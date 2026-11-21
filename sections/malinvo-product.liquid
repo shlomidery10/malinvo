@@ -186,10 +186,14 @@
   #mlv .step figure{flex:0 0 104px;aspect-ratio:auto;min-height:104px}
   #mlv .step>div{padding:14px 16px;min-width:0}
   #mlv .final{padding-bottom:120px}
-  .mlv-sticky{display:flex;position:fixed;z-index:40;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));min-height:58px;padding:0 8px 0 22px;align-items:center;justify-content:space-between;gap:12px;border:0;border-radius:999px;background:rgba(13,27,30,.94);-webkit-backdrop-filter:saturate(1.4) blur(8px);backdrop-filter:saturate(1.4) blur(8px);color:#fff;font:700 1rem/1 Heebo,Rubik,system-ui,sans-serif;direction:rtl;cursor:pointer;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;transform:translateY(calc(100% + 24px));transition:transform 220ms cubic-bezier(.32,.72,0,1)}
+  .mlv-sticky{display:flex;position:fixed;z-index:40;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));min-height:60px;padding:0 8px 0 20px;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(246,239,232,.14);border-radius:999px;background:rgba(13,27,30,.94);-webkit-backdrop-filter:saturate(1.4) blur(8px);backdrop-filter:saturate(1.4) blur(8px);color:#fff;font:700 1rem/1 Heebo,Rubik,system-ui,sans-serif;direction:rtl;cursor:pointer;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;transform:translateY(calc(100% + 24px));transition:transform 220ms cubic-bezier(.32,.72,0,1)}
   .mlv-sticky.on{transform:none;transition-duration:380ms}
   .mlv-sticky:active .mlv-sticky__c{transform:scale(.97)}
   .mlv-sticky__p{font-family:Rubik,Heebo,sans-serif;font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .mlv-sticky__b{display:inline-flex;align-items:baseline;gap:9px;min-width:0;line-height:1}
+  .mlv-sticky__logo{display:block;height:18px;width:auto}
+  .mlv-sticky__sep{width:1px;height:13px;background:#C07A4E;opacity:.9}
+  .mlv-sticky__n{font-family:Heebo,sans-serif;font-weight:500;font-size:14px;letter-spacing:.26em;text-transform:uppercase;color:#f6efe8}
   .mlv-sticky__c{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;background:#f6efe8;color:#0d1b1e;font-weight:800;white-space:nowrap;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
 }
 @media(max-width:560px){
@@ -400,7 +404,7 @@
   </section>
 </div>
 {% render 'mlv-img-loader' %}
-<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up"><span class="mlv-sticky__p">MALINVO</span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
+<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up"><span class="mlv-sticky__b" dir="ltr">{%- assign st_logo = images['malinvo_logo_light.png'] -%}{%- if st_logo -%}<img class="mlv-sticky__logo" src="{{ st_logo | image_url: height: 60 }}" srcset="{{ st_logo | image_url: height: 60 }} 1x, {{ st_logo | image_url: height: 120 }} 2x, {{ st_logo | image_url: height: 180 }} 3x" width="{{ st_logo.width }}" height="{{ st_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}<span class="mlv-sticky__p">MALINVO</span>{%- endif -%}<span class="mlv-sticky__sep" aria-hidden="true"></span><span class="mlv-sticky__n">Nova</span></span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
 
 <script>
 (function(){
