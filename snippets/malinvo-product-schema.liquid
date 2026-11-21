@@ -1,4 +1,4 @@
-{%- comment -%} MALINVO Product + AggregateOffer (ILS) + AggregateRating (static 4.8/306, matches the visible rating line) + BreadcrumbList. Vouch app untouched. {%- endcomment -%}
+{%- comment -%} MALINVO Product + AggregateOffer (ILS) + BreadcrumbList. No hardcoded rating: review markup must come from the live review data. Return and delivery values mirror the published policies (customer pays return shipping; 2-4 weeks delivery). {%- endcomment -%}
 {%- assign v = product.selected_or_first_available_variant -%}
 <script type="application/ld+json">
 {
@@ -13,13 +13,6 @@
       "image": [{%- assign mv_first = true -%}{%- for m in product.media limit: 6 -%}{%- if m.media_type == 'image' -%}{%- unless mv_first -%},{%- endunless -%}{{ m | image_url: width: 1200 | prepend: 'https:' | json }}{%- assign mv_first = false -%}{%- endif -%}{%- endfor -%}],
       "brand": { "@type": "Brand", "name": "MALINVO" },
       "sku": {{ v.sku | json }},
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "306",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "ILS",
@@ -36,14 +29,13 @@
           "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
           "merchantReturnDays": 30,
           "returnMethod": "https://schema.org/ReturnByMail",
-          "returnFees": "https://schema.org/FreeReturn",
-          "returnShippingFeesAmount": { "@type": "MonetaryAmount", "value": "0", "currency": "ILS" }
+          "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility"
         },
         "shippingDetails": {
           "@type": "OfferShippingDetails",
           "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "IL" },
           "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "ILS" },
-          "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 3, "unitCode": "DAY" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 7, "maxValue": 18, "unitCode": "DAY" } }
+          "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 3, "unitCode": "DAY" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 13, "maxValue": 25, "unitCode": "DAY" } }
         }
       }
     },
