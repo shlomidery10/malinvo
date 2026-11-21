@@ -1,0 +1,36 @@
+name: Deploy theme to Shopify
+
+# Auto-deploy the Shopify theme on every push to main.
+# Add these as GitHub repo Secrets (Settings -> Secrets and variables -> Actions):
+#   SHOPIFY_CLI_THEME_TOKEN  = Theme Access password (from the Shopify "Theme Access" app)
+#   SHOPIFY_STORE            = fpevad-a6.myshopify.com
+#   SHOPIFY_THEME_ID         = 169069641893
+# config/settings_data.json is NOT pushed, so live app-embed settings
+# (BundleUp / Cartify / Vouch / Sense-RTL) are never overwritten.
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g @shopify/cli@latest
+      - run: shopify version
+      - name: Push theme to Shopify
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
+        run: >
+          shopify theme push
+          --store "${{ secrets.SHOPIFY_STORE }}"
+          --theme "${{ secrets.SHOPIFY_THEME_ID }}"
+          --allow-live
+          --nodelete
+          --ignore "config/settings_data.json"
+          --force
