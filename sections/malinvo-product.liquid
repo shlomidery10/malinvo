@@ -216,8 +216,12 @@
 #mlv .mlv-rating__c{color:var(--muted);font-size:.85rem}
 #mlv .mlv-ship{margin:0}
 #mlv .mlv-ship span{color:var(--ink2);font-weight:600;font-size:.95rem}
-/* TEMP: hide the Vouch reviews section (demo reviews) while in test / for supplier demo. Remove this rule to show reviews again. */
-[id$="__17948660484d5ed3da"]{display:none!important}
+/* Reviews (Vouch) are shown to shoppers. */
+/* Low-stock note near the CTA, wired to real tracked inventory (shows only at <=10 in stock). */
+#mlv .mlv-stock{display:inline-flex;align-items:center;gap:8px;margin:2px 0 0;padding:7px 13px;border-radius:999px;background:var(--rose-s);color:#8a3d1f;font-weight:700;font-size:.92rem;line-height:1.2;align-self:flex-start}
+#mlv .mlv-stock::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:#d9542e;animation:mlvpulse 2s var(--ease) infinite}
+@media(prefers-reduced-motion:reduce){#mlv .mlv-stock::before{animation:none}}
+@keyframes mlvpulse{0%{box-shadow:0 0 0 0 rgba(217,84,46,.45)}70%{box-shadow:0 0 0 7px rgba(217,84,46,0)}100%{box-shadow:0 0 0 0 rgba(217,84,46,0)}}
 /* Brand lockup: MALINVO logo | NOVA on one line, sharing the wordmark's baseline. The logo PNG carries the dot above the I, so its letters are ~70% of the image height; NOVA and the divider are sized against that. */
 #mlv .mlv-lockup{--lk:clamp(22px,7.4vw,32px);display:inline-flex;align-self:center;align-items:baseline;gap:calc(var(--lk) * .5);margin:0 0 14px;line-height:1;white-space:nowrap}
 #mlv .mlv-lockup .mlv-logo{height:var(--lk);width:auto;display:block}
@@ -324,6 +328,9 @@
           <li><span class="mlv-usp__i" aria-hidden="true">🔁</span><div><b>מחליפים פילטר, לא ראש</b> - חוסך לך לאורך זמן</div></li>
           <li><span class="mlv-usp__i" aria-hidden="true">🖤</span><div><b>עיצוב אובאלי פרמיום</b> - גימור שחור מט שמשדרג את חלל האמבטיה, תחושת ואוו מהרגע הראשון</div></li>
         </ul>
+        {%- if cur.inventory_management and cur.inventory_quantity and cur.inventory_quantity > 0 and cur.inventory_quantity <= 10 -%}
+          <p class="mlv-stock" role="status">נותרו רק {{ cur.inventory_quantity }} יחידות במלאי</p>
+        {%- endif -%}
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
@@ -372,6 +379,7 @@
         <details><summary>צריך אינסטלטור?</summary><div class="acc"><div><div class="ans">לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.</div></div></div></details>
         <details><summary>איך יהיה הזרם, גם אם הלחץ אצלי לא חזק?</summary><div class="acc"><div><div class="ans">הראש לא מגדיל ולא מחליש את הלחץ שבצנרת, אבל לוח הזרבוביות עם החורים הזעירים מרכז את המים לזרם צפוף שמרגיש מלא ומורגש - גם בבתים שבהם הלחץ בינוני.</div></div></div></details>
         <details><summary>מה הפילטר מפחית?</summary><div class="acc"><div><div class="ans">פילטר פחם פעיל בארבע שכבות: יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הוא מפחית כלור שיורי, ותופס חלקיקים, חול וחלודה שמגיעים מהצנרת. איננו מצטטים אחוזים כי אין לנו בדיקת מעבדה.</div></div></div></details>
+        <details><summary>האם זה מרכך מים או מסיר אבנית?</summary><div class="acc"><div><div class="ans">לא. זהו פילטר פחם פעיל שמפחית כלור שיורי ותופס חלקיקים, חול וחלודה מהצנרת - הוא אינו מרכך מים ואינו מסיר אבנית (מינרלים כמו סידן ומגנזיום). אם מה שחשוב לך הוא מים נעימים יותר, פחות ריח כלור ופחות משקעים בדרך אליך - זה בדיוק מה שהוא עושה.</div></div></div></details>
         <details><summary>כל כמה זמן מחליפים את הפילטר?</summary><div class="acc"><div><div class="ans">זה תלוי בשימוש ובאיכות המים אצלכם, ולכן לא נוקבים במספר קבוע. הסימנים להחלפה פשוטים: ירידה מורגשת בעוצמת הזרם, או שהפילטר כבר לא נראה נקי. אז פשוט מבריגים פילטר חדש במקומו - מחליפים את הפילטר בלבד, הראש נשאר איתכם.</div></div></div></details>
         <details><summary>מה אם לא מתאים לי? אפשר להחזיר?</summary><div class="acc"><div><div class="ans"><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/policies/refund-policy">מדיניות ההחזרות</a>.</div></div></div></details>
         <details><summary>זה יתאים למקלחת שלי?</summary><div class="acc"><div><div class="ans">הראש מתברג לצינור המקלחת הרגיל ומתאים לרוב המקלחות בישראל. יש שאלה על הברז שלכם? שלחו תמונה ל-<a href="mailto:support.malinvo@gmail.com">support.malinvo@gmail.com</a> ונענה לפני ההזמנה.</div></div></div></details>
