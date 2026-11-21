@@ -327,13 +327,28 @@
 
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
-    "@type": "Organization",
-    "name": {{ shop.name | json }},
-    {% if settings.logo %}
-      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
-    {% endif %}
-    "url": {{ shop.url | json }}
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": {{ shop.url | append: '/#organization' | json }},
+        "name": {{ shop.name | json }},
+        {% if settings.logo %}
+          "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+        {% endif %}
+        "areaServed": "IL",
+        "contactPoint": { "@type": "ContactPoint", "contactType": "customer service", "email": "support.malinvo@gmail.com", "availableLanguage": "he", "areaServed": "IL" },
+        "url": {{ shop.url | json }}
+      },
+      {
+        "@type": "WebSite",
+        "@id": {{ shop.url | append: '/#website' | json }},
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }},
+        "inLanguage": "he-IL",
+        "publisher": { "@id": {{ shop.url | append: '/#organization' | json }} }
+      }
+    ]
   }
 </script>
 

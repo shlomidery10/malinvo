@@ -12,8 +12,9 @@
 {%- endif -%}
 {%- if p == blank -%}{%- assign p = all_products['filter-shower-head-oval'] -%}{%- endif -%}
 {%- assign v_set = null -%}
+{%- comment -%} The single-set price. The product still carries leftover import variants, so pick the sold set explicitly instead of the first or cheapest variant. {%- endcomment -%}
 {%- for v in p.variants -%}
-  {%- if v.title contains 'סט מלא' -%}{%- assign v_set = v -%}{%- endif -%}
+  {%- if v.title contains 'סט מלא' or v.title == 'Black' -%}{%- assign v_set = v -%}{%- break -%}{%- endif -%}
 {%- endfor -%}
 {%- assign fromv = v_set | default: p.selected_or_first_available_variant -%}
 {%- capture from_price -%}₪{{ fromv.price | money_without_currency | remove: '.00' }}{%- endcapture -%}
@@ -61,13 +62,13 @@
     { "type": "header", "content": "The set and the bundles" },
     { "type": "image_picker", "id": "set_image", "label": "The set (B1, 1200x900)" },
     { "type": "paragraph", "content": "Names, prices and tag must match the bundle picker on the product page exactly. Bundle 1 price comes from the product." },
-    { "type": "text", "id": "bundle1_name", "label": "Bundle 1 name", "default": "ראש + פילטר אחד" },
-    { "type": "text", "id": "bundle2_name", "label": "Bundle 2 name", "default": "ראש + 3 פילטרים" },
-    { "type": "text", "id": "bundle2_price", "label": "Bundle 2 price", "default": "₪349.90" },
-    { "type": "text", "id": "bundle2_tag", "label": "Bundle 2 tag", "default": "הכי משתלם" },
-    { "type": "text", "id": "bundle3_name", "label": "Bundle 3 name", "default": "ראש + 5 פילטרים" },
-    { "type": "text", "id": "bundle3_short", "label": "Bundle 3 short name (FAQ)", "default": "ראש + 5 פילטרים" },
-    { "type": "text", "id": "bundle3_price", "label": "Bundle 3 price", "default": "₪429.90" },
+    { "type": "text", "id": "bundle1_name", "label": "Bundle 1 name", "default": "סט אחד" },
+    { "type": "text", "id": "bundle2_name", "label": "Bundle 2 name", "default": "2 סטים" },
+    { "type": "text", "id": "bundle2_price", "label": "Bundle 2 price", "default": "₪499.90" },
+    { "type": "text", "id": "bundle2_tag", "label": "Bundle 2 tag", "default": "הכי פופולארי" },
+    { "type": "text", "id": "bundle3_name", "label": "Bundle 3 name", "default": "3 סטים" },
+    { "type": "text", "id": "bundle3_short", "label": "Bundle 3 short name (FAQ)", "default": "3 סטים" },
+    { "type": "text", "id": "bundle3_price", "label": "Bundle 3 price", "default": "₪699.90" },
     { "type": "header", "content": "Three steps" },
     { "type": "image_picker", "id": "step1_image", "label": "Step 1 (S1, 600x600)" },
     { "type": "image_picker", "id": "step2_image", "label": "Step 2 (S1, 600x600)" },

@@ -152,6 +152,10 @@
   rel="canonical"
   href="{{ canonical_url }}"
 >
+{%- comment -%} MALINVO sells one product: collection, list and search pages are thin near-duplicates of it, so keep them out of the index. {%- endcomment -%}
+{%- if template.name == 'collection' or template.name == 'list-collections' or template.name == 'search' %}
+<meta name="robots" content="noindex,follow">
+{%- endif %}
 
 {% if seo_description != blank %}
   <meta

@@ -32,8 +32,8 @@
       <div data-cta>
       <ul class="packs">
         {%- if n1 != blank -%}<li class="pack"><span class="pack-n">{{ n1 | escape }}</span><bdi class="pack-p">{{ from_price }}</bdi></li>{%- endif -%}
-        {%- if n2 != blank and p2 != blank -%}<li class="pack is-reco">{%- if t2 != blank -%}<span class="pack-t">{{ t2 | escape }}</span>{%- endif -%}<span class="pack-n">{{ n2 | escape }}</span><bdi class="pack-p">{{ p2 | escape }}</bdi><span class="pack-unit" style="display:block;width:100%;font-size:12px;color:#a2602f;font-weight:700;margin-top:3px">עוד 2 פילטרים · ₪25 לפילטר</span></li>{%- endif -%}
-        {%- if n3 != blank and p3 != blank -%}<li class="pack"><span class="pack-n">{{ n3 | escape }}</span><bdi class="pack-p">{{ p3 | escape }}</bdi><span class="pack-unit" style="display:block;width:100%;font-size:12px;color:#a2602f;font-weight:700;margin-top:3px">עוד 2 פילטרים · ₪40 לפילטר</span></li>{%- endif -%}
+        {%- if n2 != blank and p2 != blank -%}<li class="pack is-reco">{%- if t2 != blank -%}<span class="pack-t">{{ t2 | escape }}</span>{%- endif -%}<span class="pack-n">{{ n2 | escape }}</span><bdi class="pack-p">{{ p2 | escape }}</bdi></li>{%- endif -%}
+        {%- if n3 != blank and p3 != blank -%}<li class="pack"><span class="pack-n">{{ n3 | escape }}</span><bdi class="pack-p">{{ p3 | escape }}</bdi></li>{%- endif -%}
       </ul>
       <a href="{{ buy_url }}" class="btn">לבחירת חבילה</a>
       </div>

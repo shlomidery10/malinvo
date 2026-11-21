@@ -92,6 +92,8 @@
 #mlv .reass li{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;background:var(--mist);border-radius:12px;padding:9px 6px}
 #mlv .reass svg,#mlv .trio svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--teal-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 #mlv .trio li{display:inline-flex;align-items:center;gap:6px}
+#mlv .track:focus-visible{outline:3px solid var(--teal-d);outline-offset:-3px}
+.mlv-sticky:focus-visible{outline:3px solid #d9a27a;outline-offset:3px}
 #mlv .mlv-accs{display:grid;gap:8px}
 #mlv .mlv-accs .mlv-gtee{margin:0}
 #mlv.js [data-stagger]>*{opacity:0;transform:translateY(var(--d,14px))}
@@ -215,12 +217,6 @@
   .mlv-sticky{transform:none;opacity:0;pointer-events:none;transition:opacity 200ms ease!important}
   .mlv-sticky.on{opacity:1;pointer-events:auto}
 }
-#mlv .mlv-rating{display:flex;align-items:center;gap:7px;font-size:.9rem;color:var(--ink2);margin:0}
-#mlv .mlv-rating .mlv-stars{color:var(--teal-d);letter-spacing:1px;font-size:.98rem;direction:ltr}
-#mlv .mlv-rating b{font-family:var(--disp);font-weight:800;color:var(--ink)}
-#mlv .mlv-rating__c{color:var(--muted);font-size:.85rem}
-#mlv .mlv-ship{margin:0}
-#mlv .mlv-ship span{color:var(--ink2);font-weight:600;font-size:.95rem}
 /* Reviews (Vouch) are shown to shoppers. */
 /* Brand lockup: MALINVO logo | NOVA on one line, sharing the wordmark's baseline. The logo PNG carries the dot above the I, so its letters are ~70% of the image height; NOVA and the divider are sized against that. */
 #mlv .mlv-lockup{--lk:clamp(22px,7.4vw,32px);display:inline-flex;align-self:center;align-items:baseline;gap:calc(var(--lk) * .5);margin:0 0 14px;line-height:1;white-space:nowrap}
@@ -268,7 +264,8 @@
         {%- endfor -%}
         {%- assign gal = gal_ok | split: ';;' -%}
         {%- assign gsizes = "(min-width: 1200px) 600px, (min-width: 900px) 52vw, (min-resolution: 3dppx) 64vw, (min-resolution: 2.5dppx) 78vw, 100vw" -%}
-        <div class="track" data-track aria-label="תמונות המוצר" tabindex="0">
+        {%- if gal.size > 0 -%}
+        <div class="track" data-track role="region" aria-roledescription="קרוסלה" aria-label="תמונות המוצר" tabindex="0">
           {%- for it in gal -%}
             {%- assign gp = it | split: '|' -%}
             <figure class="slide" id="mlv-s{{ forloop.index }}">
@@ -288,6 +285,7 @@
             </figure>
           {%- endfor -%}
         </div>
+        {%- endif -%}
         {%- if gal.size > 1 -%}
           <div class="dots" aria-hidden="true">{%- for it in gal -%}<i{% if forloop.first %} class="on"{% endif %}></i>{%- endfor -%}</div>
           <div class="thumbs">
@@ -320,23 +318,23 @@
           <b class="mlv-vouch-avg"></b>
           <span class="mlv-vouch-count"></span>
         </a>
-        <ul class="mlv-usp" data-stagger>
+        <ul class="mlv-usp">
           <li><span class="mlv-usp__i" aria-hidden="true">💧</span><div><b>זרם חזק וצפוף</b> - תחושת מים מלאה ועוצמתית בכל מקלחת</div></li>
           <li><span class="mlv-usp__i" aria-hidden="true">🧪</span><div><b>פילטר פחם פעיל 4 שכבות</b> - מפחית כלור שיורי, חול, חלודה ומשקעים מהצנרת</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">✨</span><div><b>מים נקיים יותר</b> - פחות כלור ומשקעים בדרך אליך</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">✨</span><div><b>מים נקיים יותר</b> - פחות כלור ומשקעים בדרך אליכם</div></li>
           <li><span class="mlv-usp__i" aria-hidden="true">⏱️</span><div><b>התקנה בדקה</b> - מבריגים לצינור, בלי כלים ובלי אינסטלטור</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">🔁</span><div><b>מחליפים פילטר, לא ראש</b> - חוסך לך לאורך זמן</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">🖤</span><div><b>עיצוב אובאלי פרמיום</b> - גימור שחור מט שמשדרג את חלל האמבטיה, תחושת ואוו מהרגע הראשון</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">🔁</span><div><b>מחליפים פילטר, לא ראש</b> - חוסך לכם לאורך זמן</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">🖤</span><div><b>עיצוב אובאלי פרמיום</b> - גימור שחור מט שמשדרג את חדר הרחצה, תחושת ואוו מהרגע הראשון</div></li>
         </ul>
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
         </form>
-        <p style="margin:12px 0 0;color:#3a4a54;font-size:14.5px">הקנייה שלך מכוסה ב-30 יום החזרה. תתקינו, תתרשמו, ותחליטו בנחת.</p>
+        <p style="margin:12px 0 0;color:#3a4a54;font-size:14.5px">הקנייה שלכם מכוסה ב-30 יום החזרה. תתקינו, תתרשמו, ותחליטו בנחת.</p>
         {%- comment -%} Risk-reversal near CTA. Shipping from 10_SHIPPING; returns 30d approved by owner; warranty = placeholder. {%- endcomment -%}
         <ul class="reass">
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם עד הבית · עד 15 ימי עסקים, עם מספר מעקב</span></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> <a href="/policies/refund-policy">מדיניות החזרות</a></span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> <a href="/pages/refund-policy">מדיניות ההחזרות</a></span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מותג ישראלי · מענה בעברית</span></li>
         </ul>        <div class="mlv-accs">
           {% render 'malinvo-guarantee' %}
@@ -352,7 +350,7 @@
     <div class="n" style="text-align:center">
       <span class="kick">ההוכחה</span>
       <h2>ההבדל שרואים בזרם</h2>
-      <p class="section-sub">ראש רגיל מול MALINVO Nova - אותו ברז, זרם אחר לגמרי.</p>
+      <p class="lead">ראש רגיל מול MALINVO Nova - אותו ברז, זרם אחר לגמרי.</p>
       <figure class="mlv-stream-fig">
         <img src="{{ cmp_stream | image_url: width: 1100 }}" srcset="{{ cmp_stream | image_url: width: 640 }} 640w, {{ cmp_stream | image_url: width: 900 }} 900w, {{ cmp_stream | image_url: width: 1100 }} 1100w" sizes="(min-width:620px) 560px, 94vw" width="{{ cmp_stream.width }}" height="{{ cmp_stream.height }}" loading="lazy" decoding="async" alt="השוואת זרם: ראש מקלחת רגיל מול MALINVO Nova עם פילטר">
       </figure>
@@ -371,18 +369,32 @@
   <section class="sec" id="mlv-faq">
     <div class="n">
       <h2>שאלות נפוצות</h2>
+      {%- comment -%} One source for the visible FAQ and its FAQPage markup, so they cannot drift apart. Entry: question::answer, entries separated by ;; {%- endcomment -%}
+      {%- capture faq_raw -%}
+מתאים לדירה שכורה?::כן. הראש מתחבר לצינור המקלחת בהברגה, בלי קידוחים ובלי שינוי בצנרת. כשעוברים דירה, מפרקים ולוקחים אותו איתכם.
+;;צריך אינסטלטור?::לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.
+;;איך יהיה הזרם, גם אם הלחץ אצלי לא חזק?::הראש לא מגדיל ולא מחליש את הלחץ שבצנרת. החורים הזעירים בפני הראש מרכזים את המים לזרם צפוף, שלרוב מרגיש מלא גם כשהלחץ בבית בינוני.
+;;מה הפילטר מפחית?::פילטר פחם פעיל בארבע שכבות: יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הוא מפחית כלור שיורי, ותופס חלקיקים, חול וחלודה שמגיעים מהצנרת. איננו מצטטים אחוזים כי אין לנו בדיקת מעבדה.
+;;האם זה מרכך מים או מסיר אבנית?::לא. זהו פילטר פחם פעיל שמפחית כלור שיורי ותופס חלקיקים, חול וחלודה מהצנרת - הוא אינו מרכך מים ואינו מסיר אבנית (מינרלים כמו סידן ומגנזיום). אם חשוב לכם פחות כלור שיורי ופחות חלקיקים, חול וחלודה במים, בשביל זה הוא נועד.
+;;כל כמה זמן מחליפים את הפילטר?::זה תלוי בשימוש ובאיכות המים אצלכם, ולכן לא נוקבים במספר קבוע. הסימנים להחלפה פשוטים: ירידה מורגשת בעוצמת הזרם, או שהפילטר כבר לא נראה נקי. אז פשוט מבריגים פילטר חדש במקומו - מחליפים את הפילטר בלבד, הראש נשאר איתכם.
+;;כמה זמן לוקח המשלוח?::המשלוח חינם עד הבית, וזמן האספקה המשוער הוא עד 15 ימי עסקים מרגע ההזמנה, עם מספר מעקב שנשלח במייל. ימי עסקים הם א׳–ה׳, בלי שישי-שבת וחגים. במקרים חריגים (מכס, עומסי חגים) ייתכן עיכוב קצר, ואנחנו כאן לעדכן אתכם בדרך.
+;;מה אם לא מתאים לי? אפשר להחזיר?::<strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/pages/refund-policy">מדיניות ההחזרות</a>.
+;;זה יתאים למקלחת שלי?::הראש מתברג לצינור המקלחת הרגיל ומתאים לרוב המקלחות בישראל. יש שאלה על הברז שלכם? שלחו תמונה ל-<a href="mailto:support.malinvo@gmail.com">support.malinvo@gmail.com</a> ונענה לפני ההזמנה.
+;;ממה הראש עשוי?::גוף ABS קל ונוח לאחיזה, עם גימור מט.
+      {%- endcapture -%}
+      {%- assign faqs = faq_raw | strip | split: ';;' -%}
       <div class="faq">
-        <details><summary>מתאים לדירה שכורה?</summary><div class="acc"><div><div class="ans">כן. הראש מתחבר לצינור המקלחת בהברגה, בלי קידוחים ובלי שינוי בצנרת. כשעוברים דירה, מפרקים ולוקחים אותו איתך.</div></div></div></details>
-        <details><summary>צריך אינסטלטור?</summary><div class="acc"><div><div class="ans">לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.</div></div></div></details>
-        <details><summary>איך יהיה הזרם, גם אם הלחץ אצלי לא חזק?</summary><div class="acc"><div><div class="ans">הראש לא מגדיל ולא מחליש את הלחץ שבצנרת, אבל לוח הזרבוביות עם החורים הזעירים מרכז את המים לזרם צפוף שמרגיש מלא ומורגש - גם בבתים שבהם הלחץ בינוני.</div></div></div></details>
-        <details><summary>מה הפילטר מפחית?</summary><div class="acc"><div><div class="ans">פילטר פחם פעיל בארבע שכבות: יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הוא מפחית כלור שיורי, ותופס חלקיקים, חול וחלודה שמגיעים מהצנרת. איננו מצטטים אחוזים כי אין לנו בדיקת מעבדה.</div></div></div></details>
-        <details><summary>האם זה מרכך מים או מסיר אבנית?</summary><div class="acc"><div><div class="ans">לא. זהו פילטר פחם פעיל שמפחית כלור שיורי ותופס חלקיקים, חול וחלודה מהצנרת - הוא אינו מרכך מים ואינו מסיר אבנית (מינרלים כמו סידן ומגנזיום). אם מה שחשוב לך הוא מים נעימים יותר, פחות ריח כלור ופחות משקעים בדרך אליך - זה בדיוק מה שהוא עושה.</div></div></div></details>
-        <details><summary>כל כמה זמן מחליפים את הפילטר?</summary><div class="acc"><div><div class="ans">זה תלוי בשימוש ובאיכות המים אצלכם, ולכן לא נוקבים במספר קבוע. הסימנים להחלפה פשוטים: ירידה מורגשת בעוצמת הזרם, או שהפילטר כבר לא נראה נקי. אז פשוט מבריגים פילטר חדש במקומו - מחליפים את הפילטר בלבד, הראש נשאר איתכם.</div></div></div></details>
-        <details><summary>כמה זמן לוקח המשלוח?</summary><div class="acc"><div><div class="ans">המשלוח חינם עד הבית, וזמן האספקה המשוער הוא עד 15 ימי עסקים מרגע ההזמנה, עם מספר מעקב שנשלח במייל. ימי עסקים הם א׳–ה׳, בלי שישי-שבת וחגים. במקרים חריגים (מכס, עומסי חגים) ייתכן עיכוב קצר, ואנחנו כאן לעדכן אותך בדרך.</div></div></div></details>
-        <details><summary>מה אם לא מתאים לי? אפשר להחזיר?</summary><div class="acc"><div><div class="ans"><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/policies/refund-policy">מדיניות ההחזרות</a>.</div></div></div></details>
-        <details><summary>זה יתאים למקלחת שלי?</summary><div class="acc"><div><div class="ans">הראש מתברג לצינור המקלחת הרגיל ומתאים לרוב המקלחות בישראל. יש שאלה על הברז שלכם? שלחו תמונה ל-<a href="mailto:support.malinvo@gmail.com">support.malinvo@gmail.com</a> ונענה לפני ההזמנה.</div></div></div></details>
-        <details><summary>ממה הראש עשוי?</summary><div class="acc"><div><div class="ans">גוף ABS קל ונוח לאחיזה, עם גימור מט.</div></div></div></details>
+        {%- for f in faqs -%}{%- assign qa = f | strip | split: '::' -%}
+        <details><summary>{{ qa[0] }}</summary><div class="acc"><div><div class="ans">{{ qa[1] }}</div></div></div></details>
+        {%- endfor -%}
       </div>
+      <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"FAQPage","inLanguage":"he-IL","mainEntity":[
+      {%- for f in faqs -%}{%- assign qa = f | strip | split: '::' -%}
+      {"@type":"Question","name":{{ qa[0] | strip | json }},"acceptedAnswer":{"@type":"Answer","text":{{ qa[1] | strip_html | strip | json }}}}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+      ]}
+      </script>
     </div>
   </section>
 
@@ -428,6 +440,7 @@
   [].slice.call(root.querySelectorAll('details')).forEach(function(d){
     if(!d.querySelector('.acc'))return;
     var s=d.querySelector('summary');
+    d.addEventListener('toggle',function(){if(d.open&&!d.classList.contains('is-open'))d.classList.add('is-open')});
     s.addEventListener('click',function(ev){
       ev.preventDefault();
       if(d.classList.contains('is-open')){d.classList.remove('is-open');setTimeout(function(){if(!d.classList.contains('is-open'))d.open=false},reduce?0:240)}
@@ -439,25 +452,17 @@
   var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(tg)tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
   [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){a.addEventListener('click',toPicker)});
   /* mobile sticky bar: visible from the start, hidden while a bundle card or the order button is on screen above the bar */
-  var st=document.getElementById('mlv-sticky'),pr=st&&st.querySelector('[data-sticky-price]');
+  var st=document.getElementById('mlv-sticky');
   if(st){
     var show=function(on){st.classList.toggle('on',on);st.setAttribute('aria-hidden',on?'false':'true');st.tabIndex=on?0:-1};
     st.addEventListener('click',function(){toPicker()});
     show(true);
-    var fmt=function(s){var m=String(s).replace(/\s+/g,'').match(/\d[\d,]*(?:\.\d+)?/);return m?'₪'+m[0].replace(/\.00$/,''):''};
-    var readPrice=function(){
-      var r0=document.querySelector('#bundle-up .bu-offer-radio:checked'),c=(r0&&r0.closest('.bundle-offer-card'))||document.querySelector('#bundle-up .selectedBU');if(!c||!pr)return;
-      var p=c.querySelector('.offer-price'),v=p?fmt(p.textContent):'';
-      if(v&&pr.textContent!==v){pr.textContent=v;pr.setAttribute('dir','ltr')}
-    };
     var bw=function(){
       var b=document.getElementById('bundle-up');if(!b||!b.querySelector('.bundle-offer-card'))return false;
-      readPrice();b.addEventListener('change',readPrice);
-      new MutationObserver(readPrice).observe(b,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
       if('IntersectionObserver' in window){var vis={c:false,b:false},upd=function(){show(!vis.c&&!vis.b)},om={rootMargin:'0px 0px -72px 0px'},cards=b.querySelector('.bundle-offer-cards-container'),ob=document.getElementById('BU-action-button');if(cards)new IntersectionObserver(function(e){vis.c=e[0].isIntersecting;upd()},om).observe(cards);if(ob)new IntersectionObserver(function(e){vis.b=e[0].isIntersecting;upd()},om).observe(ob)}
       return true;
     };
-    if(!bw()){var tries=0,iv=setInterval(function(){if(bw()||++tries>60)clearInterval(iv)},250)}
+    if(!bw()&&buy&&'MutationObserver' in window){var mo=new MutationObserver(function(){if(bw())mo.disconnect()});mo.observe(buy,{childList:true,subtree:true})}
   }
   /* Vouch star-rating badge at the top of the buy box: mirrors the real Vouch widget data, auto-updates, hides when there are no reviews */
   (function(){
