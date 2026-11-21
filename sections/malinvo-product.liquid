@@ -218,12 +218,12 @@
 #mlv .mlv-ship span{color:var(--ink2);font-weight:600;font-size:.95rem}
 /* TEMP: hide the Vouch reviews section (demo reviews) while in test / for supplier demo. Remove this rule to show reviews again. */
 [id$="__17948660484d5ed3da"]{display:none!important}
-#mlv .mlv-lockup--stacked{display:inline-flex;flex-direction:column;align-items:center;gap:13px;margin:0 0 14px;line-height:1}
-#mlv .mlv-lockup--stacked .mlv-logo{width:252px;max-width:100%;height:auto;display:block}
-#mlv .mlv-lockup--stacked .mlv-subline{display:flex;align-items:center;gap:16px}
-#mlv .mlv-lockup--stacked .mlv-hair{width:30px;height:1px;background:#C07A4E;opacity:.75}
-#mlv .mlv-lockup--stacked .mlv-nova{font-family:"Heebo",sans-serif;font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:.44em;color:#15232B;padding-left:.44em;display:inline-flex;align-items:flex-start}
-#mlv .mlv-lockup--stacked .mlv-tm{font-size:.62em;letter-spacing:0;margin-left:.15em;transform:translateY(-.1em);color:#C07A4E;font-weight:600}
+/* Brand lockup: MALINVO logo | NOVA on one line, sharing the wordmark's baseline. The logo PNG carries the dot above the I, so its letters are ~70% of the image height; NOVA and the divider are sized against that. */
+#mlv .mlv-lockup{--lk:clamp(22px,7.4vw,32px);display:inline-flex;align-self:flex-start;align-items:baseline;gap:calc(var(--lk) * .5);margin:0 0 14px;line-height:1;white-space:nowrap}
+#mlv .mlv-lockup .mlv-logo{height:var(--lk);width:auto;display:block}
+#mlv .mlv-lockup .mlv-sep{width:1px;height:calc(var(--lk) * .74);background:#C07A4E;opacity:.8}
+#mlv .mlv-lockup .mlv-nova{font-family:"Heebo",sans-serif;font-weight:500;font-size:calc(var(--lk) * .8);line-height:1;letter-spacing:.28em;text-transform:uppercase;color:#15232B}
+#mlv .mlv-lockup .mlv-tm{position:relative;top:-.8em;margin-inline-start:-.42em;font-size:.42em;letter-spacing:0;font-weight:600;color:#C07A4E}
 #mlv .mlv-lockup__word{font-family:var(--disp);font-weight:300;font-size:1.5rem;letter-spacing:.14em;color:var(--ink);line-height:1;text-transform:uppercase}
 #mlv .mlv-usp{display:grid;gap:10px;margin:16px 0 4px;padding:0}
 #mlv .mlv-usp li{display:flex;gap:11px;align-items:flex-start;font-size:.97rem;line-height:1.45;color:var(--ink2)}
@@ -305,9 +305,10 @@
 
       <div class="buy" id="mlv-buy">
         {%- assign nova_logo = images['malinvo_logo_dark.png'] -%}
-        <h1 class="mlv-lockup mlv-lockup--stacked" dir="ltr">
-          {%- if nova_logo -%}<img class="mlv-logo" src="{{ nova_logo | image_url: width: 520 }}" srcset="{{ nova_logo | image_url: width: 252 }} 252w, {{ nova_logo | image_url: width: 520 }} 520w" sizes="252px" alt="MALINVO" width="252" loading="eager" decoding="async">{%- else -%}<span class="mlv-lockup__word">MALINVO</span>{%- endif -%}
-          <span class="mlv-subline"><span class="mlv-hair"></span><span class="mlv-nova">Nova<span class="mlv-tm">&trade;</span></span><span class="mlv-hair"></span></span>
+        <h1 class="mlv-lockup" dir="ltr">
+          {%- if nova_logo -%}<img class="mlv-logo" src="{{ nova_logo | image_url: width: 360 }}" srcset="{{ nova_logo | image_url: width: 180 }} 180w, {{ nova_logo | image_url: width: 360 }} 360w, {{ nova_logo | image_url: width: 540 }} 540w" sizes="180px" alt="MALINVO" width="{{ nova_logo.width }}" height="{{ nova_logo.height }}" loading="eager" decoding="async">{%- else -%}<span class="mlv-lockup__word">MALINVO</span>{%- endif -%}
+          <span class="mlv-sep" aria-hidden="true"></span>
+          <span class="mlv-nova">Nova<span class="mlv-tm">&trade;</span></span>
         </h1>
         <p class="mlv-tag">הצעד הראשון של המקלחת שלך. זרם מלא וצפוף, מים מסוננים, התקנה בדקה.</p>
         <a class="mlv-vouch-badge" href="#mlv-reviews" data-vouch-badge hidden>
