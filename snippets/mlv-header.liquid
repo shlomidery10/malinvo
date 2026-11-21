@@ -1,0 +1,162 @@
+{%- doc -%}
+  MALINVO premium header layer: visual overrides for the Horizon header and drawer, plus a scroll state flag.
+
+  @example
+  {% render 'mlv-header' %}
+{%- enddoc -%}
+<style>
+  #header-component {
+    --mlv-ink: #0e1d21;
+    --mlv-copper: #b4704a;
+    --mlv-cream: #f6efe8;
+    --mlv-ease: cubic-bezier(0.23, 1, 0.32, 1);
+    --icon-stroke-width: 1.35px;
+    --color-background-top-row: rgba(246, 239, 232, 0.94);
+    --cart-bubble-background: var(--mlv-copper);
+    --cart-bubble-text: #fff;
+    color: var(--mlv-ink);
+  }
+  #header-component .header__row--top {
+    position: relative;
+    background: rgba(246, 239, 232, 0.94) !important;
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    backdrop-filter: saturate(1.4) blur(14px);
+    color: var(--mlv-ink);
+  }
+  #header-component .header__row--top::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(180, 112, 74, 0.38) 18%, rgba(180, 112, 74, 0.38) 82%, transparent);
+    pointer-events: none;
+  }
+  #header-component .header__row--top::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 12px 28px -14px rgba(14, 29, 33, 0.28);
+    opacity: 0;
+    transition: opacity 280ms var(--mlv-ease);
+    pointer-events: none;
+  }
+  #header-component[data-mlv-scrolled] .header__row--top::after { opacity: 1; }
+  #header-component .header-logo {
+    transform-origin: center;
+    transition: transform 320ms var(--mlv-ease);
+  }
+  #header-component[data-mlv-scrolled] .header-logo { transform: scale(0.9); }
+  #header-component .menu-list__link {
+    position: relative;
+    color: var(--mlv-ink);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 14px;
+  }
+  #header-component .menu-list__link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 14px;
+    bottom: 9px;
+    height: 1px;
+    background: var(--mlv-copper);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 240ms var(--mlv-ease);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    #header-component .menu-list__link:hover::after { transform: scaleX(1); }
+  }
+  #header-component .menu-list__link[aria-current="page"]::after { transform: scaleX(1); }
+  #header-component .header-actions__action,
+  #header-component .header__icon--menu,
+  #header-component .search-action button {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mlv-ink);
+    border-radius: 999px;
+    transition: transform 160ms var(--mlv-ease), background-color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    #header-component .header-actions__action:hover,
+    #header-component .search-action button:hover { background-color: rgba(180, 112, 74, 0.1); }
+  }
+  #header-component .header-actions__action:active,
+  #header-component .header__icon--menu:active,
+  #header-component .search-action button:active { transform: scale(0.94); }
+  #header-component .cart-bubble {
+    box-shadow: 0 0 0 2px var(--mlv-cream);
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  #header-component .cart-bubble__background { background: var(--mlv-copper); opacity: 1; }
+  #header-component .cart-bubble__text { color: #fff; }
+  #header-component :focus-visible { outline: 2px solid var(--mlv-copper); outline-offset: 2px; }
+  #header-component .menu-drawer {
+    background: var(--mlv-cream);
+    color: var(--mlv-ink);
+  }
+  #header-component .menu-drawer__navigation { padding-block-start: 20px; }
+  #header-component .menu-drawer__menu-item--mainlist {
+    min-height: 64px;
+    padding-inline: 28px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--mlv-ink);
+    border-bottom: 1px solid rgba(14, 29, 33, 0.09);
+  }
+  #header-component .menu-drawer__menu > li:first-child .menu-drawer__menu-item--mainlist { border-top: 1px solid rgba(14, 29, 33, 0.09); }
+  #header-component .menu-drawer__menu-item--mainlist:active { color: var(--mlv-copper); }
+  #header-component .menu-drawer__close-button { min-width: 44px; min-height: 44px; color: var(--mlv-ink); }
+  #header-component .menu-drawer::after {
+    content: "MALINVO";
+    position: absolute;
+    inset-inline: 28px;
+    bottom: 32px;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: #8a5233;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #header-component .header-logo,
+    #header-component .menu-list__link::after,
+    #header-component .header-actions__action,
+    #header-component .header__row--top::after { transition: none; }
+    #header-component[data-mlv-scrolled] .header-logo { transform: none; }
+  }
+</style>
+<script>
+  (function () {
+    var h = document.getElementById('header-component');
+    if (!h) return;
+    var on = false;
+    var tick = false;
+    var last = null;
+    function update() {
+      tick = false;
+      var t = last && last !== document && last.scrollTop !== undefined ? last.scrollTop : 0;
+      var s = Math.max(window.scrollY, t) > 24;
+      if (s !== on) {
+        on = s;
+        if (s) h.setAttribute('data-mlv-scrolled', '');
+        else h.removeAttribute('data-mlv-scrolled');
+      }
+    }
+    document.addEventListener("scroll", function (e) {
+      var el = e.target;
+      if (el !== document && !(el.clientHeight > window.innerHeight * 0.6)) return;
+      last = el;
+      if (!tick) { tick = true; requestAnimationFrame(update); }
+    }, { passive: true, capture: true });
+    update();
+  })();
+</script>

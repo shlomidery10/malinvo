@@ -1,0 +1,28 @@
+{%- doc -%}
+  MALINVO footer customer service: email, answering hours and a WhatsApp link.
+  Email and WhatsApp come from the theme settings (MALINVO trust details). An empty slot renders nothing.
+{%- enddoc -%}
+{%- assign wa = settings.mlv_whatsapp | remove: ' ' | remove: '-' | remove: '+' | strip -%}
+{%- assign mail = settings.mlv_support_email | strip | default: block.settings.fallback_email -%}
+<div class="mlv-foot-contact" {{ block.shopify_attributes }}>
+  {%- if mail != blank -%}<a href="mailto:{{ mail | escape }}" dir="ltr">{{ mail | escape }}</a>{%- endif -%}
+  {%- if block.settings.hours != blank -%}<p>{{ block.settings.hours | escape }}</p>{%- endif -%}
+  {%- if wa != blank -%}<a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">כתבו לנו בוואטסאפ</a>{%- endif -%}
+</div>
+
+{% stylesheet %}
+  .mlv-foot-contact { display: flex; flex-direction: column; align-items: flex-start; }
+  .mlv-foot-contact p { margin: 0 0 4px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MALINVO footer contact",
+  "tag": null,
+  "settings": [
+    { "type": "text", "id": "fallback_email", "label": "Email (used while the theme setting is empty)", "default": "support.malinvo@gmail.com" },
+    { "type": "text", "id": "hours", "label": "Answering hours", "default": "עונים בימים א׳–ה׳, בדרך כלל עד יום עסקים אחד." }
+  ],
+  "presets": [{ "name": "MALINVO footer contact" }]
+}
+{% endschema %}

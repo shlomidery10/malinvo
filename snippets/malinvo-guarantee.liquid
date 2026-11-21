@@ -1,0 +1,68 @@
+{% doc %}
+  MALINVO 30-day decision card. Sits below the buy area, outside the /cart/add form.
+  @example
+  {% render 'malinvo-guarantee' %}
+{% enddoc %}
+<style>
+.mlv-gtee{--g-ink:#0e1d21;--g-cu:#b4704a;--g-cu-d:#8a4f2e;--g-cream:#faf5ef;--g-line:#ecdccb;--g-muted:#56676c;--g-ease:cubic-bezier(.23,1,.32,1);direction:rtl;text-align:right;margin:0;font-family:"Heebo","Rubik",system-ui,Arial,sans-serif;color:var(--g-ink);animation:mlv-gtee-in 420ms var(--g-ease) 120ms both}
+.mlv-gtee__box{background:var(--g-cream);border:1px solid var(--g-line);border-radius:16px;overflow:hidden}
+.mlv-gtee__sum{list-style:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;min-height:56px;padding:6px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:16px}
+.mlv-gtee .mlv-gtee__box>.mlv-gtee__sum,#mlv .mlv-gtee .mlv-gtee__sum{display:grid;justify-content:normal;gap:14px;min-height:56px;padding:6px 14px;margin:0;background:none;border:0;box-shadow:none;border-radius:16px;font-weight:400;font-size:1rem;color:inherit}
+.mlv-gtee__sum::-webkit-details-marker{display:none}
+.mlv-gtee__sum::before,.mlv-gtee__sum::after{content:none!important;display:none!important}
+.mlv-gtee__sum>.icon,.mlv-gtee__sum>svg{display:none}
+.mlv-gtee__sum:focus-visible{outline:2px solid var(--g-cu-d);outline-offset:-3px}
+.mlv-gtee__num{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;padding-inline-start:10px;border-inline-start:0;border-inline-end:1px solid var(--g-line);padding-inline-end:14px;margin-inline-start:-2px}
+.mlv-gtee__num b{font-family:"Rubik","Heebo",sans-serif;font-weight:800;font-size:1.55rem;line-height:.9;letter-spacing:-.04em;color:var(--g-cu);font-variant-numeric:lining-nums tabular-nums}
+.mlv-gtee__num span{font-size:.68rem;font-weight:600;letter-spacing:.04em;color:var(--g-cu-d);margin-top:1px}
+.mlv-gtee__ico svg{width:24px;height:24px;fill:none;stroke:var(--g-cu-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.mlv-gtee .mlv-gtee__list{display:grid;gap:10px}
+.mlv-gtee__list dt{font-weight:700;font-size:.92rem}
+.mlv-gtee__list dd{margin:0;font-size:.9rem;line-height:1.5;color:var(--g-muted)}
+.mlv-gtee__t{display:block;font-family:"Rubik","Heebo",sans-serif;font-weight:700;font-size:1.02rem;line-height:1.25}
+.mlv-gtee__s{display:block;font-size:.86rem;line-height:1.4;color:var(--g-muted);margin-top:2px}
+.mlv-gtee__chev{width:32px;height:32px;display:grid;place-items:center;border-radius:999px;color:var(--g-cu-d);transition:transform 240ms var(--g-ease),background-color 160ms ease}
+.mlv-gtee__chev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mlv-gtee__box[open] .mlv-gtee__chev{transform:rotate(180deg)}
+@media (hover:hover) and (pointer:fine){.mlv-gtee__sum:hover .mlv-gtee__chev{background:#f2e6d9}}
+.mlv-gtee__box::details-content{block-size:0;overflow:hidden;transition:block-size 240ms ease,content-visibility 240ms allow-discrete}
+.mlv-gtee__box[open]::details-content{block-size:auto}
+@supports (interpolate-size:allow-keywords){.mlv-gtee{interpolate-size:allow-keywords}}
+.mlv-gtee__body{margin:0 14px;padding:14px 0;border-top:1px solid var(--g-line);display:grid;gap:12px}
+.mlv-gtee__lead{margin:14px 0 12px;font-size:.93rem;line-height:1.6}
+.mlv-gtee__rows{margin:0;display:grid;gap:0;border:1px solid var(--g-line);border-radius:12px;background:#fff}
+.mlv-gtee__row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;padding:10px 14px;border-top:1px solid var(--g-line)}
+.mlv-gtee__row:first-child{border-top:0}
+.mlv-gtee__row dt{font-size:.9rem;line-height:1.45}
+.mlv-gtee__row dd{margin:0;font-size:.9rem;font-weight:700;white-space:nowrap}
+.mlv-gtee__row dd.is-cu{color:var(--g-cu-d)}
+.mlv-gtee__how{margin:12px 0 0;font-size:.9rem;line-height:1.6}
+.mlv-gtee a{color:var(--g-cu-d);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;overflow-wrap:anywhere}
+.mlv-gtee a:focus-visible{outline:2px solid var(--g-cu-d);outline-offset:2px;border-radius:3px}
+.mlv-gtee__how a{padding-block:11px}
+.mlv-gtee__more{display:inline-flex;align-items:center;min-height:44px;margin-top:4px}
+@keyframes mlv-gtee-in{from{opacity:0;transform:translateY(6px)}}
+@media (max-width:380px){.mlv-gtee__row{grid-template-columns:1fr}.mlv-gtee__row dd{white-space:normal}}
+@media (prefers-reduced-motion:reduce){.mlv-gtee{animation:none}.mlv-gtee__chev,.mlv-gtee__box::details-content{transition:none}}
+</style>
+<section class="mlv-gtee" aria-label="30 יום להחליט">
+  <details class="mlv-gtee__box">
+    <summary class="mlv-gtee__sum">
+      <span class="mlv-gtee__num mlv-gtee__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>
+      <span>
+        <span class="mlv-gtee__t">30 יום להחליט</span>
+        <span class="mlv-gtee__s">מיום הקבלה</span>
+      </span>
+      <span class="mlv-gtee__chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="mlv-gtee__body">
+      <p class="mlv-gtee__lead">מקבלים, מתרשמים, ויש 30 יום להחליט. לא מתאים לכם? אפשר לבקש החזרה.</p>
+      <dl class="mlv-gtee__rows">
+        <div class="mlv-gtee__row"><dt>משלוח אליכם</dt><dd class="is-cu">חינם</dd></div>
+        <div class="mlv-gtee__row"><dt>מוצר פגום, שגוי או שניזוק בדרך</dt><dd class="is-cu">עלינו</dd></div>
+      </dl>
+      <p class="mlv-gtee__how">איך מתחילים: כותבים ל-<a href="mailto:support.malinvo@gmail.com">support.malinvo@gmail.com</a> לפני ששולחים משהו. עונים בימים א׳–ה׳, עם הוראות וכתובת להחזרה.</p>
+      <a class="mlv-gtee__more" href="/pages/refund-policy">מדיניות החזרות מלאה</a>
+    </div>
+  </details>
+</section>

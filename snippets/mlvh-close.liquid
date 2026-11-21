@@ -1,0 +1,31 @@
+{%- doc -%}
+  MALINVO home close-ups: two 1:1 tiles (stop button, copper ring). A tile without an image is not rendered.
+  @param {image} [img1] - Stop button photo, 1:1
+  @param {image} [img2] - Copper ring photo, 1:1
+  @example
+  {% render 'mlvh-close', img1: section.settings.tile_stop_image, img2: section.settings.tile_ring_image %}
+{%- enddoc -%}
+<section class="sec" id="mlvh-close">
+  <div class="w">
+    <div class="close-h">
+      <h2>ראש מקלחת שנעים להסתכל עליו</h2>
+      <p class="lead">עיצוב אובאלי נקי בגימור מט, ופילטר שמחליפים בקלות.</p>
+    </div>
+    {%- if img1 or img2 -%}
+      <div class="tiles{% unless img1 and img2 %} one{% endunless %}">
+        {%- if img1 -%}
+          <figure class="tile">
+            <img src="{{ img1 | image_url: width: 600 }}" srcset="{{ img1 | image_url: width: 360 }} 360w, {{ img1 | image_url: width: 480 }} 480w, {{ img1 | image_url: width: 600 }} 600w, {{ img1 | image_url: width: 900 }} 900w" sizes="(min-width:901px) 310px, (min-resolution: 3dppx) 30vw, calc(50vw - 22px)" width="{{ img1.width }}" height="{{ img1.height }}" loading="lazy" decoding="async" alt="ראש המקלחת האובאלי של MALINVO, אחוז ביד">
+            <figcaption><b>עיצוב אובאלי</b><span>קו מוקפד וגימור מט שמשדרגים את המקלחת.</span></figcaption>
+          </figure>
+        {%- endif -%}
+        {%- if img2 -%}
+          <figure class="tile">
+            <img src="{{ img2 | image_url: width: 600 }}" srcset="{{ img2 | image_url: width: 360 }} 360w, {{ img2 | image_url: width: 480 }} 480w, {{ img2 | image_url: width: 600 }} 600w, {{ img2 | image_url: width: 900 }} 900w" sizes="(min-width:901px) 310px, (min-resolution: 3dppx) 30vw, calc(50vw - 22px)" width="{{ img2.width }}" height="{{ img2.height }}" loading="lazy" decoding="async" alt="פני ראש המקלחת האובאלי של MALINVO">
+            <figcaption><b>פילטר פחם פעיל</b><span>מוברג בתוך הידית ומסנן את המים לפני היציאה.</span></figcaption>
+          </figure>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>

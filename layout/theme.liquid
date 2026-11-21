@@ -1,0 +1,144 @@
+<!doctype html>
+<html
+  {% if request.design_mode %}
+    class="shopify-design-mode"
+  {% endif %}
+  lang="{{ request.locale.iso_code }}"
+  dir="{{ request.locale.direction | default: 'ltr' }}"
+>
+  <head>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- endif -%}
+
+    {%- render 'view-transition-opt-in' -%}
+
+    {%- render 'meta-tags' -%}
+    {%- comment -%}MALINVO: a section can mark its LCP image preload with <!--mlv-preload--> ... <!--mlv-preload-->; it is repeated here so the browser sees it at the top of <head>.{%- endcomment -%}
+    {%- assign mlv_pre = content_for_layout | split: '<!--mlv-preload-->' -%}
+    {%- if mlv_pre.size > 2 -%}{{ mlv_pre[1] }}{%- endif -%}
+    {%- render 'stylesheets' -%}
+    {%- render 'card-hover-effect-styles' -%}
+    {%- render 'scripts' -%}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-palette' -%}
+
+    {% if request.design_mode %}
+      {%- render 'theme-editor' -%}
+    {% endif %}
+
+    {{ content_for_header }}
+    <style>html,body{overflow-x:clip}img,video{max-width:100%}</style>
+    {%- comment -%}MALINVO: one webfont source for the whole site (Heebo body, Rubik display). Theme font_face output is disabled in snippets/theme-styles-variables.liquid.{%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&family=Rubik:wght@800;900&display=swap">
+    {%- if request.page_type == 'product' -%}
+      {%- render 'malinvo-product-schema', product: product -%}
+    {%- endif -%}
+    {%- comment -%}MALINVO: links that carry an anchor (home CTAs to the bundle picker, menu anchors) must land on it. If the browser did not scroll to the anchor by the time the page has loaded, scroll once, without fighting a visitor who already scrolled.{%- endcomment -%}
+    <script>
+      (function(){var h=location.hash;if(!h||h.length<2)return;
+      function go(){var el;try{el=document.getElementById(decodeURIComponent(h.slice(1)))}catch(e){return}if(!el||window.scrollY>10)return;
+      var m=parseFloat(getComputedStyle(el).scrollMarginTop)||0;if(Math.abs(el.getBoundingClientRect().top-m)>40)el.scrollIntoView({behavior:'auto',block:'start'})}
+      window.addEventListener('load',function(){setTimeout(go,80);setTimeout(go,700)})})();
+    </script>
+  </head>
+
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+
+    {% render 'chat-drawer' %}
+
+    <div class="page-wrapper">
+      <div id="header-group">
+        {% sections 'header-group' %}
+      </div>
+
+      <script>
+        window.measureHeaderHeights = (function () {
+          let measured = false;
+
+          return function measureHeaderHeights() {
+            if (measured) return;
+
+            const header = document.querySelector('#header-component');
+            const headerGroup = document.querySelector('#header-group');
+
+            if (!header || !headerGroup) return;
+            measured = true;
+
+            const headerHeight = header.offsetHeight;
+
+            let headerGroupHeight = 0;
+            for (const element of headerGroup.children) {
+              if (element instanceof HTMLElement) headerGroupHeight += element.offsetHeight;
+            }
+
+            if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+              headerGroupHeight += headerHeight;
+            }
+
+            document.body.style.setProperty('--header-height', `${headerHeight}px`);
+            document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+          };
+        })();
+
+        if (document.querySelector('#header-component')?.hasAttribute('transparent')) {
+          measureHeaderHeights();
+        }
+
+        (function setTopRowHeight() {
+          const header = document.querySelector('#header-component');
+          const headerTopRow = header?.querySelector('.header__row--top');
+          if (!headerTopRow) return;
+
+          window.requestAnimationFrame(function () {
+            header.style.setProperty('--top-row-height', `${headerTopRow.getBoundingClientRect().height}px`);
+          });
+        })();
+
+        (function updateTransparentHeaderOffset() {
+          const header = document.querySelector('#header-component');
+          const headerSection = document.querySelector('#header-group .header-section');
+          if (!headerSection || !header?.hasAttribute('transparent')) return;
+
+          const hasImmediateSection = headerSection.nextElementSibling?.classList.contains('shopify-section');
+          if (!hasImmediateSection) {
+            document.body.style.setProperty('--transparent-header-offset-boolean', '1');
+          }
+        })();
+      </script>
+
+      <main
+        id="MainContent"
+        class="content-for-layout"
+        role="main"
+        data-page-transition-enabled="{{ settings.page_transition_enabled }}"
+        data-product-transition="{{ settings.transition_to_main_product }}"
+        data-template="{{ template }}"
+      >
+        {{ content_for_layout }}
+      </main>
+
+      <footer>
+        {% sections 'footer-group' %}
+      </footer>
+    </div>
+
+    {% render 'cart-drawer', render_wrapper: true %}
+    {% render 'theme-drawer' %}
+
+    {% render 'search-modal' %}
+
+    {% if settings.quick_add or settings.mobile_quick_add %}
+      {% render 'quick-add-modal' %}
+    {% endif %}
+    {% render 'malinvo-whatsapp' %}
+  </body>
+</html>

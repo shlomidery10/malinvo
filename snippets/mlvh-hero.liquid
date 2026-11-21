@@ -1,0 +1,39 @@
+{%- doc -%}
+  MALINVO home hero: category tag, headline, one CTA with the price, trust line, one product photo (the LCP element).
+  @param {string} buy_url - Product page bundle picker URL
+  @param {string} from_price - Formatted "from" price, e.g. ₪249.90
+  @param {image} [img_m] - Mobile photo (up to 900px)
+  @param {image} [img_d] - Desktop photo
+  @param {string} [fit] - contain (default) | cover
+  @param {boolean} [blend] - Multiply the photo onto the cream background (for photos on a white backdrop)
+  @example
+  {% render 'mlvh-hero', buy_url: buy_url, from_price: from_price, img_m: section.settings.hero_image_m %}
+{%- enddoc -%}
+{%- assign him = img_m | default: img_d | default: images['malinvo_oval_whiteset_02.webp'] -%}
+{%- assign hid = img_d | default: img_m | default: images['malinvo_oval_whiteset_02.webp'] -%}
+{%- if him -%}
+<!--mlv-preload-->
+{%- if hid != him -%}<link rel="preload" as="image" fetchpriority="high" media="(min-width:901px)" imagesrcset="{{ hid | image_url: width: 900 }} 900w, {{ hid | image_url: width: 1400 }} 1400w" imagesizes="50vw">{%- endif -%}
+<link rel="preload" as="image" fetchpriority="high"{% if hid != him %} media="(max-width:900.98px)"{% endif %} imagesrcset="{{ him | image_url: width: 360 }} 360w, {{ him | image_url: width: 480 }} 480w, {{ him | image_url: width: 640 }} 640w" imagesizes="(min-width:901px) 50vw, 100vw">
+<!--mlv-preload-->
+{%- endif -%}
+<section class="hero" id="mlvh-hero" aria-labelledby="mlvh-h1">
+  <div class="hero-in">
+    <div class="hero-t">
+      <p class="htag">שלב 0 · MALINVO</p>
+      <h1 id="mlvh-h1">שלב 0 של היום שלך מתחיל במקלחת.</h1>
+      <p class="hsub">זרם מלא וצפוף, פילטר פחם פעיל בארבע שכבות, והתקנה בלי כלים. מחליפים פילטר, הראש נשאר.</p>
+      <a href="{{ buy_url }}" class="btn" data-cta>לבחירת חבילה <span aria-hidden="true">·</span> החל מ-<bdi>{{ from_price }}</bdi></a>
+      <p class="htrust">משלוח חינם לכל הארץ · 30 יום להחזרה · עם מעקב</p>
+      <a href="#mlvh-how" class="tlink">איך זה עובד</a>
+    </div>
+    {%- if him -%}
+      <div class="hero-m{% if fit == 'cover' %} is-cover{% endif %}{% if blend %} is-blend{% endif %}">
+        <picture>
+          {%- if hid != him -%}<source media="(min-width:901px)" srcset="{{ hid | image_url: width: 900 }} 900w, {{ hid | image_url: width: 1400 }} 1400w" sizes="50vw" width="{{ hid.width }}" height="{{ hid.height }}">{%- endif -%}
+          <img src="{{ him | image_url: width: 640 }}" srcset="{{ him | image_url: width: 360 }} 360w, {{ him | image_url: width: 480 }} 480w, {{ him | image_url: width: 640 }} 640w" sizes="(min-width:901px) 50vw, 100vw" width="{{ him.width }}" height="{{ him.height }}" loading="eager" fetchpriority="high" decoding="async" alt="ראש מקלחת אובאלי MALINVO עם פילטר, בחדר רחצה">
+        </picture>
+      </div>
+    {%- endif -%}
+  </div>
+</section>

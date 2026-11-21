@@ -1,0 +1,22 @@
+{%- doc -%}
+  MALINVO home FAQ: five native details elements, closed on load.
+  @param {string} [n1] - Bundle 1 name, as in the picker
+  @param {string} [n2] - Bundle 2 name
+  @param {string} [n3] - Bundle 3 short name
+  @param {boolean} [show_all] - Show the "all questions" link (off until /pages/faq is updated)
+  @param {boolean} [refill] - Add the "filters can be ordered separately" sentence (on once the refill block is live)
+  @example
+  {% render 'mlvh-faq', n1: 'סט לחדר הרחצה', n2: 'סט + 5 פילטרים', n3: '2 סטים + 5 פילטרים' %}
+{%- enddoc -%}
+<section class="cream sec" id="mlvh-faq">
+  <div class="n">
+    <h2>שאלות נפוצות</h2>
+    <div class="faq">
+      <details><summary>מתאים לדירה שכורה?</summary><div class="ans">כן. הראש מתחבר לצינור המקלחת בהברגה, בלי קידוחים ובלי שינוי בצנרת. כשעוברים דירה, מפרקים ולוקחים אותו איתך.</div></details>
+      <details><summary>צריך אינסטלטור?</summary><div class="ans">לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ובלי כלים.</div></details>
+      <details><summary>זה לא יחליש לי את הלחץ?</summary><div class="ans">הראש לא מגדיל ולא מחליש את הלחץ שבצנרת. לוח הזרבוביות עם חורים זעירים יוצר זרם צפוף, שלרוב מרגיש מלא גם כשהלחץ בבית צנוע.</div></details>
+      <details><summary>מה אם לא מתאים לי? אפשר להחזיר?</summary><div class="ans"><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> המוצר במצב תקין ובאריזה מקורית, ומשלוח ההחזרה על חשבון הלקוח. <a href="/policies/refund-policy">מדיניות ההחזרות המלאה</a>.</div></details>
+    </div>
+    {%- if show_all -%}<a class="tlink faq-all" href="/pages/faq">לכל השאלות</a>{%- endif -%}
+  </div>
+</section>

@@ -1,0 +1,84 @@
+{%- doc -%}
+  MALINVO image loader for the home (#mlvh) and product (#mlv) pages. Images stay plain <img loading="lazy"> tags,
+  so the page works without this script. With it:
+  1. After the hero photo has arrived, the next two photos below the screen are fetched, then (after
+     DOMContentLoaded) the rest, top to bottom: one at a time while the page is loading, two at a time after.
+  2. A photo that gets within 1400px of the screen is fetched at once (fast scrolling, anchor links).
+  3. Product gallery: slide 2 is fetched once slide 1 and the page scripts are in, slide 3 after the page has
+     loaded; the first touch on the gallery fetches the rest.
+  4. A photo below the first screen that still arrives while it is on screen fades in over the cream placeholder.
+  5. The payment icons that the bundle app adds are requested at the size they are shown (same files, same CDN).
+  Steps 1 to 3 are skipped when the visitor asked the browser to save data.
+  @example
+  {% render 'mlv-img-loader' %}
+{%- enddoc -%}
+<style>
+img.mlv-pend{opacity:0}
+img.mlv-fade{transition:opacity 180ms ease}
+@media(prefers-reduced-motion:reduce){img.mlv-fade{transition:none}}
+</style>
+<script>
+(function(){
+  var root=document.getElementById('mlvh')||document.getElementById('mlv');
+  if(!root||root.hasAttribute('data-il'))return;root.setAttribute('data-il','');
+  var arr=function(l){return [].slice.call(l)};
+  var ok=function(i){return i.complete&&i.naturalWidth>0};
+  var shown=function(i){return i.getClientRects().length>0};
+  var above=function(i){return i.getBoundingClientRect().top<window.innerHeight+40};
+  var eager=function(i){if(i.loading==='lazy')i.loading='eager'};
+  var settle=function(i,ms,cb){if(ok(i))return cb();var d=false,t,f=function(){if(d)return;d=true;clearTimeout(t);cb()};t=setTimeout(f,ms);i.addEventListener('load',f);i.addEventListener('error',f)};
+  var track=root.querySelector('[data-track]');
+  var slides=track?arr(track.querySelectorAll('img')):[];
+  var queue=arr(root.querySelectorAll('img[loading="lazy"]')).filter(function(i){return !i.closest('[data-track],.thumbs')});
+  var save=!!(navigator.connection&&navigator.connection.saveData);
+
+  /* 4. soft fade for a photo that arrives late (never for the first screen) */
+  queue.filter(function(i){return !above(i)}).concat(slides.slice(1)).forEach(function(i){
+    if(ok(i))return;
+    i.classList.add('mlv-pend','mlv-fade');
+    var f=function(){i.classList.remove('mlv-pend')};
+    i.addEventListener('load',f);i.addEventListener('error',f);
+  });
+
+  /* 5. bundle app payment icons, at display size */
+  var buy=document.getElementById('mlv-buy');
+  if(buy&&'MutationObserver' in window){
+    var fix=function(){arr(buy.querySelectorAll('img.bu-payment-icons__image')).forEach(function(i){var s=i.getAttribute('src')||'';if(s.indexOf('/extensions/')>0&&s.indexOf('width=')<0)i.setAttribute('src',s+(s.indexOf('?')<0?'?':'&')+'width=120')})};
+    fix();new MutationObserver(fix).observe(buy,{childList:true,subtree:true});
+  }
+  if(save)return;
+
+  /* 1. top-to-bottom queue; photos on the first screen are already being fetched by the browser */
+  var run=0,pos=0,budget=0,lanes=1;
+  var pump=function(){
+    while(run<lanes&&budget>0&&pos<queue.length){
+      var i=queue[pos++];
+      if(ok(i)||!shown(i)||above(i))continue;
+      budget--;run++;eager(i);settle(i,6000,function(){run--;pump()});
+    }
+  };
+  var hero=slides[0]||root.querySelector('.hero img');
+  var first=function(){if(budget<2)budget=2;pump()};
+  if(hero)settle(hero,12000,first);else first();
+  var rest=function(){var go=function(){setTimeout(function(){budget=1e3;pump();if(slides[1])eager(slides[1])},300)};if(hero)settle(hero,12000,go);else go()};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',rest);else rest();
+  var loaded=function(){lanes=2;pump();setTimeout(function(){if(slides[2])eager(slides[2])},1500)};
+  if(document.readyState==='complete')loaded();else window.addEventListener('load',loaded);
+
+  /* 2. anything that gets close is fetched at once */
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){eager(e.target);io.unobserve(e.target)}})},{rootMargin:'1400px 0px'});
+    queue.forEach(function(i){if(!ok(i))io.observe(i)});
+  }
+
+  /* 3. gallery: the first touch fetches the remaining slides, in order */
+  if(track&&slides.length>2){
+    var all=false,k=1;
+    var next=function(){while(k<slides.length&&ok(slides[k]))k++;if(k>=slides.length)return;var i=slides[k++];eager(i);settle(i,6000,next)};
+    var loadAll=function(){if(all)return;all=true;next();next()};
+    ['pointerdown','touchstart','keydown'].forEach(function(ev){track.addEventListener(ev,loadAll,{passive:true})});
+    var th=root.querySelector('.thumbs');
+    if(th){th.addEventListener('pointerenter',loadAll);th.addEventListener('click',loadAll)}
+  }
+})();
+</script>

@@ -1,0 +1,46 @@
+{% doc %}
+  MALINVO buy-box accordions 2 and 3: shipping + what's in the set.
+  Reuses the .mlv-gtee styles from snippets/malinvo-guarantee.liquid, so render it after that snippet.
+  @example
+  {% render 'mlv-buy-more' %}
+{% enddoc %}
+<section class="mlv-gtee" aria-label="משלוח ומעקב">
+  <details class="mlv-gtee__box">
+    <summary class="mlv-gtee__sum">
+      <span class="mlv-gtee__num mlv-gtee__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"/></svg></span>
+      <span>
+        <span class="mlv-gtee__t">משלוח ומעקב</span>
+        <span class="mlv-gtee__s">חינם עד הבית, עם מספר מעקב במייל</span>
+      </span>
+      <span class="mlv-gtee__chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="mlv-gtee__body">
+      <dl class="mlv-gtee__rows">
+        <div class="mlv-gtee__row"><dt>הזמנה</dt><dd>אישור נשלח למייל</dd></div>
+        <div class="mlv-gtee__row"><dt>הכנה</dt><dd>אורזים ושולחים</dd></div>
+        <div class="mlv-gtee__row"><dt>בדרך</dt><dd>מספר מעקב במייל</dd></div>
+        <div class="mlv-gtee__row"><dt>אצלכם</dt><dd>מגיע עד הדלת</dd></div>
+      </dl>
+    </div>
+  </details>
+</section>
+<section class="mlv-gtee" aria-label="מה בסט">
+  <details class="mlv-gtee__box">
+    <summary class="mlv-gtee__sum">
+      <span class="mlv-gtee__num mlv-gtee__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M4 12h16M12 8v12M8.5 8a2.5 2.5 0 1 1 3.5-2.3A2.5 2.5 0 1 1 15.5 8"/></svg></span>
+      <span>
+        <span class="mlv-gtee__t">מה בסט</span>
+        <span class="mlv-gtee__s">ראש מקלחת, צינור, מתלה קיר ופילטר</span>
+      </span>
+      <span class="mlv-gtee__chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="mlv-gtee__body">
+      <dl class="mlv-gtee__list">
+        <div><dt>ראש מקלחת</dt><dd>ראש אובאלי בגימור מט. הפילטר מוברג בתוך הידית ומסנן את המים לפני היציאה.</dd></div>
+        <div><dt>צינור מתכת גמיש</dt><dd>מחבר את הראש לברז ונותן חופש תנועה במקלחת.</dd></div>
+        <div><dt>מתלה קיר</dt><dd>הראש מחכה במקום למקלחת הבאה.</dd></div>
+        <div><dt>פילטר</dt><dd>פילטר אחד כלול בסט.</dd></div>
+      </dl>
+    </div>
+  </details>
+</section>

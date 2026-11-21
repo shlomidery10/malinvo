@@ -1,0 +1,28 @@
+{% doc %}
+  MALINVO section 3: four benefits next to a clean product photo. Styles live in sections/malinvo-product.liquid.
+  @param {image} [img] - Clean product photo, 1:1
+  @example
+  {% render 'mlv-benefits', img: section.settings.benefits_image %}
+{% enddoc %}
+<section class="mist sec" id="mlv-benefits">
+  <div class="w split">
+    <div>
+      <h2>כל מה שחשוב, בראש אחד</h2>
+      <ul class="bens" data-stagger>
+        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="17" y="6" width="14" height="36" rx="4"/><path d="M17 13h14M17 35h14M21 19h6M21 24h6M21 29h6"/></svg></i><div><b>פילטר מתחלף</b><span>מחליפים רק את הפילטר. הראש נשאר אתכם.</span></div></li>
+        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M4 24c5-8 12-12 20-12s15 4 20 12c-5 8-12 12-20 12S9 32 4 24z"/><circle cx="24" cy="24" r="6"/></svg></i><div><b>פילטר פחם פעיל</b><span>4 שכבות סינון: מפחית כלור, חלקיקים, חול וחלודה.</span></div></li>
+        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M20 17v14M28 17v14"/></svg></i><div><b>התקנה בדקה</b><span>מתברג לצינור המקלחת הרגיל. מבריגים, מחברים, בלי כלים.</span></div></li>
+        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7s-9 12-9 19a9 9 0 0 0 18 0c0-7-9-19-9-19z"/><path d="M9 28s-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8zM39 28s-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8z"/></svg></i><div><b>זרם צפוף וחזק</b><span>חורים זעירים יוצרים זרם מלא ומורגש בכל מקלחת.</span></div></li>
+      </ul>
+      <p class="bens-f">עיצוב אובאלי נקי בגימור מט, שנראה טוב בכל חדר רחצה.</p>
+    </div>
+    <figure class="media">
+      {%- if img -%}
+        <img src="{{ img | image_url: width: 900 }}" srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 720 }} 720w, {{ img | image_url: width: 840 }} 840w, {{ img | image_url: width: 1200 }} 1200w" sizes="(min-width:901px) 45vw, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ img.width }}" height="{{ img.height }}" loading="lazy" decoding="async" alt="{{ img.alt | default: 'ראש המקלחת MALINVO' | escape }}">
+      {%- else -%}
+        {%- assign ph = images['malinvo_black_06_grip_scale.png'] -%}
+        <img src="{{ ph | image_url: width: 900 }}" srcset="{{ ph | image_url: width: 600 }} 600w, {{ ph | image_url: width: 720 }} 720w, {{ ph | image_url: width: 840 }} 840w, {{ ph | image_url: width: 1200 }} 1200w" sizes="(min-width:901px) 45vw, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ ph.width }}" height="{{ ph.height }}" loading="lazy" decoding="async" alt="ראש מקלחת MALINVO Nova השחור עם פילטר פחם פעיל">
+      {%- endif -%}
+    </figure>
+  </div>
+</section>

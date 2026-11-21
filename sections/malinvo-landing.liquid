@@ -1,0 +1,343 @@
+{%- comment -%}
+  MALINVO landing (tasteskill deal): kind product · palette client brand (white ground, ink #1C1C1E,
+  accent #CC4A36 darkened for 4.5:1) · type Rubik (Hebrew) · rhythm brand-band (the close) ·
+  buttons solid · close close-type · moment word-highlight (the statement section).
+  Sections: hero (product whole) · statement · filter (split) · box (trio + spec rows) · faq · close.
+{%- endcomment -%}
+
+{%- liquid
+  assign cta_label = section.settings.cta_label
+  assign cta_link = section.settings.cta_link | default: '/products/mapal'
+-%}
+
+<div class="ml{% unless section.settings.show_hero %} ml--no-hero{% endunless %}" id="ml-{{ section.id }}" dir="rtl">
+  {%- if section.settings.show_hero -%}
+  <section class="ml-sec ml-hero" aria-labelledby="ml-h1-{{ section.id }}">
+    <div class="ml-wrap ml-hero__grid">
+      <div class="ml-hero__copy" data-enter>
+        <h1 id="ml-h1-{{ section.id }}" class="ml-h1">{{ section.settings.hero_title }}</h1>
+        <div class="ml-lead">{{ section.settings.hero_text }}</div>
+        <p class="ml-price">{{ section.settings.hero_price }}</p>
+        <div class="ml-actions">
+          <a class="ml-btn" href="{{ cta_link }}">{{ cta_label }}</a>
+        </div>
+        <ul class="ml-trust" role="list">
+          <li>{% render 'malinvo-icon', name: 'truck' %}<span>{{ section.settings.trust_1 }}</span></li>
+          <li>{% render 'malinvo-icon', name: 'return' %}<span>{{ section.settings.trust_2 }}</span></li>
+          <li>{% render 'malinvo-icon', name: 'lock' %}<span>{{ section.settings.trust_3 }}</span></li>
+        </ul>
+      </div>
+      <a class="ml-hero__media ml-frame" href="{{ cta_link }}" data-enter tabindex="-1" aria-hidden="true">
+        {%- if section.settings.hero_image -%}
+          {{ section.settings.hero_image | image_url: width: 1400 | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_image.alt }}
+        {%- endif -%}
+      </a>
+    </div>
+  </section>
+  {%- endif -%}
+
+  <section class="ml-sec ml-statement" aria-label="{{ section.settings.statement_label | escape }}">
+    <div class="ml-wrap">
+      <p class="ml-statement__text" data-word-highlight>{{ section.settings.statement }}</p>
+    </div>
+  </section>
+
+  <section class="ml-sec ml-filter" aria-labelledby="ml-filter-{{ section.id }}">
+    <div class="ml-wrap ml-split">
+      <div class="ml-split__copy">
+        <h2 id="ml-filter-{{ section.id }}" class="ml-h2">{{ section.settings.filter_title }}</h2>
+        <div class="ml-rte">{{ section.settings.filter_text }}</div>
+      </div>
+      <div class="ml-frame ml-split__media">
+        {%- if section.settings.filter_image -%}
+          {{ section.settings.filter_image | image_url: width: 1400 | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: section.settings.filter_image.alt }}
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="ml-sec ml-box" aria-labelledby="ml-box-{{ section.id }}">
+    <div class="ml-wrap">
+      <h2 id="ml-box-{{ section.id }}" class="ml-h2">{{ section.settings.box_title }}</h2>
+      <p class="ml-box__items">{{ section.settings.box_items }}</p>
+      <div class="ml-trio">
+        {%- for img in (1..3) -%}
+          {%- assign key = 'box_image_' | append: img -%}
+          {%- assign pic = section.settings[key] -%}
+          <div class="ml-frame ml-trio__item">
+            {%- if pic -%}
+              {{ pic | image_url: width: 900 | image_tag: widths: '300, 600, 900', sizes: '(min-width: 990px) 33vw, 33vw', loading: 'lazy', alt: pic.alt }}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <dl class="ml-specs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'spec' -%}
+            <div class="ml-specs__row" {{ block.shopify_attributes }}>
+              <dt>{{ block.settings.label }}</dt>
+              <dd>{{ block.settings.value }}</dd>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </dl>
+    </div>
+  </section>
+
+  <section class="ml-sec ml-faq" aria-labelledby="ml-faq-{{ section.id }}">
+    <div class="ml-wrap ml-faq__grid">
+      <h2 id="ml-faq-{{ section.id }}" class="ml-h2">{{ section.settings.faq_title }}</h2>
+      <div class="ml-faq__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <details class="ml-q" {{ block.shopify_attributes }}>
+              <summary><span>{{ block.settings.question }}</span>{% render 'malinvo-icon', name: 'plus' %}</summary>
+              <div class="ml-q__a">{{ block.settings.answer }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="ml-sec ml-close" aria-labelledby="ml-close-{{ section.id }}">
+    <div class="ml-wrap">
+      <h2 id="ml-close-{{ section.id }}" class="ml-close__name">{{ section.settings.close_title }}</h2>
+      <div class="ml-close__row">
+        <div class="ml-close__text">{{ section.settings.close_text }}</div>
+        <a class="ml-btn ml-btn--light" href="{{ cta_link }}">{{ cta_label }}</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  (() => {
+    const root = document.getElementById('ml-{{ section.id }}');
+    if (!root) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.classList.add('ml-js');
+    requestAnimationFrame(() => root.classList.add('is-entered'));
+
+    const text = root.querySelector('[data-word-highlight]');
+    if (!text || reduced) return;
+    const walk = (node, inStrong) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.append(part); return; }
+            const s = document.createElement('span');
+            s.className = 'ml-w' + (inStrong ? ' ml-w--strong' : '');
+            s.textContent = part;
+            frag.append(s);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1) {
+          walk(child, inStrong || child.tagName === 'STRONG');
+        }
+      });
+    };
+    walk(text, false);
+    const words = [...text.querySelectorAll('.ml-w')];
+    text.classList.add('is-split');
+    let last = -1, ticking = false;
+    const update = () => {
+      ticking = false;
+      const r = text.getBoundingClientRect();
+      const vh = innerHeight, start = vh * 0.85, end = vh * 0.45;
+      const t = Math.min(1, Math.max(0, (start - r.top) / Math.max(1, (start - end) + r.height)));
+      const k = Math.round(t * words.length);
+      if (k === last) return;
+      last = k;
+      words.forEach((w, i) => w.classList.toggle('is-on', i < k));
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+    addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+</script>
+
+{% stylesheet %}
+  .ml {
+    --ml-bg: #ffffff;
+    --ml-surface: #f4f2ef;
+    --ml-ink: #1c1c1e;
+    --ml-muted: #5a5a5f;
+    --ml-line: #e4e1dc;
+    --ml-accent: #cc4a36;
+    --ml-radius: 14px;
+    --ml-gutter: 24px;
+    --ml-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--ml-bg);
+    color: var(--ml-ink);
+    font-family: var(--font-body--family);
+  }
+  .ml ::selection { background: var(--ml-accent); color: #fff; }
+  .ml a:focus-visible, .ml summary:focus-visible { outline: 2px solid var(--ml-accent); outline-offset: 3px; border-radius: 6px; }
+
+  .ml { --ml-gutter: 40px; }
+  .ml-wrap { width: 100%; max-width: calc(90rem + var(--ml-gutter) * 2); margin-inline: auto; padding-inline: var(--ml-gutter); box-sizing: border-box; }
+  .ml-sec { padding-block: 72px; }
+  @media (min-width: 990px) {
+    .ml-sec { min-height: min(100svh, 900px); display: flex; align-items: center; padding-block: 96px; box-sizing: border-box; }
+    .ml-sec > .ml-wrap { flex: 1; }
+  }
+  @media (max-width: 749px) { .ml { --ml-gutter: 16px; } .ml-sec { padding-block: 64px; } }
+
+  .ml-h1, .ml-h2, .ml-close__name { font-family: var(--font-heading--family); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; margin: 0; color: inherit; }
+  .ml-h1 { font-size: clamp(2.5rem, 2rem + 3vw, 4.5rem); line-height: 1.04; }
+  .ml-h2 { font-size: clamp(2rem, 1.6rem + 2vw, 3.25rem); line-height: 1.08; }
+  .ml-lead, .ml-rte, .ml-q__a { font-size: 1.125rem; line-height: 1.6; color: var(--ml-muted); max-width: 34em; }
+  .ml-lead p, .ml-rte p, .ml-q__a p { margin: 0 0 0.75em; }
+  .ml-lead strong { color: var(--ml-ink); }
+
+  .ml-btn {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px;
+    border-radius: var(--ml-radius); background: var(--ml-accent); color: #fff; font-weight: 500; font-size: 1.0625rem;
+    text-decoration: none; transition: transform 220ms var(--ml-ease), box-shadow 220ms var(--ml-ease), background-color 220ms;
+    box-shadow: 0 1px 2px rgb(28 28 30 / 0.12);
+  }
+  .ml-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -10px rgb(204 74 54 / 0.6); }
+  .ml-btn:active { transform: translateY(0) scale(0.98); transition-duration: 80ms; }
+  .ml-btn--light { background: #fff; color: var(--ml-ink); }
+  .ml-btn--light:hover { box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.35); }
+
+  .ml-frame { display: block; overflow: hidden; border-radius: var(--ml-radius); background: var(--ml-surface); }
+  .ml-frame img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ml-ease); }
+  .ml-frame:hover img { transform: scale(1.03); }
+
+  /* hero */
+  .ml-hero { padding-block-start: 32px; }
+  .ml-hero__grid { display: grid; gap: 40px; align-items: center; }
+  .ml-hero__copy { display: grid; gap: 20px; justify-items: start; }
+  .ml-price { margin: 0; font-size: 1.25rem; font-weight: 500; }
+  .ml-price strong { font-weight: 700; }
+  .ml-hero__media { aspect-ratio: 4 / 5; }
+  .ml-trust { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; font-size: 0.9375rem; color: var(--ml-muted); }
+  .ml-trust li { display: flex; align-items: center; gap: 10px; }
+  .ml-trust svg { flex: none; width: 20px; height: 20px; color: var(--ml-ink); }
+  @media (min-width: 990px) {
+    .ml-hero__grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+    .ml-hero__media { height: min(calc(100svh - 240px), 720px); width: auto; max-width: 100%; justify-self: end; }
+  }
+  @media (max-width: 989px) { .ml-btn { width: 100%; } .ml-actions { width: 100%; } }
+
+  .ml-js [data-enter] { opacity: 0; transform: translateY(16px); }
+  .ml-js.is-entered [data-enter] { opacity: 1; transform: none; transition: opacity 900ms var(--ml-ease), transform 900ms var(--ml-ease); }
+  .ml-js.is-entered [data-enter] + [data-enter] { transition-delay: 120ms; }
+
+  /* statement (word-highlight) */
+  .ml-statement { background: var(--ml-surface); }
+  .ml-statement__text { margin: 0; max-width: 18em; font-family: var(--font-heading--family); font-weight: 700; font-size: clamp(2rem, 1.2rem + 3.6vw, 4.5rem); line-height: 1.22; letter-spacing: -0.015em; text-wrap: pretty; }
+  .ml-statement__text strong { font-weight: inherit; color: var(--ml-accent); }
+  .ml-statement__text.is-split .ml-w { color: color-mix(in oklab, var(--ml-ink) 45%, var(--ml-surface)); transition: color 180ms ease; }
+  .ml-statement__text.is-split .ml-w.is-on { color: var(--ml-ink); }
+  .ml-statement__text.is-split .ml-w--strong.is-on { color: var(--ml-accent); }
+
+  /* split */
+  .ml-split { display: grid; gap: 40px; align-items: center; }
+  .ml-split__copy { display: grid; gap: 20px; }
+  .ml-split__media { aspect-ratio: 4 / 3; }
+  .ml-split__media img { transform: scale(1.14); transform-origin: 20% 85%; }
+  .ml-split__media:hover img { transform: scale(1.17); }
+  @media (min-width: 990px) { .ml-split { grid-template-columns: 5fr 7fr; gap: 64px; } }
+
+  /* box */
+  .ml-box .ml-wrap { display: grid; gap: 20px; }
+  .ml-box__items { margin: 0; font-size: 1.125rem; color: var(--ml-muted); }
+  .ml-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-block-start: 12px; }
+  .ml-trio__item { aspect-ratio: 1; background: #fff; box-shadow: inset 0 0 0 1px var(--ml-line); }
+  .ml-specs { margin: 32px 0 0; display: grid; border-top: 1px solid var(--ml-line); }
+  .ml-specs__row { display: grid; grid-template-columns: minmax(120px, 1fr) 2fr; gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--ml-line); }
+  .ml-specs dt { font-weight: 500; }
+  .ml-specs dd { margin: 0; color: var(--ml-muted); }
+  @media (min-width: 990px) { .ml-specs { grid-template-columns: 1fr 1fr; column-gap: 64px; } }
+  @media (max-width: 749px) { .ml-trio { gap: 8px; } }
+
+  /* faq */
+  .ml-faq { background: var(--ml-surface); }
+  .ml-faq__grid { display: grid; gap: 32px; }
+  @media (min-width: 990px) { .ml-faq__grid { grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; } }
+  .ml-q { border-bottom: 1px solid var(--ml-line); }
+  .ml-q:first-child { border-top: 1px solid var(--ml-line); }
+  .ml-q summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; cursor: pointer; list-style: none; font-size: 1.125rem; font-weight: 500; }
+  .ml-q summary::-webkit-details-marker { display: none; }
+  .ml-q summary svg { flex: none; width: 20px; height: 20px; transition: transform 300ms var(--ml-ease); }
+  .ml-q[open] summary svg { transform: rotate(45deg); }
+  .ml-q__a { padding-block-end: 20px; font-size: 1.0625rem; }
+
+  /* close: brand band, name set large */
+  .ml-close { background: var(--ml-accent); color: #fff; }
+  .ml-close .ml-wrap { display: grid; gap: 40px; }
+  .ml-close__name { font-size: clamp(4rem, 2rem + 10vw, 11rem); line-height: 0.9; letter-spacing: -0.04em; }
+  .ml-close__row { display: grid; gap: 24px; align-items: end; }
+  .ml-close__text { font-size: 1.25rem; line-height: 1.55; max-width: 32em; }
+  .ml-close__text p { margin: 0 0 0.5em; }
+  @media (min-width: 990px) { .ml-close__row { grid-template-columns: 1fr auto; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ml *, .ml *::before, .ml *::after { transition: none !important; animation: none !important; }
+    .ml-js [data-enter] { opacity: 1; transform: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MALINVO landing",
+  "tag": "div",
+  "class": "malinvo-landing-section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "checkbox", "id": "show_hero", "label": "Show hero", "default": true },
+    { "type": "text", "id": "hero_title", "label": "Headline", "default": "ראש מקלחת עם מסנן בידית" },
+    { "type": "richtext", "id": "hero_text", "label": "Text", "default": "<p><strong>ראש מקלחת אובאלי עם פילטר פחם פעיל</strong>: זרם חזק ומלא, מים מסוננים, התקנה בדקה — בלי כלים ובלי אינסטלטור.</p>" },
+    { "type": "text", "id": "hero_price", "label": "Price line", "default": "סט מלא החל מ-₪249.90" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "להזמנת הסט" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "trust_1", "label": "Trust line 1", "default": "משלוח חינם עם מספר מעקב" },
+    { "type": "text", "id": "trust_2", "label": "Trust line 2", "default": "30 יום להחזיר, המשלוח חזרה עלינו" },
+    { "type": "text", "id": "trust_3", "label": "Trust line 3", "default": "תשלום מאובטח באשראי או ב-PayPal" },
+    { "type": "header", "content": "Statement" },
+    { "type": "text", "id": "statement_label", "label": "Statement name (screen readers)", "default": "המסנן" },
+    { "type": "inline_richtext", "id": "statement", "label": "Statement", "default": "המים בבית עוברים דרך צנרת עם שנים של חלודה ומשקעים. בראש האובאלי הם עוברים קודם דרך <strong>פילטר פחם פעיל בתוך הידית</strong>, ורק אז מגיעים אליכם." },
+    { "type": "header", "content": "Filter" },
+    { "type": "text", "id": "filter_title", "label": "Heading", "default": "המסנן יושב בתוך הידית" },
+    { "type": "richtext", "id": "filter_text", "label": "Text", "default": "<p>מסנן רב-שכבתי שנועד לעצור משקעים וחלודה מהצנרת. כשהוא מתלכלך, פותחים את הידית ומחליפים. מסנני החלפה נמכרים אצלנו.</p>" },
+    { "type": "image_picker", "id": "filter_image", "label": "Filter image" },
+    { "type": "header", "content": "In the box" },
+    { "type": "text", "id": "box_title", "label": "Heading", "default": "הכול בקופסה" },
+    { "type": "text", "id": "box_items", "label": "Items", "default": "ראש מקלחת אובאלי · פילטר פחם פעיל כלול" },
+    { "type": "image_picker", "id": "box_image_1", "label": "Box image 1" },
+    { "type": "image_picker", "id": "box_image_2", "label": "Box image 2" },
+    { "type": "image_picker", "id": "box_image_3", "label": "Box image 3" },
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_title", "label": "Heading", "default": "שאלות לפני שמזמינים" },
+    { "type": "header", "content": "Close" },
+    { "type": "text", "id": "close_title", "label": "Name set large", "default": "MALINVO" },
+    { "type": "richtext", "id": "close_text", "label": "Text", "default": "<p>30 יום להתקלח איתו בבית. אם הוא לא בשבילכם, כותבים לנו, אנחנו משלמים את המשלוח חזרה ומחזירים את כל הכסף.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "ראש" },
+        { "type": "text", "id": "value", "label": "Value", "default": "ראש אובאלי · פילטר 4 שכבות" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "כמה זמן לוקח המשלוח?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>המשלוח חינם ומגיע עד הבית, עם מספר מעקב במייל.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "MALINVO landing" }]
+}
+{% endschema %}

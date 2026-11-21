@@ -1,0 +1,84 @@
+{%- comment -%}
+  MALINVO home (decisions_home.md v2). Ten sections, each a snippet. One CTA wording, one target: the product page
+  bundle picker. No reveal animation: everything is visible without JS. Images come from the section settings,
+  and a slot without an image is not rendered.
+{%- endcomment -%}
+{%- comment -%} Handle-independent product lookup: 1) section setting, 2) product id via collections.all, 3) handle fallback. {%- endcomment -%}
+{%- assign p = section.settings.product -%}
+{%- if p == blank -%}
+  {%- for cp in collections.all.products -%}
+    {%- if cp.id == 10898707939493 -%}{%- assign p = cp -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if p == blank -%}{%- assign p = all_products['filter-shower-head-oval'] -%}{%- endif -%}
+{%- assign v_set = null -%}
+{%- for v in p.variants -%}
+  {%- if v.title contains 'סט מלא' -%}{%- assign v_set = v -%}{%- endif -%}
+{%- endfor -%}
+{%- assign fromv = v_set | default: p.selected_or_first_available_variant -%}
+{%- capture from_price -%}₪{{ fromv.price | money_without_currency | remove: '.00' }}{%- endcapture -%}
+{%- assign purl = p.url | default: '/products/filter-shower-head-oval' -%}
+{%- assign buy_url = purl | append: '#bundle-up' -%}
+{%- assign s = section.settings -%}
+
+{% render 'mlv-sections-css' %}
+
+<div id="mlvh">
+  {% render 'mlvh-hero', buy_url: buy_url, from_price: from_price, img_m: s.hero_image_m, img_d: s.hero_image_d, fit: s.hero_fit, blend: s.hero_blend %}
+  {% render 'mlvh-strip' %}
+  {% render 'mlv-pipe', img_m: s.pipe_image_m, img_d: s.pipe_image_d, chamber_img: s.chamber_image, real_img: s.used_filter_image, real_cap: s.used_filter_caption, real_title: 'פילטר חדש ופילטר אחרי שימוש', section_id: 'mlvh-how', buy_url: buy_url, hide_points_mobile: true, cta_button: true %}
+  {% render 'mlvh-close', img1: s.tile_stop_image, img2: s.tile_ring_image %}
+  {% render 'mlvh-offer', buy_url: buy_url, from_price: from_price, img: s.set_image, n1: s.bundle1_name, n2: s.bundle2_name, p2: s.bundle2_price, t2: s.bundle2_tag, n3: s.bundle3_name, p3: s.bundle3_price %}
+  {% render 'mlv-steps', img1: s.step1_image, img2: s.step2_image, img3: s.step3_image, section_id: 'mlvh-steps', no_placeholder: true %}
+  {% render 'mlv-compare', section_id: 'mlvh-compare' %}
+  {% render 'mlvh-trust' %}
+  {% render 'mlvh-faq', n1: s.bundle1_name, n2: s.bundle2_name, n3: s.bundle3_short, show_all: s.faq_show_all, refill: s.faq_refill_sentence %}
+  {% render 'mlvh-final', buy_url: buy_url, from_price: from_price, img_m: s.final_image_m, img_d: s.final_image_d %}
+</div>
+{% render 'mlvh-sticky', buy_url: buy_url, from_price: from_price %}
+{% render 'mlv-img-loader' %}
+
+{% schema %}
+{
+  "name": "MALINVO home",
+  "tag": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product (optional - falls back to product id 10898707939493)" },
+    { "type": "header", "content": "Hero" },
+    { "type": "image_picker", "id": "hero_image_m", "label": "Hero photo, mobile (H1, 1080x1320)" },
+    { "type": "image_picker", "id": "hero_image_d", "label": "Hero photo, desktop (H1, 1400x1500)" },
+    { "type": "select", "id": "hero_fit", "label": "Hero photo fit", "options": [{ "value": "contain", "label": "Contain (whole photo)" }, { "value": "cover", "label": "Cover (fills the area, crops)" }], "default": "contain" },
+    { "type": "checkbox", "id": "hero_blend", "label": "Blend photo into cream background (white-backdrop photos)", "default": false },
+    { "type": "header", "content": "What reaches you from the pipes" },
+    { "type": "image_picker", "id": "pipe_image_m", "label": "Infographic, mobile (P1)" },
+    { "type": "image_picker", "id": "pipe_image_d", "label": "Infographic, desktop (P1)" },
+    { "type": "image_picker", "id": "chamber_image", "label": "Real photo of the clear chamber (T1a, 1200x800)" },
+    { "type": "image_picker", "id": "used_filter_image", "label": "Real photo: new filter next to a used one (U1)", "info": "The slot is hidden while empty." },
+    { "type": "text", "id": "used_filter_caption", "label": "Used filter photo caption", "info": "How long and where the filter was used, as it really was." },
+    { "type": "header", "content": "Close-ups" },
+    { "type": "image_picker", "id": "tile_stop_image", "label": "Stop button (T1b, 800x800)" },
+    { "type": "image_picker", "id": "tile_ring_image", "label": "Copper ring (T1c, 800x800)" },
+    { "type": "header", "content": "The set and the bundles" },
+    { "type": "image_picker", "id": "set_image", "label": "The set (B1, 1200x900)" },
+    { "type": "paragraph", "content": "Names, prices and tag must match the bundle picker on the product page exactly. Bundle 1 price comes from the product." },
+    { "type": "text", "id": "bundle1_name", "label": "Bundle 1 name", "default": "ראש + פילטר אחד" },
+    { "type": "text", "id": "bundle2_name", "label": "Bundle 2 name", "default": "ראש + 3 פילטרים" },
+    { "type": "text", "id": "bundle2_price", "label": "Bundle 2 price", "default": "₪349.90" },
+    { "type": "text", "id": "bundle2_tag", "label": "Bundle 2 tag", "default": "הכי משתלם" },
+    { "type": "text", "id": "bundle3_name", "label": "Bundle 3 name", "default": "ראש + 5 פילטרים" },
+    { "type": "text", "id": "bundle3_short", "label": "Bundle 3 short name (FAQ)", "default": "ראש + 5 פילטרים" },
+    { "type": "text", "id": "bundle3_price", "label": "Bundle 3 price", "default": "₪429.90" },
+    { "type": "header", "content": "Three steps" },
+    { "type": "image_picker", "id": "step1_image", "label": "Step 1 (S1, 600x600)" },
+    { "type": "image_picker", "id": "step2_image", "label": "Step 2 (S1, 600x600)" },
+    { "type": "image_picker", "id": "step3_image", "label": "Step 3 (S1, 600x600)" },
+    { "type": "header", "content": "FAQ" },
+    { "type": "checkbox", "id": "faq_show_all", "label": "Show the link to /pages/faq", "info": "Turn on after the FAQ page content is updated.", "default": false },
+    { "type": "checkbox", "id": "faq_refill_sentence", "label": "Mention that filters can be ordered separately", "info": "Turn on once the refill block is live on the product page.", "default": false },
+    { "type": "header", "content": "Closing section" },
+    { "type": "image_picker", "id": "final_image_m", "label": "Closing photo, mobile (F1, 1080x840)" },
+    { "type": "image_picker", "id": "final_image_d", "label": "Closing photo, desktop (F1, 1920x800)" }
+  ],
+  "presets": [{ "name": "MALINVO home" }]
+}
+{% endschema %}

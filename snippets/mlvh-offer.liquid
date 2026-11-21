@@ -1,0 +1,43 @@
+{%- doc -%}
+  MALINVO home offer: the set photo, what is in the box, and the three bundles exactly as the product page picker
+  names them. The rows are display only. One button leads to the picker.
+  @param {string} buy_url - Product page bundle picker URL
+  @param {string} from_price - Formatted price of the first bundle
+  @param {image} [img] - Set photo, 4:3
+  @param {string} [n1] - Bundle 1 name
+  @param {string} [n2] - Bundle 2 name
+  @param {string} [p2] - Bundle 2 price
+  @param {string} [t2] - Bundle 2 tag
+  @param {string} [n3] - Bundle 3 name
+  @param {string} [p3] - Bundle 3 price
+  @example
+  {% render 'mlvh-offer', buy_url: buy_url, from_price: from_price, img: section.settings.set_image %}
+{%- enddoc -%}
+{%- assign img = img | default: images['malinvo_oval_whiteset_01.webp'] -%}
+<section class="offer cream sec" id="mlvh-offer">
+  <div class="w offer-g">
+    {%- if img -%}
+      <figure class="offer-m">
+        <img src="{{ img | image_url: width: 720 }}" srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 720 }} 720w, {{ img | image_url: width: 840 }} 840w, {{ img | image_url: width: 960 }} 960w, {{ img | image_url: width: 1200 }} 1200w" sizes="(min-width:901px) 45vw, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ img.width }}" height="{{ img.height }}" loading="lazy" decoding="async" alt="סט MALINVO: ראש מקלחת אובאלי עם פילטר פחם פעיל">
+      </figure>
+    {%- endif -%}
+    <div>
+      <span class="kick">הסט</span>
+      <h2>הכול בקופסה אחת</h2>
+      <p class="lead">סט שלם עם פילטר כלול, מוכן להתקנה בדקה. החל מ-<bdi>{{ from_price }}</bdi>.</p>
+      <ul class="inbox" aria-label="בסט">
+        <li>ראש מקלחת אובאלי</li><li>פילטר פחם פעיל כלול</li>
+      </ul>
+      <h3>שלוש חבילות לבחירה</h3>
+      <div data-cta>
+      <ul class="packs">
+        {%- if n1 != blank -%}<li class="pack"><span class="pack-n">{{ n1 | escape }}</span><bdi class="pack-p">{{ from_price }}</bdi></li>{%- endif -%}
+        {%- if n2 != blank and p2 != blank -%}<li class="pack is-reco">{%- if t2 != blank -%}<span class="pack-t">{{ t2 | escape }}</span>{%- endif -%}<span class="pack-n">{{ n2 | escape }}</span><bdi class="pack-p">{{ p2 | escape }}</bdi><span class="pack-unit" style="display:block;width:100%;font-size:12px;color:#a2602f;font-weight:700;margin-top:3px">עוד 2 פילטרים · ₪25 לפילטר</span></li>{%- endif -%}
+        {%- if n3 != blank and p3 != blank -%}<li class="pack"><span class="pack-n">{{ n3 | escape }}</span><bdi class="pack-p">{{ p3 | escape }}</bdi><span class="pack-unit" style="display:block;width:100%;font-size:12px;color:#a2602f;font-weight:700;margin-top:3px">עוד 2 פילטרים · ₪40 לפילטר</span></li>{%- endif -%}
+      </ul>
+      <a href="{{ buy_url }}" class="btn">לבחירת חבילה</a>
+      </div>
+      <p class="offer-f">הבחירה והתשלום בעמוד הבא, בכרטיס אשראי או ב-PayPal.</p>
+    </div>
+  </div>
+</section>

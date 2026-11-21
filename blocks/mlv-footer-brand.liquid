@@ -1,0 +1,26 @@
+{%- doc -%}
+  MALINVO footer brand: the store logo (same request as the header logo) and the brand line.
+{%- enddoc -%}
+<div class="mlv-foot-brand" {{ block.shopify_attributes }}>
+  {%- if settings.logo != blank -%}
+    {% render 'image', image: settings.logo, class: 'mlv-foot-brand__logo', height: 120, alt_text_fallback: shop.name, text_fallback: shop.name %}
+  {%- endif -%}
+  {%- if block.settings.text != blank -%}<p class="mlv-foot-brand__line">{{ block.settings.text | escape }}</p>{%- endif -%}
+</div>
+
+{% stylesheet %}
+  .mlv-foot-brand { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .mlv-foot-brand__logo { display: block; height: 25px; width: auto; }
+  .mlv-foot-brand__line { margin: 0; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MALINVO footer brand",
+  "tag": null,
+  "settings": [
+    { "type": "text", "id": "text", "label": "Brand line", "default": "ראש מקלחת אובאלי עם פילטר פחם פעיל." }
+  ],
+  "presets": [{ "name": "MALINVO footer brand" }]
+}
+{% endschema %}

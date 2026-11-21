@@ -1,0 +1,42 @@
+{% doc %}
+  MALINVO section 5: MALINVO next to a regular shower head. Styles live in sections/malinvo-product.liquid
+  (product page) and snippets/mlv-sections-css.liquid (home page). The brand name is the real logo image,
+  with visually hidden text for screen readers and search engines.
+  @param {string} [section_id] - Section id (default: mlv-compare)
+  @example
+  {% render 'mlv-compare' %}
+{% enddoc %}
+{%- capture cmp_yes -%}<svg class="cmp-y" viewBox="0 0 24 24" role="img" aria-label="יש"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{%- endcapture -%}
+{%- capture cmp_no -%}<span class="cmp-n" role="img" aria-label="אין">✕</span>{%- endcapture -%}
+{%- assign cmp_logo = images['malinvo_logo_dark.png'] -%}
+{%- assign cmp_prod = images['malinvo_black_01_hero.png'] -%}
+{%- capture cmp_brand -%}
+  {%- if cmp_logo -%}<span class="cmp-vh">MALINVO</span><img class="cmp-logo" src="{{ cmp_logo | image_url: height: 120 }}" srcset="{{ cmp_logo | image_url: height: 120 }} 1x, {{ cmp_logo | image_url: height: 240 }} 2x, {{ cmp_logo | image_url: height: 360 }} 3x" width="{{ cmp_logo.width }}" height="{{ cmp_logo.height }}" loading="lazy" decoding="async" alt="" aria-hidden="true">{%- else -%}MALINVO{%- endif -%}
+{%- endcapture -%}
+<section class="mist sec" id="{{ section_id | default: 'mlv-compare' }}">
+  <div class="n">
+    <h2 class="cmp-h">{{ cmp_brand }} מול ראש מקלחת רגיל</h2>
+    <table class="cmp">
+      <thead>
+        <tr>
+          <td></td>
+          <th scope="col" class="us">{%- if cmp_prod -%}<img class="cmp-prod" src="{{ cmp_prod | image_url: width: 160 }}" srcset="{{ cmp_prod | image_url: width: 160 }} 1x, {{ cmp_prod | image_url: width: 320 }} 2x" width="160" height="160" loading="lazy" decoding="async" alt="ראש המקלחת MALINVO, בשלמותו">{%- endif -%}{{ cmp_brand }}</th>
+          <th scope="col">ראש מקלחת רגיל, בלי פילטר</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">פילטר מתחלף בידית</th><td class="us">{{ cmp_yes }}</td><td>{{ cmp_no }}</td></tr>
+        <tr><th scope="row">פילטר פחם פעיל 4 שכבות</th><td class="us">{{ cmp_yes }}</td><td>{{ cmp_no }}</td></tr>
+        <tr><th scope="row">זרם צפוף ומורגש</th><td class="us">{{ cmp_yes }}</td><td>תלוי בדגם</td></tr>
+        <tr><th scope="row">מפחית כלור, חול וחלודה</th><td class="us">{{ cmp_yes }}</td><td>{{ cmp_no }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<style>
+  :is(#mlv,#mlvh) .cmp-vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  :is(#mlv,#mlvh) .cmp-h .cmp-logo{display:inline-block;height:.68em;width:auto;vertical-align:baseline;margin-inline-end:.12em}
+  :is(#mlv,#mlvh) .cmp thead .us img.cmp-prod{display:block;width:80px;height:80px;margin:0 auto 8px;border-radius:14px;object-fit:contain;background:#f6efe8}
+  :is(#mlv,#mlvh) .cmp thead .us img.cmp-logo{display:block;width:auto;height:13px;margin:0 auto;border-radius:0;object-fit:contain}
+  @media(max-width:560px){:is(#mlv,#mlvh) .cmp thead .us img.cmp-prod{width:64px;height:64px}:is(#mlv,#mlvh) .cmp thead .us img.cmp-logo{height:11px}}
+</style>

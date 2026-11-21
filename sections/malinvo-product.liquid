@@ -1,0 +1,499 @@
+{%- comment -%}
+  MALINVO product page (v11 architecture): Hero + buy box, pipe, benefits, steps, compare, FAQ, 30 days + CTA.
+  The single server-rendered /cart/add form lives in the hero buy box (BundleUp attaches to it). No JS touches the form.
+  Fonts are loaded from layout/theme.liquid (product pages only).
+{%- endcomment -%}
+{%- assign cur = product.selected_or_first_available_variant -%}
+{%- assign from_v = cur -%}
+{%- for v in product.variants -%}
+  {%- if v.price < from_v.price -%}{%- assign from_v = v -%}{%- endif -%}
+{%- endfor -%}
+{%- capture from_price -%}₪{{ from_v.price | money_without_currency | remove: '.00' }}{%- endcapture -%}
+{%- assign fb = '/cdn/shop/files/' -%}
+
+<style>
+#mlv{--ink:#0d1b1e;--ink2:#2a3a3e;--muted:#5d7177;--line:#e4ebed;--mist:#f5f7f8;--sand:#f3ede4;--teal:#b87a55;--teal-d:#8f5434;--rose:#d9a27a;--rose-s:#fbf3ec;--disp:"Rubik","Heebo",system-ui,sans-serif;--body:"Heebo","Rubik",system-ui,Arial,sans-serif;--ease:cubic-bezier(.23,1,.32,1);--ease-out:cubic-bezier(.23,1,.32,1);--r:22px;direction:rtl;text-align:right;color:var(--ink);font-family:var(--body);line-height:1.6;background:#fff;-webkit-font-smoothing:antialiased;overflow-x:clip}
+#mlv *{box-sizing:border-box}
+#mlv h1,#mlv h2,#mlv h3,#mlv p,#mlv ul,#mlv ol,#mlv figure{margin:0;padding:0}
+#mlv li{list-style:none}
+#mlv h1,#mlv h2,#mlv h3{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1.1;text-wrap:balance;color:var(--ink)}
+#mlv h2{font-size:clamp(1.7rem,5.2vw,2.6rem)}
+#mlv h3{font-size:1.15rem;line-height:1.3}
+#mlv p{text-wrap:pretty}
+#mlv .w{max-width:1180px;margin-inline:auto;padding-inline:16px}
+#mlv .n{max-width:760px;margin-inline:auto;padding-inline:16px}
+#mlv .sec{padding-block:clamp(44px,8vw,96px)}
+#mlv section[id]{scroll-margin-top:60px}
+#mlv .kick{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;letter-spacing:.06em;color:var(--teal-d)}
+#mlv .kick::before{content:"";width:18px;height:2px;background:var(--teal);border-radius:2px}
+#mlv .kick+h2{margin-top:14px}
+#mlv h2+.lead{margin-top:16px}
+#mlv h1.mlv-name{font-family:var(--body);font-size:.9rem;font-weight:700;letter-spacing:.04em;line-height:1.5;text-wrap:initial}
+#mlv p.mlv-tag{display:block;font-family:var(--disp);font-size:clamp(1.55rem,6.4vw,2.4rem);font-weight:900;letter-spacing:-.02em;line-height:1.12;text-wrap:balance;color:var(--ink)}
+#mlv .lead{font-size:clamp(1.02rem,2.4vw,1.2rem);line-height:1.65;color:var(--ink2)}
+#mlv .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 30px;border-radius:999px;background:var(--ink);color:#fff;font:800 1.05rem/1 var(--body);text-decoration:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+#mlv .btn:active{transform:scale(.97)}
+@media(hover:hover) and (pointer:fine){#mlv .btn:hover{background:#26363a}}
+#mlv .btn:focus-visible,#mlv a:focus-visible,#mlv summary:focus-visible,#mlv .th:focus-visible{outline:3px solid var(--teal-d);outline-offset:3px}
+#mlv .hero{padding-block:clamp(12px,3vw,48px) clamp(40px,7vw,88px)}
+#mlv .hero .w{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start}
+#mlv .gal{position:sticky;top:90px;min-width:0}
+#mlv .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;gap:10px;border-radius:var(--r);scrollbar-width:none}
+#mlv .track::-webkit-scrollbar{display:none}
+#mlv .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1/1;background:#f3ece5;border-radius:var(--r);overflow:hidden}
+#mlv .slide img{width:100%;height:100%;object-fit:contain;display:block}
+#mlv .dots{display:none;justify-content:center;gap:8px;padding-top:10px}
+#mlv .dots i{width:7px;height:7px;border-radius:50%;background:#c9d3d6;transition:transform 200ms var(--ease-out),background-color 200ms ease}
+#mlv .dots i.on{background:var(--ink);transform:scale(1.35)}
+#mlv .thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+#mlv .th{flex:0 0 64px;height:64px;border-radius:12px;overflow:hidden;border:2px solid transparent;background:#f3ece5;padding:0;cursor:pointer;opacity:.6;transition:opacity 200ms ease,border-color 200ms ease}
+#mlv .th[aria-current="true"]{border-color:var(--ink);opacity:1}
+#mlv .th img{width:100%;height:100%;object-fit:cover;display:block}
+#mlv .buy{display:flex;flex-direction:column;gap:14px;scroll-margin-top:90px;min-width:0}
+#mlv .price{display:flex;align-items:baseline;gap:6px 10px;flex-wrap:wrap}
+#mlv .price b{font-family:var(--disp);font-weight:900;font-size:1.5rem;line-height:1.2;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+#mlv .price span{font-size:.92rem;color:var(--muted)}
+#mlv .shopify-product-form{display:block}
+#mlv .product-form__buttons button{width:100%}
+#bundle-up{scroll-margin-top:90px}
+#mlv #bundle-up,#mlv #bundle-up *{font-family:var(--body)}
+#mlv #bundle-up .bundle-name{justify-content:flex-start;margin:0 0 10px}
+#mlv #bundle-up .bundle-name p{margin:0}
+#mlv #bundle-up .bundle-name span{font-size:16px!important;font-weight:700;color:var(--ink)!important}
+#mlv #bundle-up .bundle-offer-cards-container{flex-direction:column;justify-content:flex-start;gap:10px;margin:0 0 14px}
+#mlv #bundle-up .card-offer-wrapper{width:100%;max-width:none;flex:none}
+#mlv #bundle-up .offer-wrapper-label{cursor:pointer;display:block}
+#mlv #bundle-up .bundle-offer-card{width:100%;height:auto;min-height:0;border-radius:14px;transition:transform 160ms var(--ease-out),border-color 200ms ease,background-color 200ms ease,box-shadow 200ms ease;-webkit-tap-highlight-color:transparent}
+#mlv #bundle-up .offer-wrapper-label:active .bundle-offer-card{transform:scale(.98)}
+#mlv #bundle-up .bundle-offer-card:not(:has(.bu-offer-radio:checked)){border-color:var(--line)!important;background-color:#fff!important;box-shadow:none}
+#mlv #bundle-up .bundle-offer-card:has(.bu-offer-radio:checked){border-color:var(--ink)!important;background-color:var(--rose-s)!important;box-shadow:0 0 0 1px var(--ink),0 14px 28px -18px rgba(13,27,30,.55)}
+#mlv #bundle-up .card-content-wrapper{padding:9px 14px;margin:0}
+#mlv #bundle-up .header-wrapper{flex-direction:row;padding:0;gap:0}
+#mlv #bundle-up .offer-text-section{flex:1 1 auto;min-width:0}
+#mlv #bundle-up .offer-header{flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+#mlv #bundle-up .offer-start-section{align-items:flex-start;flex:1 1 auto;min-width:0}
+#mlv #bundle-up .offer-headline{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:4px 8px}
+#mlv #bundle-up .offer-title{text-align:start}
+#mlv #bundle-up .offer-title p,#mlv #bundle-up .offer-title-label p{margin:0;line-height:1.3}
+#mlv #bundle-up .offer-title span{font-size:16px!important;color:var(--ink)!important}
+#mlv #bundle-up .offer-title-label{padding:2px 8px;border-radius:6px;background:#fbf3ec!important;border:1px solid #ecd9c8}
+#mlv #bundle-up .offer-title-label span{font-size:12px!important;color:#8f5434!important}
+#mlv #bundle-up .offer-price-wrapper{flex:none}
+#mlv #bundle-up .bundle-offer-card_pricing{align-items:flex-end;gap:0}
+#mlv #bundle-up .offer-price p,#mlv #bundle-up .offer-compare-price p{margin:0;direction:ltr;unicode-bidi:isolate;white-space:nowrap;line-height:1.25}
+#mlv #bundle-up .offer-price p{font-family:var(--disp);font-weight:800;font-size:19px}
+#mlv #bundle-up .offer-compare-price p{font-size:13px}
+#mlv #bundle-up .offer-bottom-text{margin:0}
+#mlv #bundle-up .card-tag{left:auto;right:14px;width:auto;border-radius:6px}
+#mlv #BU-action-button{min-height:56px;border-radius:999px!important;-webkit-tap-highlight-color:transparent;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+#mlv #BU-action-button:active{transform:scale(.97)}
+#mlv .bu-payment-icons{--bu-payment-icon-height:24px!important;flex-wrap:wrap;max-width:100%;margin-top:10px}
+#mlv .reass{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center;font-size:.8rem;font-weight:700;line-height:1.3}
+#mlv .reass li{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;background:var(--mist);border-radius:12px;padding:9px 6px}
+#mlv .reass svg,#mlv .trio svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--teal-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+#mlv .trio li{display:inline-flex;align-items:center;gap:6px}
+#mlv .mlv-accs{display:grid;gap:8px}
+#mlv .mlv-accs .mlv-gtee{margin:0}
+#mlv.js [data-stagger]>*{opacity:0;transform:translateY(var(--d,14px))}
+#mlv.js [data-stagger].in>*{opacity:1;transform:none;transition:opacity 500ms var(--ease-out),transform 500ms var(--ease-out);transition-delay:var(--t,0ms)}
+#mlv.js [data-stagger]>*:has(img){opacity:1}
+#mlv [data-stagger]>:nth-child(1){--t:0ms;--d:14px}
+#mlv [data-stagger]>:nth-child(2){--t:70ms;--d:10px}
+#mlv [data-stagger]>:nth-child(3){--t:120ms;--d:8px}
+#mlv [data-stagger]>:nth-child(4){--t:155ms;--d:6px}
+#mlv .mist{background:var(--mist)}
+#mlv .pipe{background:var(--sand)}
+#mlv .pipe-g{display:grid;gap:24px}
+#mlv .pipe-m{border-radius:var(--r);overflow:hidden;background:#fff;aspect-ratio:4/5}
+#mlv .pipe-m.is-ph{aspect-ratio:1/1}
+#mlv .pipe-m img{width:100%;height:100%;object-fit:contain;display:block}
+#mlv .pipe-m.is-ph img{object-fit:cover}
+#mlv .nums{display:grid;gap:10px;counter-reset:n}
+#mlv .nums li{counter-increment:n;display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid #ecdfd0}
+#mlv .nums li::before{content:counter(n);flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--teal-d);color:#fff;font:800 .95rem/1 var(--disp)}
+#mlv .nums b{display:block;font-size:1rem;line-height:1.4}
+#mlv .nums span{display:block;font-size:.95rem;line-height:1.5;color:var(--ink2)}
+#mlv .tlink{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;font-weight:800;color:var(--teal-d);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
+#mlv .pipe-real{margin-top:14px;border-radius:16px;overflow:hidden;background:#fff;border:1px solid #ecdfd0}
+#mlv .pipe-real img{display:block;width:100%;height:auto}
+#mlv .pipe-real figcaption{padding:10px 14px;font-size:.9rem;color:var(--ink2)}
+#mlv .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,88px);align-items:center}
+#mlv .media{border-radius:var(--r);overflow:hidden;background:#f3ece5;aspect-ratio:1/1}
+#mlv .media img{width:100%;height:100%;object-fit:cover;display:block}
+#mlv .bens{display:grid;margin-top:24px;border-top:1px solid var(--line)}
+#mlv .bens li{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+#mlv .bens i{flex:none;width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:#fff;border:1px solid var(--line)}
+#mlv .bens svg{width:30px;height:30px;fill:none;stroke:var(--teal-d);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#mlv .bens b{display:block;font-size:1.02rem;line-height:1.4}
+#mlv .bens span{display:block;font-size:.95rem;line-height:1.5;color:var(--ink2)}
+#mlv .bens-f{margin-top:18px;font-size:.95rem;color:var(--muted)}
+#mlv .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:32px;counter-reset:s}
+#mlv .step{counter-increment:s;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+#mlv .step figure{position:relative;aspect-ratio:1/1;background:#f3ece5}
+#mlv .step img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+#mlv .step>div{padding:20px 22px 24px}
+#mlv .step h3::before{content:counter(s);display:inline-grid;place-items:center;width:28px;height:28px;margin-inline-end:10px;border-radius:50%;background:var(--teal-d);color:#fff;font:800 .9rem/1 var(--disp);letter-spacing:0;vertical-align:3px}
+#mlv .step p{margin-top:8px;color:var(--ink2);font-size:.96rem;line-height:1.55}
+#mlv .cmp{width:100%;margin-top:28px;border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:.95rem;line-height:1.4;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+#mlv .cmp th,#mlv .cmp td{padding:14px;text-align:center;vertical-align:middle;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink)}
+#mlv .cmp tbody tr:last-child>*{border-bottom:0}
+#mlv .cmp thead>tr>:first-child{width:42%}
+#mlv .cmp th[scope="row"]{text-align:start;font-weight:700}
+#mlv .cmp thead th{font-size:.88rem;font-weight:800;vertical-align:bottom}
+#mlv .cmp .us{background:var(--rose-s);width:24%}
+#mlv .cmp thead .us img{display:block;width:48px;height:48px;margin:0 auto 6px;border-radius:50%;object-fit:cover}
+#mlv .cmp tbody td:last-child{color:var(--muted);font-size:.9rem}
+#mlv .cmp-y{display:inline-block;width:22px;height:22px;vertical-align:middle;fill:none;stroke:var(--teal-d);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#mlv .faq{margin-top:28px;border-top:1px solid var(--line)}
+#mlv .faq details{border-bottom:1px solid var(--line)}
+#mlv .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px;padding:16px 0;font-weight:700;font-size:1.02rem;-webkit-tap-highlight-color:transparent}
+#mlv .faq summary::-webkit-details-marker{display:none}
+#mlv .faq summary::after{content:"";flex:none;width:11px;height:11px;margin-inline-end:5px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-3px) rotate(45deg);transition:transform 240ms var(--ease-out)}
+#mlv .faq details.is-open summary::after,#mlv:not(.js) .faq details[open] summary::after{transform:translateY(3px) rotate(-135deg)}
+#mlv .acc{display:grid;grid-template-rows:1fr}
+#mlv.js .acc{grid-template-rows:0fr;transition:grid-template-rows 240ms var(--ease-out)}
+#mlv.js details.is-open .acc{grid-template-rows:1fr}
+#mlv .acc>div{overflow:hidden;min-height:0}
+#mlv .ans{padding:0 0 20px;color:var(--ink2);font-size:.97rem}
+#mlv .ans a{color:var(--teal-d);font-weight:600;text-underline-offset:3px;overflow-wrap:anywhere;padding-block:11px}
+#mlv .final{text-align:center;background:var(--sand)}
+#mlv .final-m{max-width:520px;margin:0 auto 28px;border-radius:var(--r);overflow:hidden;background:#f3ece5}
+#mlv .final-m img{display:block;width:100%;height:auto}
+#mlv .final p{margin-top:14px}
+#mlv .trio{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:18px;font-size:.9rem;font-weight:700;color:var(--ink2)}
+#mlv .final .btn{margin-top:26px}
+.mlv-sticky{display:none}
+@media(min-width:901px){
+  #mlv .pipe-g{grid-template-columns:1fr 1fr;grid-template-areas:"h m" "p m";column-gap:clamp(28px,6vw,88px);row-gap:28px;align-items:start}
+  #mlv .pipe-h{grid-area:h}
+  #mlv .pipe-p{grid-area:p}
+  #mlv .pipe-m{grid-area:m;align-self:center;aspect-ratio:16/9}
+  #mlv .pipe-m.is-ph{aspect-ratio:1/1;width:100%;max-width:520px;justify-self:center}
+}
+@media(max-width:900px){
+  #mlv .hero{padding-top:0}
+  #mlv .hero .w{grid-template-columns:1fr;gap:14px}
+  #mlv .gal{position:static;margin-inline:-16px}
+  #mlv .track{border-radius:0;gap:0}
+  #mlv .slide{border-radius:0}
+  #mlv .thumbs{display:none}
+  #mlv .dots{display:flex}
+  #mlv .buy{gap:12px}
+  #mlv .split{grid-template-columns:1fr}
+  #mlv .split .media{order:-1}
+  #mlv .steps{grid-template-columns:1fr;gap:12px;margin-top:24px}
+  #mlv .step{flex-direction:row;border-radius:18px}
+  #mlv .step figure{flex:0 0 104px;aspect-ratio:auto;min-height:104px}
+  #mlv .step>div{padding:14px 16px;min-width:0}
+  #mlv .final{padding-bottom:120px}
+  .mlv-sticky{display:flex;position:fixed;z-index:40;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));min-height:58px;padding:0 8px 0 22px;align-items:center;justify-content:space-between;gap:12px;border:0;border-radius:999px;background:rgba(13,27,30,.94);-webkit-backdrop-filter:saturate(1.4) blur(8px);backdrop-filter:saturate(1.4) blur(8px);color:#fff;font:700 1rem/1 Heebo,Rubik,system-ui,sans-serif;direction:rtl;cursor:pointer;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;transform:translateY(calc(100% + 24px));transition:transform 220ms cubic-bezier(.32,.72,0,1)}
+  .mlv-sticky.on{transform:none;transition-duration:380ms}
+  .mlv-sticky:active .mlv-sticky__c{transform:scale(.97)}
+  .mlv-sticky__p{font-family:Rubik,Heebo,sans-serif;font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .mlv-sticky__c{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;background:#f6efe8;color:#0d1b1e;font-weight:800;white-space:nowrap;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+}
+@media(max-width:560px){
+  #mlv .cmp{font-size:.9rem}
+  #mlv .cmp th,#mlv .cmp td{padding:12px 8px}
+  #mlv .cmp thead>tr>:first-child{width:40%}
+  #mlv .cmp .us{width:25%}
+}
+#mlv .vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#mlv .pipe-g.has-img .pipe-m{background:#f6efe8}
+#mlv .pipe-g.has-img .lead{margin-bottom:18px}
+@media(min-width:750px){#mlv .pipe-g.has-img .pipe-m{aspect-ratio:16/9;width:100%;max-width:920px;margin-inline:auto}}
+@media(min-width:901px){#mlv .pipe-g.has-img{grid-template-columns:1fr;grid-template-areas:"h" "m" "p";row-gap:20px}#mlv .pipe-g.has-img .pipe-p,#mlv .pipe-g.has-img .pipe-h{max-width:920px;width:100%;margin-inline:auto}#mlv .pipe-g.has-img .nums{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){
+  #mlv *,#mlv *::after{transition-duration:0ms!important;scroll-behavior:auto!important}
+  #mlv.js [data-stagger]>*{transform:none!important}
+  #mlv.js [data-stagger].in>*{transition:opacity 200ms ease!important;transition-delay:0ms!important}
+  .mlv-sticky{transform:none;opacity:0;pointer-events:none;transition:opacity 200ms ease!important}
+  .mlv-sticky.on{opacity:1;pointer-events:auto}
+}
+#mlv .mlv-rating{display:flex;align-items:center;gap:7px;font-size:.9rem;color:var(--ink2);margin:0}
+#mlv .mlv-rating .mlv-stars{color:var(--teal-d);letter-spacing:1px;font-size:.98rem;direction:ltr}
+#mlv .mlv-rating b{font-family:var(--disp);font-weight:800;color:var(--ink)}
+#mlv .mlv-rating__c{color:var(--muted);font-size:.85rem}
+#mlv .mlv-ship{margin:0}
+#mlv .mlv-ship span{color:var(--ink2);font-weight:600;font-size:.95rem}
+/* TEMP: hide the Vouch reviews section (demo reviews) while in test / for supplier demo. Remove this rule to show reviews again. */
+[id$="__17948660484d5ed3da"]{display:none!important}
+#mlv .mlv-lockup{direction:ltr;display:inline-flex;align-items:center;gap:9px;margin:0 0 12px;line-height:1}
+#mlv .mlv-lockup__logo{height:30px;width:auto;display:block}
+#mlv .mlv-lockup__word{font-family:var(--disp);font-weight:300;font-size:1.5rem;letter-spacing:.14em;color:var(--ink);line-height:1;text-transform:uppercase}
+#mlv .mlv-lockup__nova{font-family:var(--disp);font-weight:500;font-size:1.4rem;letter-spacing:.01em;line-height:1;color:var(--teal-d)}
+#mlv .mlv-lockup__nova sup{font-size:.56em;font-weight:500;line-height:0;vertical-align:top;margin-inline-start:0;color:var(--teal-d)}
+#mlv .mlv-usp{display:grid;gap:10px;margin:16px 0 4px;padding:0}
+#mlv .mlv-usp li{display:flex;gap:11px;align-items:flex-start;font-size:.97rem;line-height:1.45;color:var(--ink2)}
+#mlv .mlv-usp__i{flex:none;font-size:1.18rem;line-height:1.3}
+#mlv .mlv-usp b{color:var(--ink);font-weight:700}
+#mlv .mlv-vouch-badge{display:inline-flex;align-items:center;gap:7px;margin:0 0 14px;text-decoration:none;color:var(--ink2);font-size:.92rem;line-height:1;-webkit-tap-highlight-color:transparent}
+#mlv .mlv-vouch-stars{position:relative;display:inline-block;font-size:1rem;line-height:1;letter-spacing:1px;color:#e7ddcb;direction:ltr;white-space:nowrap}
+#mlv .mlv-vouch-fill{position:absolute;inset-block:0;inset-inline-start:0;overflow:hidden;white-space:nowrap;color:#FFC043;width:0}
+#mlv .mlv-vouch-avg{font-family:var(--disp);font-weight:800;color:var(--ink);font-size:.95rem;line-height:1}
+#mlv .mlv-vouch-count{color:var(--muted);font-size:.9rem;line-height:1;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+#mlv .mlv-stream-fig{margin:24px auto 0;max-width:560px;border-radius:var(--r);overflow:hidden;background:#f3ece5}
+#mlv .mlv-stream-fig img{display:block;width:100%;height:auto}
+@media(hover:hover) and (pointer:fine){#mlv .mlv-vouch-badge:hover .mlv-vouch-count{color:var(--ink2)}}
+</style>
+
+<div id="mlv">
+  <section class="hero">
+    <div class="w">
+      <div class="gal">
+        {%- comment -%}
+          Gallery plan (decisions.md, 8 branded 1:1 slides). m|<product media id>|  or  f|<file in Files>|<alt>.
+          Order: 1 lifestyle, 2 in the set, 3 chamber, 4 in hand, 5 callouts, 6 install, 7 comparison, 8 set + 5 filters.
+        {%- endcomment -%}
+        {%- comment -%} New product (oval filter): gallery uses the product's own uploaded media, in Shopify order, with each media's Hebrew alt text. {%- endcomment -%}
+        {%- assign gal_spec = '' -%}
+        {%- for m in product.media -%}{%- assign gal_spec = gal_spec | append: 'm|' | append: m.id | append: '|;;' -%}{%- endfor -%}
+        {%- assign gal_spec = gal_spec | split: ';;' -%}
+        {%- assign gal_ok = '' -%}
+        {%- for it in gal_spec -%}
+          {%- assign gp = it | split: '|' -%}
+          {%- if gp[0] == 'm' -%}
+            {%- assign gnum = gp[1] | plus: 0 -%}
+            {%- assign gm = product.media | where: 'id', gnum | first -%}
+            {%- if gm -%}{%- assign gal_ok = gal_ok | append: it | append: ';;' -%}{%- endif -%}
+          {%- else -%}
+            {%- assign gal_ok = gal_ok | append: it | append: ';;' -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- assign gal = gal_ok | split: ';;' -%}
+        {%- assign gsizes = "(min-width: 1200px) 600px, (min-width: 900px) 52vw, (min-resolution: 3dppx) 64vw, (min-resolution: 2.5dppx) 78vw, 100vw" -%}
+        <div class="track" data-track aria-label="תמונות המוצר" tabindex="0">
+          {%- for it in gal -%}
+            {%- assign gp = it | split: '|' -%}
+            <figure class="slide" id="mlv-s{{ forloop.index }}">
+              {%- if gp[0] == 'm' -%}
+                {%- assign gnum = gp[1] | plus: 0 -%}
+                {%- assign gm = product.media | where: 'id', gnum | first -%}
+                {%- assign galt = gm.alt | default: 'ראש מקלחת MALINVO עם פילטר מתחלף' -%}
+                {%- if forloop.first -%}
+                  {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, fetchpriority: 'high', loading: 'eager', decoding: 'async', preload: true, alt: galt }}
+                {%- else -%}
+                  {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, loading: 'lazy', decoding: 'async', alt: galt }}
+                {%- endif -%}
+              {%- else -%}
+                {%- assign gu = fb | append: gp[1] -%}
+                <img src="{{ gu }}&width=1000" srcset="{{ gu }}&width=600 600w, {{ gu }}&width=750 750w, {{ gu }}&width=900 900w, {{ gu }}&width=1000 1000w" sizes="{{ gsizes }}" width="1000" height="1000" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" decoding="async" alt="{{ gp[2] | escape }}">
+              {%- endif -%}
+            </figure>
+          {%- endfor -%}
+        </div>
+        {%- if gal.size > 1 -%}
+          <div class="dots" aria-hidden="true">{%- for it in gal -%}<i{% if forloop.first %} class="on"{% endif %}></i>{%- endfor -%}</div>
+          <div class="thumbs">
+            {%- for it in gal -%}
+              {%- assign gp = it | split: '|' -%}
+              <button type="button" class="th" data-to="{{ forloop.index0 }}" aria-label="תמונה {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
+                {%- if gp[0] == 'm' -%}
+                  {%- assign gnum = gp[1] | plus: 0 -%}
+                  {%- assign gm = product.media | where: 'id', gnum | first -%}
+                  {{- gm.preview_image | image_url: width: 140 | image_tag: loading: 'lazy', alt: '' -}}
+                {%- else -%}
+                  <img src="{{ fb }}{{ gp[1] }}&width=140" width="140" height="140" loading="lazy" decoding="async" alt="">
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="buy" id="mlv-buy">
+        {%- assign nova_logo = images['malinvo_logo_dark.png'] -%}
+        <h1 class="mlv-lockup">
+          {%- if nova_logo -%}<img class="mlv-lockup__logo" src="{{ nova_logo | image_url: width: 520 }}" srcset="{{ nova_logo | image_url: width: 260 }} 260w, {{ nova_logo | image_url: width: 520 }} 520w" sizes="190px" alt="MALINVO" width="190" height="34" loading="eager" decoding="async">{%- else -%}<span class="mlv-lockup__word">MALINVO</span>{%- endif -%}
+          <span class="mlv-lockup__nova">Nova<sup>™</sup></span>
+        </h1>
+        <p class="mlv-tag">הצעד הראשון של המקלחת שלך. זרם מלא וצפוף, מים מסוננים, התקנה בדקה.</p>
+        <a class="mlv-vouch-badge" href="#mlv-reviews" data-vouch-badge hidden>
+          <span class="mlv-vouch-stars" aria-hidden="true"><span class="mlv-vouch-fill">★★★★★</span>★★★★★</span>
+          <b class="mlv-vouch-avg"></b>
+          <span class="mlv-vouch-count"></span>
+        </a>
+        <ul class="mlv-usp" data-stagger>
+          <li><span class="mlv-usp__i" aria-hidden="true">💧</span><div><b>זרם חזק וצפוף</b> - תחושת מים מלאה ועוצמתית בכל מקלחת</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">🧪</span><div><b>פילטר פחם פעיל 4 שכבות</b> - מפחית כלור שיורי, חול, חלודה ומשקעים מהצנרת</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">✨</span><div><b>מים נקיים יותר</b> - פחות כלור ומשקעים בדרך אליך</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">⏱️</span><div><b>התקנה בדקה</b> - מבריגים לצינור, בלי כלים ובלי אינסטלטור</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">🔁</span><div><b>מחליפים פילטר, לא ראש</b> - חוסך לך לאורך זמן</div></li>
+          <li><span class="mlv-usp__i" aria-hidden="true">🖤</span><div><b>עיצוב אובאלי פרמיום</b> - גימור שחור מט שמשדרג את חלל האמבטיה, תחושת ואוו מהרגע הראשון</div></li>
+        </ul>
+        <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
+          <input type="hidden" name="id" value="{{ cur.id }}">
+          <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
+        </form>
+        <p style="margin:12px 0 0;color:#3a4a54;font-size:14.5px">הקנייה שלך מכוסה ב-30 יום החזרה. תתקינו, תתרשמו, ותחליטו בנחת.</p>
+        {%- comment -%} Risk-reversal near CTA. Shipping from 10_SHIPPING; returns 30d approved by owner; warranty = placeholder. {%- endcomment -%}
+        <ul class="reass">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם לכל הארץ · עם מעקב עד הבית</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> <a href="/policies/refund-policy">מדיניות החזרות</a></span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מותג ישראלי · מענה בעברית</span></li>
+        </ul>        <div class="mlv-accs">
+          {% render 'malinvo-guarantee' %}
+          {% render 'mlv-buy-more' %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- assign cmp_stream = images['craftad-e9e8e197.png'] -%}
+  {%- if cmp_stream -%}
+  <section class="sec mist" id="mlv-stream">
+    <div class="n" style="text-align:center">
+      <span class="kick">ההוכחה</span>
+      <h2>ההבדל שרואים בזרם</h2>
+      <p class="section-sub">ראש רגיל מול MALINVO Nova - אותו ברז, זרם אחר לגמרי.</p>
+      <figure class="mlv-stream-fig">
+        <img src="{{ cmp_stream | image_url: width: 1100 }}" srcset="{{ cmp_stream | image_url: width: 640 }} 640w, {{ cmp_stream | image_url: width: 900 }} 900w, {{ cmp_stream | image_url: width: 1100 }} 1100w" sizes="(min-width:620px) 560px, 94vw" width="{{ cmp_stream.width }}" height="{{ cmp_stream.height }}" loading="lazy" decoding="async" alt="השוואת זרם: ראש מקלחת רגיל מול MALINVO Nova עם פילטר">
+      </figure>
+      <a class="btn" href="#bundle-up" data-to-buy style="margin-top:22px">רוצה את הזרם הזה</a>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- assign real_img = null -%}
+  {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
+  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result %}
+  {% render 'mlv-benefits', img: section.settings.benefits_image %}
+  {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
+  {% render 'mlv-compare' %}
+
+  <section class="sec" id="mlv-faq">
+    <div class="n">
+      <h2>שאלות נפוצות</h2>
+      <div class="faq">
+        <details><summary>מתאים לדירה שכורה?</summary><div class="acc"><div><div class="ans">כן. הראש מתחבר לצינור המקלחת בהברגה, בלי קידוחים ובלי שינוי בצנרת. כשעוברים דירה, מפרקים ולוקחים אותו איתך.</div></div></div></details>
+        <details><summary>צריך אינסטלטור?</summary><div class="acc"><div><div class="ans">לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.</div></div></div></details>
+        <details><summary>איך יהיה הזרם, גם אם הלחץ אצלי לא חזק?</summary><div class="acc"><div><div class="ans">הראש לא מגדיל ולא מחליש את הלחץ שבצנרת, אבל לוח הזרבוביות עם החורים הזעירים מרכז את המים לזרם צפוף שמרגיש מלא ומורגש - גם בבתים שבהם הלחץ בינוני.</div></div></div></details>
+        <details><summary>מה הפילטר מפחית?</summary><div class="acc"><div><div class="ans">פילטר פחם פעיל בארבע שכבות: יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הוא מפחית כלור שיורי, ותופס חלקיקים, חול וחלודה שמגיעים מהצנרת. איננו מצטטים אחוזים כי אין לנו בדיקת מעבדה.</div></div></div></details>
+        <details><summary>כל כמה זמן מחליפים את הפילטר?</summary><div class="acc"><div><div class="ans">זה תלוי בשימוש ובאיכות המים אצלכם, ולכן לא נוקבים במספר קבוע. הסימנים להחלפה פשוטים: ירידה מורגשת בעוצמת הזרם, או שהפילטר כבר לא נראה נקי. אז פשוט מבריגים פילטר חדש במקומו - מחליפים את הפילטר בלבד, הראש נשאר איתכם.</div></div></div></details>
+        <details><summary>מה אם לא מתאים לי? אפשר להחזיר?</summary><div class="acc"><div><div class="ans"><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/policies/refund-policy">מדיניות ההחזרות</a>.</div></div></div></details>
+        <details><summary>זה יתאים למקלחת שלי?</summary><div class="acc"><div><div class="ans">הראש מתברג לצינור המקלחת הרגיל ומתאים לרוב המקלחות בישראל. יש שאלה על הברז שלכם? שלחו תמונה ל-<a href="mailto:support.malinvo@gmail.com">support.malinvo@gmail.com</a> ונענה לפני ההזמנה.</div></div></div></details>
+        <details><summary>ממה הראש עשוי?</summary><div class="acc"><div><div class="ans">גוף ABS קל ונוח לאחיזה, עם גימור מט.</div></div></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final sec" id="mlv-final">
+    <div class="n">
+      {%- assign fimg = section.settings.final_image -%}
+      <figure class="final-m">
+        {%- if fimg -%}
+          <img src="{{ fimg | image_url: width: 1040 }}" srcset="{{ fimg | image_url: width: 520 }} 520w, {{ fimg | image_url: width: 720 }} 720w, {{ fimg | image_url: width: 840 }} 840w, {{ fimg | image_url: width: 1040 }} 1040w" sizes="(min-width:560px) 520px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ fimg.width }}" height="{{ fimg.height }}" loading="lazy" decoding="async" alt="{{ fimg.alt | default: 'MALINVO: משלוח חינם עד הבית, מעקב במייל ו-30 יום להחליט' | escape }}">
+        {%- else -%}
+          {%- assign fph = images['malinvo_black_01_hero.png'] -%}
+          <img src="{{ fph | image_url: width: 1040 }}" srcset="{{ fph | image_url: width: 520 }} 520w, {{ fph | image_url: width: 720 }} 720w, {{ fph | image_url: width: 840 }} 840w, {{ fph | image_url: width: 1040 }} 1040w" sizes="(min-width:560px) 520px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ fph.width }}" height="{{ fph.height }}" loading="lazy" decoding="async" alt="MALINVO Nova: משלוח חינם עד הבית, מעקב במייל ו-30 יום להחליט">
+        {%- endif -%}
+      </figure>
+      <h2>30 יום להחליט, אצלכם בבית</h2>
+      <p class="lead">מזמינים, מנסים, ויש לכם 30 יום להחליט.</p>
+      <ul class="trio"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>משלוח חינם עד הבית</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>מעקב במייל</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</li></ul>
+      <a href="#bundle-up" class="btn" data-to-buy>לבחירת חבילה</a>
+    </div>
+  </section>
+</div>
+{% render 'mlv-img-loader' %}
+<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up"><span class="mlv-sticky__p">MALINVO</span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
+
+<script>
+(function(){
+  var root=document.getElementById('mlv');if(!root)return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.classList.add('js');
+  /* gallery: native scroll-snap, synced dots + thumbs */
+  var track=root.querySelector('[data-track]'),ths=[].slice.call(root.querySelectorAll('.th')),dots=[].slice.call(root.querySelectorAll('.dots i'));
+  if(track){
+    ths.forEach(function(b){b.addEventListener('click',function(){var s=track.children[+b.dataset.to];if(s)track.scrollTo({left:s.offsetLeft-track.firstElementChild.offsetLeft,behavior:reduce?'auto':'smooth'})})});
+    var t;track.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(function(){var w=track.firstElementChild?track.firstElementChild.getBoundingClientRect().width:track.clientWidth;var i=Math.round(Math.abs(track.scrollLeft)/(w||1));ths.forEach(function(b,j){b.setAttribute('aria-current',j===i?'true':'false')});dots.forEach(function(d,j){d.classList.toggle('on',j===i)})},60)},{passive:true});
+  }
+  /* staggered lists, run once */
+  var once=[].slice.call(root.querySelectorAll('[data-stagger]'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -10% 0px',threshold:.12});
+    once.forEach(function(el){io.observe(el)});
+  }else{once.forEach(function(el){el.classList.add('in')})}
+  /* FAQ accordion: details stays native, height via grid rows */
+  [].slice.call(root.querySelectorAll('details')).forEach(function(d){
+    if(!d.querySelector('.acc'))return;
+    var s=d.querySelector('summary');
+    s.addEventListener('click',function(ev){
+      ev.preventDefault();
+      if(d.classList.contains('is-open')){d.classList.remove('is-open');setTimeout(function(){if(!d.classList.contains('is-open'))d.open=false},reduce?0:240)}
+      else{d.open=true;requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('is-open')})})}
+    });
+  });
+  /* every "choose a bundle" control lands on the bundle picker */
+  var buy=document.getElementById('mlv-buy');
+  var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(tg)tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
+  [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){a.addEventListener('click',toPicker)});
+  /* mobile sticky bar: visible from the start, hidden while a bundle card or the order button is on screen above the bar */
+  var st=document.getElementById('mlv-sticky'),pr=st&&st.querySelector('[data-sticky-price]');
+  if(st){
+    var show=function(on){st.classList.toggle('on',on);st.setAttribute('aria-hidden',on?'false':'true');st.tabIndex=on?0:-1};
+    st.addEventListener('click',function(){toPicker()});
+    show(true);
+    var fmt=function(s){var m=String(s).replace(/\s+/g,'').match(/\d[\d,]*(?:\.\d+)?/);return m?'₪'+m[0].replace(/\.00$/,''):''};
+    var readPrice=function(){
+      var r0=document.querySelector('#bundle-up .bu-offer-radio:checked'),c=(r0&&r0.closest('.bundle-offer-card'))||document.querySelector('#bundle-up .selectedBU');if(!c||!pr)return;
+      var p=c.querySelector('.offer-price'),v=p?fmt(p.textContent):'';
+      if(v&&pr.textContent!==v){pr.textContent=v;pr.setAttribute('dir','ltr')}
+    };
+    var bw=function(){
+      var b=document.getElementById('bundle-up');if(!b||!b.querySelector('.bundle-offer-card'))return false;
+      readPrice();b.addEventListener('change',readPrice);
+      new MutationObserver(readPrice).observe(b,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
+      if('IntersectionObserver' in window){var vis={c:false,b:false},upd=function(){show(!vis.c&&!vis.b)},om={rootMargin:'0px 0px -72px 0px'},cards=b.querySelector('.bundle-offer-cards-container'),ob=document.getElementById('BU-action-button');if(cards)new IntersectionObserver(function(e){vis.c=e[0].isIntersecting;upd()},om).observe(cards);if(ob)new IntersectionObserver(function(e){vis.b=e[0].isIntersecting;upd()},om).observe(ob)}
+      return true;
+    };
+    if(!bw()){var tries=0,iv=setInterval(function(){if(bw()||++tries>60)clearInterval(iv)},250)}
+  }
+  /* Vouch star-rating badge at the top of the buy box: mirrors the real Vouch widget data, auto-updates, hides when there are no reviews */
+  (function(){
+    var badge=root.querySelector('[data-vouch-badge]');if(!badge)return;
+    var fill=badge.querySelector('.mlv-vouch-fill'),avgEl=badge.querySelector('.mlv-vouch-avg'),cntEl=badge.querySelector('.mlv-vouch-count'),tries=0;
+    var num=function(s){var m=String(s||'').replace(/[^\d.]/g,'');return m?parseFloat(m):NaN};
+    function fillBadge(){
+      var w=document.querySelector('.review-widget');if(!w)return false;
+      var an=w.querySelector('.dropdown-rating-large span'),cn=w.querySelector('.summary-text');
+      var avg=an?num(an.textContent):NaN;
+      var ct=cn?cn.textContent:((w.querySelector('.review-header-clean')||{}).textContent||'');
+      var cnt=num((String(ct).match(/\d[\d,]*/)||[])[0]);
+      if(!cnt||cnt<1)return true;
+      if(!isNaN(avg)){fill.style.width=(Math.max(0,Math.min(5,avg))/5*100)+'%';avgEl.textContent=avg.toFixed(1)}else{fill.style.width='100%'}
+      cntEl.textContent=cnt.toLocaleString('he-IL')+' חוות דעת';
+      badge.hidden=false;
+      badge.addEventListener('click',function(ev){ev.preventDefault();var t=document.querySelector('.review-widget');if(t)(t.closest('[id^="shopify-block"]')||t).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})});
+      return true;
+    }
+    if(!fillBadge()){var iv2=setInterval(function(){if(fillBadge()||++tries>80)clearInterval(iv2)},250)}
+  })();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "MALINVO product",
+  "tag": "section",
+  "class": "mlv-section",
+  "settings": [
+    { "type": "header", "content": "סקשן 2: מה מגיע מהצנרת" },
+    { "type": "image_picker", "id": "pipe_image_m", "label": "אינפוגרפיקה למובייל (4:5)" },
+    { "type": "image_picker", "id": "pipe_image_d", "label": "אינפוגרפיקה לדסקטופ (16:9)" },
+    { "type": "header", "content": "סקשן 3: יתרונות" },
+    { "type": "image_picker", "id": "benefits_image", "label": "תמונת מוצר נקייה (1:1)" },
+    { "type": "header", "content": "סקשן 4: שלושה צעדים" },
+    { "type": "image_picker", "id": "step1_image", "label": "צעד 1: מחברים (1:1)" },
+    { "type": "image_picker", "id": "step2_image", "label": "צעד 2: תולים (1:1)" },
+    { "type": "image_picker", "id": "step3_image", "label": "צעד 3: מתקלחים ורואים (1:1)" },
+    { "type": "header", "content": "סקשן 7: 30 יום להחליט" },
+    { "type": "image_picker", "id": "final_image", "label": "תמונת אמון (1:1)" },
+    { "type": "header", "content": "תמונת פילטר אמיתית אחרי שימוש (מוסתר עד שממלאים)" },
+    { "type": "checkbox", "id": "show_strip_results", "label": "להציג תמונת פילטר אמיתית בסקשן 2", "default": false },
+    { "type": "image_picker", "id": "strip_image", "label": "תמונה אמיתית: הפילטר אחרי שימוש" },
+    { "type": "text", "id": "strip_result", "label": "כיתוב לתמונה" }
+  ]
+}
+{% endschema %}
