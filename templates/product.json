@@ -23,8 +23,8 @@
       "settings": {
         "show_strip_results": false,
         "strip_result": "",
-        "pipe_image_m": "",
-        "pipe_image_d": "",
+        "pipe_image_m": "shopify://shop_images/malinvo_nova_pipe_section.jpg",
+        "pipe_image_d": "shopify://shop_images/malinvo_nova_pipe_section.jpg",
         "step1_image": "",
         "step2_image": "",
         "step3_image": ""
