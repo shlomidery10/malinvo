@@ -12,20 +12,12 @@
     "main": {
       "type": "malinvo-home",
       "settings": {
-        "hero_image_m": "shopify://shop_images/malinvo_oval_whiteset_02.webp",
-        "hero_image_d": "shopify://shop_images/malinvo_oval_whiteset_02.webp",
+        "hero_image_m": "shopify://shop_images/malinvo_black_06_grip_scale.png",
+        "hero_image_d": "shopify://shop_images/malinvo_black_06_grip_scale.png",
         "hero_fit": "cover",
         "hero_blend": false,
-        "pipe_image_m": "shopify://shop_images/malinvo_oval_silver_01.webp",
-        "pipe_image_d": "shopify://shop_images/malinvo_oval_silver_01.webp",
-        "set_image": "shopify://shop_images/malinvo_oval_whiteset_01.webp",
-        "bundle2_tag": "הכי פופולארי",
-        "step1_image": "shopify://shop_images/malinvo_oval_silver_01.webp",
-        "step2_image": "shopify://shop_images/malinvo_oval_whiteset_02.webp",
-        "step3_image": "shopify://shop_images/malinvo_oval_silver_rail.webp",
-        "final_image_m": "shopify://shop_images/malinvo_oval_silverset_01.webp",
-        "final_image_d": "shopify://shop_images/malinvo_oval_silverset_01.webp",
-        "faq_refill_sentence": true
+        "final_image_m": "shopify://shop_images/malinvo_black_06_grip_scale.png",
+        "final_image_d": "shopify://shop_images/malinvo_black_06_grip_scale.png"
       }
     }
   },

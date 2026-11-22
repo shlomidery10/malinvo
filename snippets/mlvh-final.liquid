@@ -1,27 +1,25 @@
 {%- doc -%}
   MALINVO home closing section: the only dark section on the page.
-  @param {string} buy_url - Product page bundle picker URL
-  @param {string} from_price - Formatted "from" price
+  @param {string} url - Product page URL
   @param {image} [img_m] - Mobile photo
   @param {image} [img_d] - Desktop photo
   @example
-  {% render 'mlvh-final', buy_url: buy_url, from_price: from_price, img_m: section.settings.final_image_m %}
+  {% render 'mlvh-final', url: product_url, img_m: section.settings.final_image_m %}
 {%- enddoc -%}
-{%- assign fim = img_m | default: img_d | default: images['malinvo_oval_silverset_01.webp'] -%}
-{%- assign fid = img_d | default: img_m | default: images['malinvo_oval_silverset_01.webp'] -%}
+{%- assign fim = img_m | default: img_d | default: images['malinvo_black_06_grip_scale.png'] -%}
+{%- assign fid = img_d | default: img_m | default: images['malinvo_black_06_grip_scale.png'] -%}
 <section class="final{% unless fim %} no-img{% endunless %}" id="mlvh-final">
   {%- if fim -%}
     <figure class="final-m">
       <picture>
         {%- if fid != fim -%}<source media="(min-width:901px)" srcset="{{ fid | image_url: width: 1280 }} 1280w, {{ fid | image_url: width: 1920 }} 1920w" sizes="100vw" width="{{ fid.width }}" height="{{ fid.height }}">{%- endif -%}
-        <img src="{{ fim | image_url: width: 800 }}" srcset="{{ fim | image_url: width: 420 }} 420w, {{ fim | image_url: width: 800 }} 800w, {{ fim | image_url: width: 1080 }} 1080w" sizes="100vw" width="{{ fim.width }}" height="{{ fim.height }}" loading="lazy" decoding="async" alt="ראש המקלחת האובאלי של MALINVO">
+        <img src="{{ fim | image_url: width: 800 }}" srcset="{{ fim | image_url: width: 420 }} 420w, {{ fim | image_url: width: 800 }} 800w, {{ fim | image_url: width: 1080 }} 1080w" sizes="100vw" width="{{ fim.width }}" height="{{ fim.height }}" loading="lazy" decoding="async" alt="{{ fim.alt | default: 'ראש המקלחת MALINVO Nova' | escape }}">
       </picture>
     </figure>
   {%- endif -%}
   <div class="n">
     <h2>גם המים יכולים להיות בחירה שלכם.</h2>
     <p class="lead">ראש מקלחת מסנן, שמתקינים בדקה על הצינור הקיים.</p>
-    <a href="{{ buy_url }}" class="btn" data-cta>לבחירת חבילה <span aria-hidden="true">·</span> החל מ-<bdi>{{ from_price }}</bdi></a>
-    <p class="htrust">משלוח חינם · פילטר אחד כלול</p>
+    <a href="{{ url }}" class="btn" data-cta>לעמוד המוצר</a>
   </div>
 </section>

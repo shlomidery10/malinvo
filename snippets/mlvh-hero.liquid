@@ -1,16 +1,16 @@
 {%- doc -%}
-  MALINVO home hero: category tag, headline, one CTA with the price, trust line, one product photo (the LCP element).
-  @param {string} buy_url - Product page bundle picker URL
-  @param {string} from_price - Formatted "from" price, e.g. ₪249.90
+  MALINVO home hero: headline, one line naming the product, one button to the product page, one product photo (the LCP element).
+  No price here: the price lives on the product page only.
+  @param {string} url - Product page URL
   @param {image} [img_m] - Mobile photo (up to 900px)
   @param {image} [img_d] - Desktop photo
   @param {string} [fit] - contain (default) | cover
   @param {boolean} [blend] - Multiply the photo onto the cream background (for photos on a white backdrop)
   @example
-  {% render 'mlvh-hero', buy_url: buy_url, from_price: from_price, img_m: section.settings.hero_image_m %}
+  {% render 'mlvh-hero', url: product_url, img_m: section.settings.hero_image_m %}
 {%- enddoc -%}
-{%- assign him = img_m | default: img_d | default: images['malinvo_oval_whiteset_02.webp'] -%}
-{%- assign hid = img_d | default: img_m | default: images['malinvo_oval_whiteset_02.webp'] -%}
+{%- assign him = img_m | default: img_d | default: images['malinvo_black_06_grip_scale.png'] -%}
+{%- assign hid = img_d | default: img_m | default: images['malinvo_black_06_grip_scale.png'] -%}
 {%- if him -%}
 <!--mlv-preload-->
 {%- if hid != him -%}<link rel="preload" as="image" fetchpriority="high" media="(min-width:901px)" imagesrcset="{{ hid | image_url: width: 900 }} 900w, {{ hid | image_url: width: 1400 }} 1400w" imagesizes="50vw">{%- endif -%}
@@ -20,18 +20,15 @@
 <section class="hero" id="mlvh-hero" aria-labelledby="mlvh-h1">
   <div class="hero-in">
     <div class="hero-t">
-      <p class="htag">MALINVO Nova · ראש מקלחת מסנן</p>
       <h1 id="mlvh-h1">בחרתם להם את השמפו הכי עדין. ומה עם המים עצמם?</h1>
-      <p class="hsub">ראש מקלחת מסנן שמפחית כלור שיורי ותופס חול וחלודה מהצנרת. מתקינים בדקה, בלי כלים.</p>
-      <a href="{{ buy_url }}" class="btn" data-cta>לבחירת חבילה <span aria-hidden="true">·</span> החל מ-<bdi>{{ from_price }}</bdi></a>
-      <p class="htrust">משלוח חינם · עד 15 ימי עסקים · 30 יום להחליט</p>
-      <a href="#mlvh-how" class="tlink">איך זה עובד</a>
+      <p class="hsub">MALINVO Nova, ראש מקלחת מסנן.</p>
+      <a href="{{ url }}" class="btn" data-cta>לעמוד המוצר</a>
     </div>
     {%- if him -%}
       <div class="hero-m{% if fit == 'cover' %} is-cover{% endif %}{% if blend %} is-blend{% endif %}">
         <picture>
           {%- if hid != him -%}<source media="(min-width:901px)" srcset="{{ hid | image_url: width: 900 }} 900w, {{ hid | image_url: width: 1400 }} 1400w" sizes="50vw" width="{{ hid.width }}" height="{{ hid.height }}">{%- endif -%}
-          <img src="{{ him | image_url: width: 640 }}" srcset="{{ him | image_url: width: 360 }} 360w, {{ him | image_url: width: 480 }} 480w, {{ him | image_url: width: 640 }} 640w" sizes="(min-width:901px) 50vw, 100vw" width="{{ him.width }}" height="{{ him.height }}" loading="eager" fetchpriority="high" decoding="async" alt="ראש מקלחת אובאלי MALINVO עם פילטר, בחדר רחצה">
+          <img src="{{ him | image_url: width: 640 }}" srcset="{{ him | image_url: width: 360 }} 360w, {{ him | image_url: width: 480 }} 480w, {{ him | image_url: width: 640 }} 640w" sizes="(min-width:901px) 50vw, 100vw" width="{{ him.width }}" height="{{ him.height }}" loading="eager" fetchpriority="high" decoding="async" alt="{{ him.alt | default: 'ראש המקלחת MALINVO Nova באחיזת יד, בחדר רחצה' | escape }}">
         </picture>
       </div>
     {%- endif -%}
