@@ -260,7 +260,14 @@
         {%- endcomment -%}
         {%- comment -%} New product (oval filter): gallery uses the product's own uploaded media, in Shopify order, with each media's Hebrew alt text. {%- endcomment -%}
         {%- assign gal_spec = '' -%}
-        {%- for m in product.media -%}{%- assign gal_spec = gal_spec | append: 'm|' | append: m.id | append: '|;;' -%}{%- endfor -%}
+        {%- comment -%} Color swap: the hero of every non-default variant is kept out of the slide list; choosing that color swaps slide 1 to it (see "hero color swap" script). {%- endcomment -%}
+        {%- assign alt_hero = null -%}{%- assign alt_hero_color = '' -%}
+        {%- for v in product.variants -%}{%- unless forloop.first -%}{%- if v.featured_media and v.featured_media.id != product.variants.first.featured_media.id -%}{%- assign alt_hero = v.featured_media -%}{%- assign alt_hero_color = v.option1 -%}{%- endif -%}{%- endunless -%}{%- endfor -%}
+        {%- for m in product.media -%}{%- unless alt_hero and m.id == alt_hero.id -%}{%- assign gal_spec = gal_spec | append: 'm|' | append: m.id | append: '|;;' -%}{%- endunless -%}{%- endfor -%}
+        {%- if alt_hero -%}
+        {%- capture alt_srcset -%}{{ alt_hero.preview_image | image_url: width: 600 }} 600w, {{ alt_hero.preview_image | image_url: width: 750 }} 750w, {{ alt_hero.preview_image | image_url: width: 900 }} 900w, {{ alt_hero.preview_image | image_url: width: 1000 }} 1000w, {{ alt_hero.preview_image | image_url: width: 1200 }} 1200w{%- endcapture -%}
+        <script type="application/json" data-hero-alt>{"color":{{ alt_hero_color | json }},"alt":{{ alt_hero.alt | json }},"src":{{ alt_hero.preview_image | image_url: width: 1200 | json }},"thumb":{{ alt_hero.preview_image | image_url: width: 140 | json }},"srcset":{{ alt_srcset | json }}}</script>
+        {%- endif -%}
         {%- assign gal_spec = gal_spec | split: ';;' -%}
         {%- assign gal_ok = '' -%}
         {%- for it in gal_spec -%}
@@ -490,6 +497,26 @@
     };
     if(!bw()&&buy&&'MutationObserver' in window){var mo=new MutationObserver(function(){if(bw())mo.disconnect()});mo.observe(buy,{childList:true,subtree:true})}
   }
+  /* Hero color swap: when the first set in the selected bundle offer is the alternate color, slide 1 shows that color's hero */
+  (function(){
+    var dataEl=document.querySelector('[data-hero-alt]');if(!dataEl)return;
+    var alt;try{alt=JSON.parse(dataEl.textContent)}catch(e){return}
+    var img=document.querySelector('#mlv-s1 img'),th=document.querySelector('#mlv .thumbs .th img');if(!img)return;
+    var base={src:img.getAttribute('src'),srcset:img.getAttribute('srcset'),alt:img.getAttribute('alt'),thumb:th?th.getAttribute('src'):null,thumbset:th?th.getAttribute('srcset'):null};
+    var shown='base';
+    function apply(){
+      var radio=document.querySelector('#bundle-up .bu-offer-radio:checked');
+      var card=radio?radio.closest('.card-offer-wrapper'):null;
+      var sel=card?card.querySelector('.bu-boxes-option.selected, .bu-selected-option'):null;
+      var want=(sel&&sel.getAttribute('data-value')===alt.color)?'alt':'base';
+      if(want===shown)return;shown=want;
+      if(want==='alt'){img.setAttribute('srcset',alt.srcset);img.setAttribute('src',alt.src);img.setAttribute('alt',alt.alt||'');if(th){th.removeAttribute('srcset');th.setAttribute('src',alt.thumb)}}
+      else{img.setAttribute('srcset',base.srcset||'');img.setAttribute('src',base.src);img.setAttribute('alt',base.alt||'');if(th){if(base.thumbset)th.setAttribute('srcset',base.thumbset);th.setAttribute('src',base.thumb)}}
+    }
+    document.addEventListener('click',function(ev){if(ev.target.closest&&ev.target.closest('#bundle-up'))setTimeout(apply,80)});
+    document.addEventListener('change',function(ev){if(ev.target.closest&&ev.target.closest('#bundle-up'))setTimeout(apply,80)});
+  })();
+
   /* Vouch star-rating badge at the top of the buy box: mirrors the real Vouch widget data, auto-updates, hides when there are no reviews */
   (function(){
     var badge=root.querySelector('[data-vouch-badge]');if(!badge)return;
