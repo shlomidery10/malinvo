@@ -55,6 +55,10 @@
 #mlv .price span{font-size:.92rem;color:var(--muted)}
 #mlv .shopify-product-form{display:block}
 #mlv .product-form__buttons button{width:100%}
+#mlv .mlv-price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:2px 0 6px;font-variant-numeric:tabular-nums}
+#mlv .mlv-price__now{font-family:var(--disp);font-weight:800;font-size:1.6rem;line-height:1.1;color:var(--ink)}
+#mlv .mlv-price__was{font-size:1.05rem;color:var(--muted);text-decoration-thickness:1.5px}
+#mlv .mlv-price__note{font-size:.92rem;color:var(--teal-d);font-weight:600}
 #bundle-up{scroll-margin-top:90px}
 /* Vouch Review Widget section at the page bottom: kept only as the data source for the star badge; the visible reviews are the carousel in #mlv-reviews */
 [id$="__17948660484d5ed3da"]{display:none!important}
@@ -333,6 +337,10 @@
           <li><span class="mlv-usp__i" aria-hidden="true">🔁</span><div><b>מחליפים פילטר, לא ראש</b> - חוסך לכם לאורך זמן</div></li>
           <li><span class="mlv-usp__i" aria-hidden="true">🖤</span><div><b>עיצוב אובאלי פרמיום</b> - גימור מט בשחור או בלבן שמשדרג את חדר הרחצה, תחושת ואוו מהרגע הראשון</div></li>
         </ul>
+        {%- comment -%} Launch price: the regular price (compare-at) is real and takes effect on 1.1.2027; until then the line says so explicitly. Renders only while compare-at > price. {%- endcomment -%}
+        {%- if cur.compare_at_price > cur.price -%}
+        <p class="mlv-price"><s class="mlv-price__was"><bdi>₪{{ cur.compare_at_price | money_without_currency }}</bdi></s><b class="mlv-price__now"><bdi>₪{{ cur.price | money_without_currency }}</bdi></b><span class="mlv-price__note">· מחיר השקה עד 31.12.2026</span></p>
+        {%- endif -%}
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>

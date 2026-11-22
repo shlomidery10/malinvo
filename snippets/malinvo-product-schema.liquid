@@ -24,6 +24,9 @@
         "@type": "Offer",
         "priceCurrency": "ILS",
         "price": {{ v.price | divided_by: 100.0 | json }},
+        {%- if v.compare_at_price > v.price %}
+        "priceValidUntil": "2026-12-31",
+        {%- endif %}
         "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
         "itemCondition": "https://schema.org/NewCondition",
         "url": {{ shop.url | append: product.url | json }},
