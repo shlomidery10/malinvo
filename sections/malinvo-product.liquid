@@ -63,7 +63,12 @@
 #mlv #bundle-up .bundle-name p{margin:0}
 #mlv #bundle-up .bundle-name span{font-size:16px!important;font-weight:700;color:var(--ink)!important}
 #mlv #bundle-up .bundle-offer-cards-container{flex-direction:column;justify-content:flex-start;gap:10px;margin:0 0 14px}
-#mlv #bundle-up .card-offer-wrapper{width:100%;max-width:none;flex:none}
+#mlv #bundle-up .card-offer-wrapper{width:100%;max-width:none;flex:none;position:relative;z-index:3}
+/* Color dropdowns open downward over the next card: earlier cards must paint above later ones, even while the press effect (transform) makes a stacking context */
+#mlv #bundle-up .card-offer-wrapper:nth-child(2){z-index:2}
+#mlv #bundle-up .card-offer-wrapper:nth-child(n+3){z-index:1}
+#mlv #bundle-up .bu-selector{position:relative;z-index:50}
+#mlv #bundle-up .bu-select-items{z-index:1000}
 #mlv #bundle-up .offer-wrapper-label{cursor:pointer;display:block}
 #mlv #bundle-up .bundle-offer-card{width:100%;height:auto;min-height:0;border-radius:14px;transition:transform 160ms var(--ease-out),border-color 200ms ease,background-color 200ms ease,box-shadow 200ms ease;-webkit-tap-highlight-color:transparent}
 #mlv #bundle-up .offer-wrapper-label:active .bundle-offer-card{transform:scale(.98)}
