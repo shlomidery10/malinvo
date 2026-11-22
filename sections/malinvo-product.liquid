@@ -56,6 +56,8 @@
 #mlv .shopify-product-form{display:block}
 #mlv .product-form__buttons button{width:100%}
 #bundle-up{scroll-margin-top:90px}
+/* Vouch Review Widget section at the page bottom: kept only as the data source for the star badge; the visible reviews are the carousel in #mlv-reviews */
+[id$="__17948660484d5ed3da"]{display:none!important}
 #mlv #bundle-up,#mlv #bundle-up *{font-family:var(--body)}
 #mlv #bundle-up .bundle-name{justify-content:flex-start;margin:0 0 10px}
 #mlv #bundle-up .bundle-name p{margin:0}
@@ -359,6 +361,14 @@
   </section>
   {%- endif -%}
 
+  {%- if section.blocks.size > 0 -%}
+  <section class="sec" id="mlv-reviews">
+    <div class="w">
+      {%- for block in section.blocks -%}{%- if block.type == '@app' -%}<div {{ block.shopify_attributes }}>{% render block %}</div>{%- endif -%}{%- endfor -%}
+    </div>
+  </section>
+  {%- endif -%}
+
   {%- assign real_img = null -%}
   {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
   {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result %}
@@ -478,7 +488,7 @@
       if(!isNaN(avg)){fill.style.width=(Math.max(0,Math.min(5,avg))/5*100)+'%';avgEl.textContent=avg.toFixed(1)}else{fill.style.width='100%'}
       cntEl.textContent=cnt.toLocaleString('he-IL')+' חוות דעת';
       badge.hidden=false;
-      badge.addEventListener('click',function(ev){ev.preventDefault();var t=document.querySelector('.review-widget');if(t)(t.closest('[id^="shopify-block"]')||t).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})});
+      badge.addEventListener('click',function(ev){ev.preventDefault();var t=document.getElementById('mlv-reviews')||document.querySelector('.review-widget');if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})});
       return true;
     }
     if(!fillBadge()){var iv2=setInterval(function(){if(fillBadge()||++tries>80)clearInterval(iv2)},250)}
@@ -491,6 +501,7 @@
   "name": "MALINVO product",
   "tag": "section",
   "class": "mlv-section",
+  "blocks": [ { "type": "@app" } ],
   "settings": [
     { "type": "header", "content": "סקשן 2: מה מגיע מהצנרת" },
     { "type": "image_picker", "id": "pipe_image_m", "label": "אינפוגרפיקה למובייל (4:5)" },

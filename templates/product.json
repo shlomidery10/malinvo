@@ -11,6 +11,15 @@
   "sections": {
     "main": {
       "type": "malinvo-product",
+      "blocks": {
+        "vouch_review_carousel": {
+          "type": "shopify://apps/vouch/blocks/review-carousel/019c19f2-9a2e-7832-a209-16355608caa1",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "vouch_review_carousel"
+      ],
       "settings": {
         "show_strip_results": false,
         "strip_result": "",
