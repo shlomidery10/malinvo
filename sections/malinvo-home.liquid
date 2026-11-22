@@ -10,7 +10,7 @@
     {%- if cp.id == 10898707939493 -%}{%- assign p = cp -%}{%- break -%}{%- endif -%}
   {%- endfor -%}
 {%- endif -%}
-{%- if p == blank -%}{%- assign p = all_products['filter-shower-head-oval'] -%}{%- endif -%}
+{%- if p == blank -%}{%- assign p = all_products['malinvo-nova'] -%}{%- endif -%}
 {%- assign v_set = null -%}
 {%- comment -%} The single-set price. The product still carries leftover import variants, so pick the sold set explicitly instead of the first or cheapest variant. {%- endcomment -%}
 {%- for v in p.variants -%}
@@ -18,7 +18,7 @@
 {%- endfor -%}
 {%- assign fromv = v_set | default: p.selected_or_first_available_variant -%}
 {%- capture from_price -%}₪{{ fromv.price | money_without_currency | remove: '.00' }}{%- endcapture -%}
-{%- assign purl = p.url | default: '/products/filter-shower-head-oval' -%}
+{%- assign purl = p.url | default: '/products/malinvo-nova' -%}
 {%- assign buy_url = purl | append: '#bundle-up' -%}
 {%- assign s = section.settings -%}
 
