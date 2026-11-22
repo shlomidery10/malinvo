@@ -105,6 +105,15 @@
 #mlv .trio li{display:inline-flex;align-items:center;gap:6px}
 #mlv .track:focus-visible{outline:3px solid var(--teal-d);outline-offset:-3px}
 .mlv-sticky:focus-visible{outline:3px solid #d9a27a;outline-offset:3px}
+#mlv .need{display:grid;gap:10px;margin:22px 0 0;padding:0;list-style:none}
+#mlv .need li{display:grid;gap:3px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+#mlv .need li.is-hi{border-color:var(--teal);border-inline-start-width:4px}
+#mlv .need b{font-family:var(--disp);font-weight:800;font-size:1.08rem;color:var(--ink)}
+#mlv .need span{color:var(--ink2);font-size:.95rem}
+#mlv .need-n{margin-block-start:18px;font-weight:600;color:var(--ink);line-height:1.55}
+#mlv .need-s{margin-block-start:10px;font-size:.84rem;line-height:1.5;color:var(--muted)}
+#mlv .need-s a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere}
+@media(min-width:621px){#mlv .need{grid-template-columns:repeat(2,minmax(0,1fr))}}
 #mlv .terms{display:grid;margin:22px 0 0;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
 #mlv .terms>div{display:grid;grid-template-columns:minmax(92px,auto) 1fr;gap:14px;align-items:baseline;padding:14px 16px;border-block-start:1px solid var(--line)}
 #mlv .terms>div:first-child{border-block-start:0}
@@ -383,6 +392,21 @@
           {% render 'mlv-buy-more' %}
         </div>
       </div>
+    </div>
+  </section>
+
+  {%- comment -%} The need, stated from a published study. Wording follows the paper: blood trihalomethane levels in adults were highest after a 10-minute shower and lowest after drinking 1 L of tap water. It did not test this product, and the section says so. {%- endcomment -%}
+  <section class="sec mist" id="mlv-need">
+    <div class="n">
+      <span class="kick">למה גם המקלחת</span>
+      <h2>על מי השתייה שלהם אתם כבר מקפידים.</h2>
+      <p class="lead">ומה עם המים שבמקלחת? במחקר שמדד רמות בדם, אחרי מקלחת של 10 דקות נמצאו יותר תוצרי לוואי של כלור מאשר אחרי שתיית ליטר שלם של מי ברז.</p>
+      <ul class="need">
+        <li class="is-hi"><b>מקלחת של 10 דקות</b><span>הרמה הגבוהה ביותר שנמדדה בדם</span></li>
+        <li><b>שתיית ליטר מי ברז</b><span>הרמה הנמוכה ביותר שנמדדה בדם</span></li>
+      </ul>
+      <p class="need-n">הפילטר של MALINVO Nova מפחית כלור שיורי במי המקלחת. המחקר עצמו לא בדק את המוצר שלנו.</p>
+      <p class="need-s">מקור: <a href="https://pubmed.ncbi.nlm.nih.gov/10981726/" target="_blank" rel="noopener">Backer ואחרים, Journal of Exposure Analysis and Environmental Epidemiology, 2000</a>. מחקר של חוקרי המרכז האמריקאי לבקרת מחלות (CDC), שנערך במבוגרים.</p>
     </div>
   </section>
 
