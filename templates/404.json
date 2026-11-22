@@ -65,7 +65,7 @@
           "name": "t:names.button",
           "settings": {
             "label": "לראש המקלחת",
-            "link": "shopify://products/filter-shower-head-oval",
+            "link": "shopify://products/malinvo-nova",
             "open_in_new_tab": false,
             "style_class": "button",
             "width": "fit-content",

@@ -35,6 +35,7 @@
           <source media="(min-width:750px)" srcset="{{ img_wide | image_url: width: 1000 }} 1000w, {{ img_wide | image_url: width: 1840 }} 1840w" sizes="(min-width:960px) 920px, 100vw" width="{{ img_wide.width }}" height="{{ img_wide.height }}">
           <img src="{{ img_tall | image_url: width: 800 }}" srcset="{{ img_tall | image_url: width: 500 }} 500w, {{ img_tall | image_url: width: 800 }} 800w, {{ img_tall | image_url: width: 1080 }} 1080w" sizes="100vw" width="{{ img_tall.width }}" height="{{ img_tall.height }}" loading="lazy" decoding="async" alt="{{ pipe_alt }}">
         </picture>
+        <figcaption style="position:absolute;bottom:10px;inset-inline-start:12px;margin:0;padding:2px 10px;border-radius:999px;background:rgba(21,35,43,.6);color:#fff;font-size:11px;line-height:1.6">המחשה</figcaption>
       </figure>
     {%- else -%}
       {%- assign ph = images['malinvo_black_03_filter_inside.png'] -%}
