@@ -363,6 +363,10 @@
 
   {%- if section.blocks.size > 0 -%}
   <section class="sec" id="mlv-reviews">
+    <div class="n" style="text-align:center;margin-bottom:28px">
+      <span class="kick">ביקורות</span>
+      <h2>מה אומרים אחרי המקלחת הראשונה</h2>
+    </div>
     <div class="w">
       {%- for block in section.blocks -%}{%- if block.type == '@app' -%}<div {{ block.shopify_attributes }}>{% render block %}</div>{%- endif -%}{%- endfor -%}
     </div>
