@@ -110,6 +110,8 @@
 #mlv .need li.is-hi{border-color:var(--teal);border-inline-start-width:4px}
 #mlv .need b{font-family:var(--disp);font-weight:800;font-size:1.08rem;color:var(--ink)}
 #mlv .need span{color:var(--ink2);font-size:.95rem}
+#mlv .need-brand{display:inline-flex;align-items:baseline;gap:.3em;white-space:nowrap}
+#mlv .need-logo{display:block;block-size:1.05em;inline-size:auto}
 #mlv .need-n{margin-block-start:18px;font-weight:600;color:var(--ink);line-height:1.55}
 @media(min-width:621px){#mlv .need{grid-template-columns:repeat(2,minmax(0,1fr))}}
 #mlv .terms{display:grid;margin:22px 0 0;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
@@ -403,7 +405,8 @@
         <li class="is-hi"><b>מקלחת של 10 דקות</b><span>הרמה הגבוהה ביותר שנמדדה בדם</span></li>
         <li><b>שתיית ליטר מי ברז</b><span>הרמה הנמוכה ביותר שנמדדה בדם</span></li>
       </ul>
-      <p class="need-n">הפילטר של MALINVO Nova מפחית כלור שיורי במי המקלחת.</p>
+      {%- assign need_logo = images['malinvo_logo_dark.png'] -%}
+      <p class="need-n">הפילטר של <span class="need-brand" dir="ltr">{%- if need_logo -%}<img class="need-logo" src="{{ need_logo | image_url: height: 60 }}" srcset="{{ need_logo | image_url: height: 60 }} 1x, {{ need_logo | image_url: height: 120 }} 2x, {{ need_logo | image_url: height: 180 }} 3x" width="{{ need_logo.width }}" height="{{ need_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}MALINVO{%- endif %} Nova</span> מפחית כלור שיורי במי המקלחת.</p>
     </div>
   </section>
 
