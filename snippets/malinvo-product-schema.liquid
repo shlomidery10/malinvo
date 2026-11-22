@@ -1,7 +1,7 @@
 {%- comment -%} MALINVO Product + Offer (ILS, the single-set price) + BreadcrumbList. No hardcoded rating: review markup must come from the live review data. Return and delivery values mirror the published policies (customer pays return shipping; 1-3 business days handling plus up to 15 business days delivery). {%- endcomment -%}
 {%- assign v = product.selected_or_first_available_variant -%}
-{%- comment -%} The product still carries leftover import variants; the sold single set is the "Black" variant. Falls back to the default variant once they are cleaned up. {%- endcomment -%}
-{%- for pv in product.variants -%}{%- if pv.title == 'Black' -%}{%- assign v = pv -%}{%- break -%}{%- endif -%}{%- endfor -%}
+{%- comment -%} Two sold variants (שחור / לבן); the schema describes the selected one, defaulting to the black set. {%- endcomment -%}
+{%- if v == blank -%}{%- for pv in product.variants -%}{%- if pv.title == 'שחור' -%}{%- assign v = pv -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- endif -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -15,7 +15,7 @@
       "image": [{%- assign mv_first = true -%}{%- for m in product.media limit: 6 -%}{%- if m.media_type == 'image' -%}{%- unless mv_first -%},{%- endunless -%}{{ m | image_url: width: 1200 | prepend: 'https:' | json }}{%- assign mv_first = false -%}{%- endif -%}{%- endfor -%}],
       "brand": { "@type": "Brand", "name": "MALINVO" },
       "category": "ראש מקלחת עם פילטר",
-      "color": "שחור מט",
+      "color": {{ v.title | append: ' מט' | json }},
       "material": "ABS",
       {%- if v.sku != blank %}
       "sku": {{ v.sku | json }},
