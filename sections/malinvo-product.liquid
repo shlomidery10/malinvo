@@ -88,12 +88,27 @@
 #mlv #BU-action-button{min-height:56px;border-radius:999px!important;-webkit-tap-highlight-color:transparent;transition:transform 160ms var(--ease-out),background-color 200ms ease}
 #mlv #BU-action-button:active{transform:scale(.97)}
 #mlv .bu-payment-icons{--bu-payment-icon-height:24px!important;flex-wrap:wrap;max-width:100%;margin-top:10px}
-#mlv .reass{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center;font-size:.8rem;font-weight:700;line-height:1.3}
-#mlv .reass li{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;background:var(--mist);border-radius:12px;padding:9px 6px}
+#mlv .reass{display:grid;gap:8px;font-size:.92rem;font-weight:600;line-height:1.4}
+#mlv .reass li{display:flex;align-items:center;gap:11px;background:var(--mist);border-radius:12px;padding:11px 14px}
 #mlv .reass svg,#mlv .trio svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--teal-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 #mlv .trio li{display:inline-flex;align-items:center;gap:6px}
 #mlv .track:focus-visible{outline:3px solid var(--teal-d);outline-offset:-3px}
 .mlv-sticky:focus-visible{outline:3px solid #d9a27a;outline-offset:3px}
+#mlv .terms{display:grid;margin:22px 0 0;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+#mlv .terms>div{display:grid;grid-template-columns:minmax(92px,auto) 1fr;gap:14px;align-items:baseline;padding:14px 16px;border-block-start:1px solid var(--line)}
+#mlv .terms>div:first-child{border-block-start:0}
+#mlv .terms dt{font-weight:800;color:var(--ink)}
+#mlv .terms dd{margin:0;color:var(--ink2);line-height:1.55}
+#mlv .terms-l{margin-block-start:14px;font-size:.95rem}
+#mlv .terms-l a{display:inline-block;padding-block:11px;color:var(--teal-d);font-weight:700;text-underline-offset:3px}
+#mlv .rvs{display:grid;gap:14px;margin:24px 0 0;padding:0;list-style:none}
+#mlv .rv{display:grid;gap:10px;padding:18px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+#mlv .rv img{inline-size:56px;block-size:56px;border-radius:50%;object-fit:cover}
+#mlv .rv blockquote{margin:0;font-size:1rem;line-height:1.6;color:var(--ink2)}
+#mlv .rv cite{font-style:normal;font-weight:800;color:var(--ink)}
+#mlv .homes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:24px 0 0;padding:0;list-style:none}
+#mlv .homes img{display:block;inline-size:100%;block-size:auto;aspect-ratio:1/1;object-fit:cover;border-radius:14px}
+@media(min-width:901px){#mlv .rvs{grid-template-columns:repeat(3,minmax(0,1fr))}#mlv .homes{grid-template-columns:repeat(3,minmax(0,1fr))}}
 #mlv .mlv-accs{display:grid;gap:8px}
 #mlv .mlv-accs .mlv-gtee{margin:0}
 #mlv.js [data-stagger]>*{opacity:0;transform:translateY(var(--d,14px))}
@@ -227,7 +242,10 @@
 #mlv .mlv-lockup__word{font-family:var(--disp);font-weight:300;font-size:1.5rem;letter-spacing:.14em;color:var(--ink);line-height:1;text-transform:uppercase}
 #mlv .mlv-usp{display:grid;gap:10px;margin:16px 0 4px;padding:0}
 #mlv .mlv-usp li{display:flex;gap:11px;align-items:flex-start;font-size:.97rem;line-height:1.45;color:var(--ink2)}
-#mlv .mlv-usp__i{flex:none;font-size:1.18rem;line-height:1.3}
+#mlv .mlv-usp li::before{content:"";flex:none;inline-size:7px;block-size:7px;border-radius:50%;background:var(--teal);margin-block-start:.56em}
+#mlv .mlv-sub{font-size:1.02rem;line-height:1.55;color:var(--ink2)}
+#mlv .buy-note{font-size:.92rem;line-height:1.5;color:var(--ink2)}
+#mlv .buy-note a,#mlv .reass a{color:var(--teal-d);font-weight:700;text-underline-offset:3px}
 #mlv .mlv-usp b{color:var(--ink);font-weight:700}
 #mlv .mlv-vouch-badge{display:inline-flex;align-items:center;gap:7px;margin:0 0 14px;text-decoration:none;color:var(--ink2);font-size:.92rem;line-height:1;-webkit-tap-highlight-color:transparent}
 #mlv .mlv-vouch-stars{position:relative;display:inline-block;font-size:1rem;line-height:1;letter-spacing:1px;color:#e7ddcb;direction:ltr;white-space:nowrap}
@@ -312,30 +330,29 @@
           <span class="mlv-sep" aria-hidden="true"></span>
           <span class="mlv-nova">Nova<span class="mlv-tm">&trade;</span></span>
         </h1>
-        <p class="mlv-tag">הצעד הראשון של המקלחת שלך. זרם מלא וצפוף, מים מסוננים, התקנה בדקה.</p>
+        <p class="mlv-tag">בחרתם להם את השמפו הכי עדין. ומה עם המים עצמם?</p>
+        <p class="mlv-sub">MALINVO Nova, ראש מקלחת מסנן. מפחית כלור שיורי ותופס חול וחלודה מהצנרת, לפני שהמים מגיעים אליהם.</p>
         <a class="mlv-vouch-badge" href="#mlv-reviews" data-vouch-badge hidden>
           <span class="mlv-vouch-stars" aria-hidden="true"><span class="mlv-vouch-fill">★★★★★</span>★★★★★</span>
           <b class="mlv-vouch-avg"></b>
           <span class="mlv-vouch-count"></span>
         </a>
         <ul class="mlv-usp">
-          <li><span class="mlv-usp__i" aria-hidden="true">💧</span><div><b>זרם חזק וצפוף</b> - תחושת מים מלאה ועוצמתית בכל מקלחת</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">🧪</span><div><b>פילטר פחם פעיל 4 שכבות</b> - מפחית כלור שיורי, חול, חלודה ומשקעים מהצנרת</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">✨</span><div><b>מים נקיים יותר</b> - פחות כלור ומשקעים בדרך אליכם</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">⏱️</span><div><b>התקנה בדקה</b> - מבריגים לצינור, בלי כלים ובלי אינסטלטור</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">🔁</span><div><b>מחליפים פילטר, לא ראש</b> - חוסך לכם לאורך זמן</div></li>
-          <li><span class="mlv-usp__i" aria-hidden="true">🖤</span><div><b>עיצוב אובאלי פרמיום</b> - גימור שחור מט שמשדרג את חדר הרחצה, תחושת ואוו מהרגע הראשון</div></li>
+          <li><div><b>מים מסוננים בכל מקלחת.</b> הפילטר מפחית כלור שיורי ותופס חלקיקים, חול וחלודה מהצנרת.</div></li>
+          <li><div><b>זרם מלא וצפוף.</b> חורים זעירים מרכזים את המים, בלי לשנות את הלחץ בבית.</div></li>
+          <li><div><b>מתקינים בדקה.</b> מבריגים לצינור המקלחת הקיים, בלי כלים ובלי אינסטלטור.</div></li>
+          <li><div><b>מחליפים רק את הפילטר.</b> הראש נשאר אצלכם.</div></li>
         </ul>
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
         </form>
-        <p style="margin:12px 0 0;color:#3a4a54;font-size:14.5px">הקנייה שלכם מכוסה ב-30 יום החזרה. תתקינו, תתרשמו, ותחליטו בנחת.</p>
+        <p class="buy-note">30 יום להחליט, מיום שהמוצר אצלכם. <a href="#mlv-terms">כל התנאים כתובים כאן למטה</a>.</p>
         {%- comment -%} Risk-reversal near CTA. Shipping from 10_SHIPPING; returns 30d approved by owner; warranty = placeholder. {%- endcomment -%}
         <ul class="reass">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם עד הבית · עד 15 ימי עסקים, עם מספר מעקב</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם · עד 15 ימי עסקים, עם מספר מעקב</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> <a href="/pages/refund-policy">מדיניות ההחזרות</a></span></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מותג ישראלי · מענה בעברית</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מענה בעברית</span></li>
         </ul>        <div class="mlv-accs">
           {% render 'malinvo-guarantee' %}
           {% render 'mlv-buy-more' %}
@@ -344,17 +361,31 @@
     </div>
   </section>
 
+  <section class="sec" id="mlv-terms">
+    <div class="n">
+      <span class="kick">בשקיפות</span>
+      <h2>משלוח והחזרות, בלי אותיות קטנות</h2>
+      <dl class="terms">
+        <div><dt>משלוח</dt><dd>חינם, לכל הארץ.</dd></div>
+        <div><dt>זמן אספקה</dt><dd>1–3 ימי עסקים טיפול בהזמנה, ועד 15 ימי עסקים משלוח. מספר מעקב נשלח במייל.</dd></div>
+        <div><dt>החזרה</dt><dd>30 יום מיום הקבלה.</dd></div>
+        <div><dt>חשוב לדעת</dt><dd>בהחזרה משינוי דעת, משלוח ההחזרה עליכם. מוצר שהותקן עשוי לקבל זיכוי חלקי, ופילטר שנפתח אינו מוחזר.</dd></div>
+      </dl>
+      <p class="terms-l"><a href="/pages/shipping-policy">מדיניות המשלוחים</a><span aria-hidden="true"> · </span><a href="/pages/refund-policy">מדיניות ההחזרות</a></p>
+    </div>
+  </section>
+
   {%- assign cmp_stream = images['craftad-e9e8e197.png'] -%}
   {%- if cmp_stream -%}
   <section class="sec mist" id="mlv-stream">
     <div class="n" style="text-align:center">
-      <span class="kick">ההוכחה</span>
-      <h2>ההבדל שרואים בזרם</h2>
-      <p class="lead">ראש רגיל מול MALINVO Nova - אותו ברז, זרם אחר לגמרי.</p>
+      <span class="kick">הזרם</span>
+      <h2>כך נראה זרם מלא וצפוף</h2>
+      <p class="lead">חורים זעירים מרכזים את המים. הלחץ בבית נשאר כמו שהוא.</p>
       <figure class="mlv-stream-fig">
         <img src="{{ cmp_stream | image_url: width: 1100 }}" srcset="{{ cmp_stream | image_url: width: 640 }} 640w, {{ cmp_stream | image_url: width: 900 }} 900w, {{ cmp_stream | image_url: width: 1100 }} 1100w" sizes="(min-width:620px) 560px, 94vw" width="{{ cmp_stream.width }}" height="{{ cmp_stream.height }}" loading="lazy" decoding="async" alt="השוואת זרם: ראש מקלחת רגיל מול MALINVO Nova עם פילטר">
       </figure>
-      <a class="btn" href="#bundle-up" data-to-buy style="margin-top:22px">רוצה את הזרם הזה</a>
+      <a class="btn" href="#bundle-up" data-to-buy style="margin-top:22px">לבחירת חבילה</a>
     </div>
   </section>
   {%- endif -%}
@@ -365,6 +396,53 @@
   {% render 'mlv-benefits', img: section.settings.benefits_image %}
   {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
   {% render 'mlv-compare' %}
+
+  <section class="sec" id="mlv-adults">
+    <div class="n" style="text-align:center">
+      <span class="kick">לכל המשפחה</span>
+      <h2>וגם המקלחת שלכם</h2>
+      <p class="lead">אותו פילטר, אותם מים: פחות כלור שיורי גם במקלחת של ההורים.</p>
+    </div>
+  </section>
+
+  {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
+  {%- capture rv_html -%}
+    {%- for i in (1..3) -%}
+      {%- assign kt = 'review' | append: i | append: '_text' -%}{%- assign kn = 'review' | append: i | append: '_name' -%}{%- assign ki = 'review' | append: i | append: '_image' -%}
+      {%- assign rt = section.settings[kt] -%}{%- assign rn = section.settings[kn] -%}{%- assign ri = section.settings[ki] -%}
+      {%- if rt != blank and rn != blank -%}
+        <li class="rv">
+          {%- if ri -%}<img src="{{ ri | image_url: width: 160 }}" srcset="{{ ri | image_url: width: 80 }} 1x, {{ ri | image_url: width: 160 }} 2x" width="56" height="56" loading="lazy" decoding="async" alt="">{%- endif -%}
+          <blockquote>{{ rt | escape }}</blockquote>
+          <cite>{{ rn | escape }}</cite>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- assign rv_html = rv_html | strip -%}
+  {%- if rv_html != blank -%}
+  <section class="sec mist" id="mlv-parents">
+    <div class="w">
+      <h2>הורים מספרים</h2>
+      <ul class="rvs">{{ rv_html }}</ul>
+    </div>
+  </section>
+  {%- endif -%}
+  {%- capture ph_html -%}
+    {%- for i in (1..6) -%}
+      {%- assign kp = 'home_photo' | append: i -%}{%- assign hp = section.settings[kp] -%}
+      {%- if hp -%}<li><img src="{{ hp | image_url: width: 600 }}" srcset="{{ hp | image_url: width: 360 }} 360w, {{ hp | image_url: width: 600 }} 600w, {{ hp | image_url: width: 900 }} 900w" sizes="(min-width:901px) 300px, 46vw" width="{{ hp.width }}" height="{{ hp.height }}" loading="lazy" decoding="async" alt="{{ hp.alt | default: 'MALINVO Nova אצל לקוחות' | escape }}"></li>{%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- assign ph_html = ph_html | strip -%}
+  {%- if ph_html != blank -%}
+  <section class="sec" id="mlv-homes">
+    <div class="w">
+      <h2>אצלכם בבית</h2>
+      <ul class="homes">{{ ph_html }}</ul>
+    </div>
+  </section>
+  {%- endif -%}
 
   <section class="sec" id="mlv-faq">
     <div class="n">
@@ -377,7 +455,7 @@
 ;;מה הפילטר מפחית?::פילטר פחם פעיל בארבע שכבות: יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הוא מפחית כלור שיורי, ותופס חלקיקים, חול וחלודה שמגיעים מהצנרת. איננו מצטטים אחוזים כי אין לנו בדיקת מעבדה.
 ;;האם זה מרכך מים או מסיר אבנית?::לא. זהו פילטר פחם פעיל שמפחית כלור שיורי ותופס חלקיקים, חול וחלודה מהצנרת - הוא אינו מרכך מים ואינו מסיר אבנית (מינרלים כמו סידן ומגנזיום). אם חשוב לכם פחות כלור שיורי ופחות חלקיקים, חול וחלודה במים, בשביל זה הוא נועד.
 ;;כל כמה זמן מחליפים את הפילטר?::זה תלוי בשימוש ובאיכות המים אצלכם, ולכן לא נוקבים במספר קבוע. הסימנים להחלפה פשוטים: ירידה מורגשת בעוצמת הזרם, או שהפילטר כבר לא נראה נקי. אז פשוט מבריגים פילטר חדש במקומו - מחליפים את הפילטר בלבד, הראש נשאר איתכם.
-;;כמה זמן לוקח המשלוח?::המשלוח חינם עד הבית, וזמן האספקה המשוער הוא עד 15 ימי עסקים מרגע ההזמנה, עם מספר מעקב שנשלח במייל. ימי עסקים הם א׳–ה׳, בלי שישי-שבת וחגים. במקרים חריגים (מכס, עומסי חגים) ייתכן עיכוב קצר, ואנחנו כאן לעדכן אתכם בדרך.
+;;כמה זמן לוקח המשלוח?::המשלוח חינם. מכינים את ההזמנה תוך 1–3 ימי עסקים, והמשלוח עצמו לוקח עד 15 ימי עסקים, עם מספר מעקב שנשלח במייל. ימי עסקים הם ימים א׳–ה׳, לא כולל חגים. אם יהיה עיכוב חריג, נעדכן אתכם במייל.
 ;;מה אם לא מתאים לי? אפשר להחזיר?::<strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/pages/refund-policy">מדיניות ההחזרות</a>.
 ;;זה יתאים למקלחת שלי?::הראש מתברג לצינור המקלחת הרגיל ומתאים לרוב המקלחות בישראל. יש שאלה על הברז שלכם? שלחו תמונה ל-<a href="mailto:support.malinvo@gmail.com">support.malinvo@gmail.com</a> ונענה לפני ההזמנה.
 ;;ממה הראש עשוי?::גוף ABS קל ונוח לאחיזה, עם גימור מט.
@@ -403,15 +481,15 @@
       {%- assign fimg = section.settings.final_image -%}
       <figure class="final-m">
         {%- if fimg -%}
-          <img src="{{ fimg | image_url: width: 1040 }}" srcset="{{ fimg | image_url: width: 520 }} 520w, {{ fimg | image_url: width: 720 }} 720w, {{ fimg | image_url: width: 840 }} 840w, {{ fimg | image_url: width: 1040 }} 1040w" sizes="(min-width:560px) 520px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ fimg.width }}" height="{{ fimg.height }}" loading="lazy" decoding="async" alt="{{ fimg.alt | default: 'MALINVO: משלוח חינם עד הבית, מעקב במייל ו-30 יום להחליט' | escape }}">
+          <img src="{{ fimg | image_url: width: 1040 }}" srcset="{{ fimg | image_url: width: 520 }} 520w, {{ fimg | image_url: width: 720 }} 720w, {{ fimg | image_url: width: 840 }} 840w, {{ fimg | image_url: width: 1040 }} 1040w" sizes="(min-width:560px) 520px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ fimg.width }}" height="{{ fimg.height }}" loading="lazy" decoding="async" alt="{{ fimg.alt | default: 'MALINVO: משלוח חינם, מעקב במייל ו-30 יום להחליט' | escape }}">
         {%- else -%}
           {%- assign fph = images['malinvo_black_01_hero.png'] -%}
-          <img src="{{ fph | image_url: width: 1040 }}" srcset="{{ fph | image_url: width: 520 }} 520w, {{ fph | image_url: width: 720 }} 720w, {{ fph | image_url: width: 840 }} 840w, {{ fph | image_url: width: 1040 }} 1040w" sizes="(min-width:560px) 520px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ fph.width }}" height="{{ fph.height }}" loading="lazy" decoding="async" alt="MALINVO Nova: משלוח חינם עד הבית, מעקב במייל ו-30 יום להחליט">
+          <img src="{{ fph | image_url: width: 1040 }}" srcset="{{ fph | image_url: width: 520 }} 520w, {{ fph | image_url: width: 720 }} 720w, {{ fph | image_url: width: 840 }} 840w, {{ fph | image_url: width: 1040 }} 1040w" sizes="(min-width:560px) 520px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ fph.width }}" height="{{ fph.height }}" loading="lazy" decoding="async" alt="MALINVO Nova: משלוח חינם, מעקב במייל ו-30 יום להחליט">
         {%- endif -%}
       </figure>
       <h2>30 יום להחליט, אצלכם בבית</h2>
       <p class="lead">מזמינים, מנסים, ויש לכם 30 יום להחליט.</p>
-      <ul class="trio"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>משלוח חינם עד הבית</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>מעקב במייל</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</li></ul>
+      <ul class="trio"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>משלוח חינם</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>מעקב במייל</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</li></ul>
       <a href="#bundle-up" class="btn" data-to-buy>לבחירת חבילה</a>
     </div>
   </section>
@@ -493,6 +571,24 @@
   "tag": "section",
   "class": "mlv-section",
   "settings": [
+    { "type": "header", "content": "הורים מספרים (מוסתר עד שממלאים)" },
+    { "type": "paragraph", "content": "רק ביקורות אמיתיות של לקוחות. ביקורת מוצגת כשיש לה גם טקסט וגם שם." },
+    { "type": "textarea", "id": "review1_text", "label": "ביקורת 1: טקסט" },
+    { "type": "text", "id": "review1_name", "label": "ביקורת 1: שם" },
+    { "type": "image_picker", "id": "review1_image", "label": "ביקורת 1: תמונה (לא חובה)" },
+    { "type": "textarea", "id": "review2_text", "label": "ביקורת 2: טקסט" },
+    { "type": "text", "id": "review2_name", "label": "ביקורת 2: שם" },
+    { "type": "image_picker", "id": "review2_image", "label": "ביקורת 2: תמונה (לא חובה)" },
+    { "type": "textarea", "id": "review3_text", "label": "ביקורת 3: טקסט" },
+    { "type": "text", "id": "review3_name", "label": "ביקורת 3: שם" },
+    { "type": "image_picker", "id": "review3_image", "label": "ביקורת 3: תמונה (לא חובה)" },
+    { "type": "header", "content": "אצלכם בבית: תמונות אמיתיות (מוסתר עד שממלאים)" },
+    { "type": "image_picker", "id": "home_photo1", "label": "תמונה 1" },
+    { "type": "image_picker", "id": "home_photo2", "label": "תמונה 2" },
+    { "type": "image_picker", "id": "home_photo3", "label": "תמונה 3" },
+    { "type": "image_picker", "id": "home_photo4", "label": "תמונה 4" },
+    { "type": "image_picker", "id": "home_photo5", "label": "תמונה 5" },
+    { "type": "image_picker", "id": "home_photo6", "label": "תמונה 6" },
     { "type": "header", "content": "סקשן 2: מה מגיע מהצנרת" },
     { "type": "image_picker", "id": "pipe_image_m", "label": "אינפוגרפיקה למובייל (4:5)" },
     { "type": "image_picker", "id": "pipe_image_d", "label": "אינפוגרפיקה לדסקטופ (16:9)" },
