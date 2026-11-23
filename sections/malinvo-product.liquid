@@ -105,24 +105,23 @@
 #mlv .trio li{display:inline-flex;align-items:center;gap:6px}
 #mlv .track:focus-visible{outline:3px solid var(--teal-d);outline-offset:-3px}
 .mlv-sticky:focus-visible{outline:3px solid #d9a27a;outline-offset:3px}
-#mlv .big{background:#0b0d0e;color:#fff;padding-block:clamp(44px,8vw,88px)}
 #mlv .big :where(p){margin:0}
-#mlv .big-k{display:block;margin-block-end:16px;font-size:.8rem;font-weight:700;letter-spacing:.08em;color:#aab2b4}
-#mlv .big-n{font:900 clamp(5.4rem,22vw,8.5rem)/.9 var(--disp);color:#e23b2e}
-#mlv .big-n small{font-size:.28em;font-weight:800;color:#fff;margin-inline-start:.25em}
-#mlv .big-t{margin:14px 0 0;font:800 clamp(1.4rem,4.6vw,2rem)/1.32 var(--disp);color:#fff;text-wrap:balance}
-#mlv .big-t mark{background:#e23b2e;color:#fff;padding:0 .22em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-#mlv .big-by{margin-block-start:16px;font-size:.95rem;color:#aab2b4}
-#mlv .big-inf{margin-block-start:14px;font:700 1.1rem/1.45 var(--disp);color:#fff}
-#mlv .big-f{display:grid;gap:10px;margin:22px 0 0;padding:18px 0 0;list-style:none;border-block-start:1px solid #2c3133;font-size:.95rem;line-height:1.55;color:#c9d0d1}
-#mlv .big-f li{padding-inline-start:16px;border-inline-start:3px solid #e23b2e}
-#mlv .big-src{margin-block-start:16px;font-size:.72rem;line-height:1.6;color:#6f797b;text-align:left}
-#mlv .big-src a{color:#8b9698;text-underline-offset:2px;white-space:nowrap}
-#mlv .big-s{margin-block-start:clamp(34px,6vw,56px);padding-block-start:clamp(34px,6vw,56px);border-block-start:1px solid #2c3133}
-#mlv .big-s .big-n{color:#3fd0b0}
-#mlv .big-s .big-t mark{background:#3fd0b0;color:#0b0d0e}
-#mlv .big-s .big-by{font-size:1.05rem;color:#fff}
-#mlv .big-s .btn{margin-block-start:22px;background:#fff;color:#0b0d0e}
+#mlv .big-p{background:var(--sand);padding-block:clamp(40px,7vw,80px)}
+#mlv .big-s{background:#fff;padding-block:clamp(36px,6vw,72px)}
+#mlv .big-n{margin-block-start:14px;font:900 clamp(5.4rem,22vw,8.5rem)/.9 var(--disp);color:var(--teal-d)}
+#mlv .big-n small{font-size:.28em;font-weight:800;margin-inline-start:.25em}
+#mlv .big-t{margin:14px 0 0;font:800 clamp(1.4rem,4.6vw,2rem)/1.32 var(--disp);color:var(--ink);text-wrap:balance}
+#mlv .big-t mark{background:#e9d2c0;color:inherit;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#mlv .big-by{margin-block-start:16px;font-size:.95rem;color:var(--muted)}
+#mlv .big-inf{margin-block-start:14px;font:700 1.1rem/1.45 var(--disp);color:var(--ink)}
+#mlv .big-f{display:grid;gap:10px;margin:22px 0 0;padding:18px 0 0;list-style:none;border-block-start:1px solid #e2d6c6;font-size:.95rem;line-height:1.55;color:var(--ink2)}
+#mlv .big-f li{padding-inline-start:16px;border-inline-start:3px solid var(--teal)}
+#mlv .big-src{margin-block-start:16px;font-size:.72rem;line-height:1.6;color:var(--muted);text-align:left}
+#mlv .big-src a{color:var(--muted);text-underline-offset:2px;white-space:nowrap}
+#mlv .big-s .big-n{margin-block-start:0;color:var(--ink)}
+#mlv .big-s .big-t mark{background:var(--ink);color:#fff}
+#mlv .big-s .big-by{font-size:1.05rem;color:var(--ink2)}
+#mlv .big-s .btn{margin-block-start:22px}
 #mlv .journey-h{margin:0 0 14px;font:800 clamp(1.3rem,4vw,1.7rem)/1.3 var(--disp);color:var(--ink);text-wrap:balance}
 #mlv .journey-e{margin:16px 0 4px;font-weight:700;color:var(--ink);line-height:1.5}
 #mlv .need-brand{display:inline-flex;align-items:baseline;gap:.3em;white-space:nowrap}
@@ -418,9 +417,8 @@
 
   {%- comment -%} The unseen part, from published studies, then the answer. All three studies were on adults and none tested this product; the page says "adults" in the text. Sources: Backer 2000 (PMID 10981726), Jo/Weisel/Lioy 1990 (PMID 2287784), Backer 2008 (PMID 18197300). {%- endcomment -%}
   <section class="big" id="mlv-study">
-    <div class="n">
-      <div class="big-p">
-        <span class="big-k">ומה שלא רואים בעין</span>
+    <div class="big-p"><div class="n">
+        <span class="kick">ומה שלא רואים בעין</span>
         <p class="big-n">10<small>דקות</small></p>
         <h2 class="big-t">מספיקות כדי שבדם יימדדו <mark>יותר תוצרי לוואי של כלור</mark> מאשר אחרי שתיית ליטר שלם של מי ברז.</h2>
         <p class="big-by">מחקר של חוקרי ה-CDC בארה״ב, בדיקות דם ל-31 מבוגרים.</p>
@@ -430,14 +428,13 @@
           <li>במחקר המשך של ה-CDC על 100 משתתפים, האוויר בתא המקלחת היה המנבא החזק ביותר למה שנמדד בדם.</li>
         </ul>
         <p class="big-src" dir="ltr" lang="en"><a href="https://doi.org/10.1038/sj.jea.7500098" target="_blank" rel="noopener nofollow">Backer et al., 2000</a> · <a href="https://doi.org/10.1111/j.1539-6924.1990.tb00541.x" target="_blank" rel="noopener nofollow">Jo, Weisel, Lioy, 1990</a> · <a href="https://doi.org/10.1289/ehp.10049" target="_blank" rel="noopener nofollow">Backer et al., 2008</a></p>
-      </div>
-      <div class="big-s">
+    </div></div>
+    <div class="big-s"><div class="n">
         <p class="big-n">4<small>שכבות</small></p>
         <p class="big-t">של סינון בתוך הידית, ביניהן סיב פחם פעיל. הן <mark>תופסות חול, חלודה ומשקעים ומפחיתות כלור שיורי</mark>, רגע לפני שהמים יוצאים.</p>
         <p class="big-by">את המים לשתייה כבר סידרתם. הגיע תור המקלחת.</p>
         <a class="btn" href="#bundle-up" data-to-buy>להתקין לילדים ולכם</a>
-      </div>
-    </div>
+    </div></div>
   </section>
 
   {%- if section.blocks.size > 0 -%}
