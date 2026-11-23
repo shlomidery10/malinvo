@@ -284,6 +284,23 @@
 #mlv .mlv-vouch-fill{position:absolute;inset-block:0;inset-inline-start:0;overflow:hidden;white-space:nowrap;color:#FFC043;width:0}
 #mlv .mlv-vouch-avg{font-family:var(--disp);font-weight:800;color:var(--ink);font-size:.95rem;line-height:1}
 #mlv .mlv-vouch-count{color:var(--muted);font-size:.9rem;line-height:1;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+#mlv .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:880px;margin:26px auto 0}
+#mlv .vs-c{min-width:0;border-radius:var(--r);overflow:hidden;background:#fff;border:1px solid var(--line);text-align:start}
+#mlv .vs-c.is-new{border-color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+#mlv .vs-c figure{position:relative;margin:0}
+#mlv .vs-c figure img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+#mlv .vs-c.is-old figure img{filter:saturate(.75)}
+#mlv .vs-c figcaption{position:absolute;bottom:8px;inset-inline-start:8px;margin:0;padding:1px 8px;border-radius:999px;background:rgba(21,35,43,.6);color:#fff;font-size:10px;line-height:1.6}
+#mlv .vs-c h3{margin:14px 14px 8px;font:800 clamp(1rem,3.4vw,1.25rem)/1.2 var(--disp);color:var(--ink);text-align:start}
+#mlv .vs-c.is-old h3{color:var(--muted)}
+#mlv .vs-c.is-new h3{text-align:right}
+#mlv .vs-c h3 .vs-logo{display:inline-block;height:.72em;width:auto;vertical-align:baseline;margin-inline-end:.3em}
+#mlv .vs-c ul{display:grid;gap:8px;margin:0;padding:0 14px 16px;list-style:none;font-size:clamp(.84rem,2.6vw,.98rem);line-height:1.4;color:var(--ink2)}
+#mlv .vs-c li{display:grid;grid-template-columns:18px 1fr;gap:6px;align-items:start}
+#mlv .vs-c li::before{content:"✕";font-weight:800;color:#b3402e;line-height:1.4}
+#mlv .vs-c.is-new li::before{content:"✓";color:var(--teal-d)}
+#mlv .vs-c.is-new li{color:var(--ink);font-weight:600}
+@media(min-width:750px){#mlv .vs{gap:22px}#mlv .vs-c h3{margin:18px 20px 10px}#mlv .vs-c ul{padding:0 20px 22px}}
 #mlv .mlv-stream-fig{margin:24px auto 0;max-width:560px;border-radius:var(--r);overflow:hidden;background:#f3ece5}
 #mlv .mlv-stream-fig img{display:block;width:100%;height:auto}
 @media(hover:hover) and (pointer:fine){#mlv .mlv-vouch-badge:hover .mlv-vouch-count{color:var(--ink2)}}
@@ -454,20 +471,38 @@
     </div></div>
   </section>
 
-  {%- assign cmp_stream = images['craftad-e9e8e197.png'] -%}
-  {%- if cmp_stream -%}
+  {%- comment -%} Stream comparison: two illustrations (labelled as such) with live text, old head against Nova. {%- endcomment -%}
+  {%- assign vs_logo = images['malinvo_logo_dark.png'] -%}
   <section class="sec mist" id="mlv-stream">
     <div class="n" style="text-align:center">
       <span class="kick">הזרם</span>
       <h2>כך נראה זרם מלא וצפוף</h2>
       <p class="lead">חורים זעירים מרכזים את המים. הלחץ בבית נשאר כמו שהוא.</p>
-      <figure class="mlv-stream-fig">
-        <img src="{{ cmp_stream | image_url: width: 1100 }}" srcset="{{ cmp_stream | image_url: width: 640 }} 640w, {{ cmp_stream | image_url: width: 900 }} 900w, {{ cmp_stream | image_url: width: 1100 }} 1100w" sizes="(min-width:620px) 560px, 94vw" width="{{ cmp_stream.width }}" height="{{ cmp_stream.height }}" loading="lazy" decoding="async" alt="השוואת זרם: ראש מקלחת רגיל מול MALINVO Nova עם פילטר">
-      </figure>
-      <a class="btn" href="#bundle-up" data-to-buy style="margin-top:22px">לבחירת חבילה</a>
+    </div>
+    <div class="w">
+      <div class="vs">
+        <article class="vs-c is-old">
+          <figure><img src="{{ 'malinvo-stream-old.jpg' | asset_img_url: '800x' }}" srcset="{{ 'malinvo-stream-old.jpg' | asset_img_url: '400x' }} 400w, {{ 'malinvo-stream-old.jpg' | asset_img_url: '800x' }} 800w, {{ 'malinvo-stream-old.jpg' | asset_img_url: '1200x' }} 1200w" sizes="(min-width:900px) 420px, 46vw" width="1200" height="1200" loading="lazy" decoding="async" alt="המחשה: ראש מקלחת ישן עם זרם דליל ומפוזר"><figcaption>המחשה</figcaption></figure>
+          <h3>הראש הישן</h3>
+          <ul>
+            <li>בלי שום פילטר</li>
+            <li>מה שעובר בצנרת מגיע ישר אליכם</li>
+            <li>זרם שנחלש ומתפזר עם השנים</li>
+          </ul>
+        </article>
+        <article class="vs-c is-new">
+          <figure><img src="{{ 'malinvo-stream-nova.jpg' | asset_img_url: '800x' }}" srcset="{{ 'malinvo-stream-nova.jpg' | asset_img_url: '400x' }} 400w, {{ 'malinvo-stream-nova.jpg' | asset_img_url: '800x' }} 800w, {{ 'malinvo-stream-nova.jpg' | asset_img_url: '1200x' }} 1200w" sizes="(min-width:900px) 420px, 46vw" width="1200" height="1200" loading="lazy" decoding="async" alt="המחשה: ראש המקלחת MALINVO Nova הלבן עם זרם מלא וצפוף"><figcaption>המחשה</figcaption></figure>
+          <h3 dir="ltr">{%- if vs_logo -%}<img class="vs-logo" src="{{ vs_logo | image_url: height: 60 }}" srcset="{{ vs_logo | image_url: height: 60 }} 1x, {{ vs_logo | image_url: height: 120 }} 2x" width="{{ vs_logo.width }}" height="{{ vs_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}MALINVO{%- endif %} Nova</h3>
+          <ul>
+            <li>פילטר 4 שכבות בתוך הידית</li>
+            <li>החול והחלודה נשארים בפילטר, הכלור מופחת</li>
+            <li>זרם מלא וצפוף</li>
+          </ul>
+        </article>
+      </div>
+      <p style="text-align:center;margin:26px 0 0"><a class="btn" href="#bundle-up" data-to-buy>לבחירת חבילה</a></p>
     </div>
   </section>
-  {%- endif -%}
 
   {% render 'mlv-benefits', img: section.settings.benefits_image %}
   {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
