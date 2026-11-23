@@ -26,9 +26,9 @@
         "pipe_image_m": "shopify://shop_images/malinvo_nova_pipe_section.jpg",
         "pipe_image_d": "shopify://shop_images/malinvo_nova_pipe_section.jpg",
         "benefits_image": "shopify://shop_images/malinvo_nova_filter_scene.jpg",
-        "step1_image": "",
-        "step2_image": "",
-        "step3_image": ""
+        "step1_image": "shopify://shop_images/malinvo_nova_step1.jpg",
+        "step2_image": "shopify://shop_images/malinvo_nova_step2.jpg",
+        "step3_image": "shopify://shop_images/malinvo_nova_step3.jpg"
       }
     },
     "17948660484d5ed3da": {
