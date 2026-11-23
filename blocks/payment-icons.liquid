@@ -29,6 +29,15 @@
         <img src="{{ images[mv_file] | image_url: width: 96 }}" alt="{{ mv_alts[forloop.index0] }}" width="96" height="60" loading="lazy" decoding="async" class="payment-icons__img">
       </li>
     {%- endfor -%}
+    {%- comment -%}MALINVO: same set and order as the BundleUp widget on the product page; these four are theme assets{%- endcomment -%}
+    {%- assign mv_keys2 = "applepay,googlepay,isracard,bit" | split: "," -%}
+    {%- assign mv_alts2 = "Apple Pay,Google Pay,Isracard,bit" | split: "," -%}
+    {%- for k in mv_keys2 -%}
+      <li class="payment-icons__item payment-icons__item--mv">
+        {%- assign mv_file = 'malinvo-pay-' | append: k | append: '.png' -%}
+        <img src="{{ mv_file | asset_url }}" alt="{{ mv_alts2[forloop.index0] }}" width="96" height="60" loading="lazy" decoding="async" class="payment-icons__img">
+      </li>
+    {%- endfor -%}
   </ul>
 </div>
 
