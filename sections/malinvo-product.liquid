@@ -114,13 +114,6 @@
 #mlv .need-logo{display:block;block-size:1.05em;inline-size:auto}
 #mlv .need-n{margin-block-start:18px;font-weight:600;color:var(--ink);line-height:1.55}
 @media(min-width:621px){#mlv .need{grid-template-columns:repeat(2,minmax(0,1fr))}}
-#mlv .terms{display:grid;margin:22px 0 0;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
-#mlv .terms>div{display:grid;grid-template-columns:minmax(92px,auto) 1fr;gap:14px;align-items:baseline;padding:14px 16px;border-block-start:1px solid var(--line)}
-#mlv .terms>div:first-child{border-block-start:0}
-#mlv .terms dt{font-weight:800;color:var(--ink)}
-#mlv .terms dd{margin:0;color:var(--ink2);line-height:1.55}
-#mlv .terms-l{margin-block-start:14px;font-size:.95rem}
-#mlv .terms-l a{display:inline-block;padding-block:11px;color:var(--teal-d);font-weight:700;text-underline-offset:3px}
 #mlv .rvs{display:grid;gap:14px;margin:24px 0 0;padding:0;list-style:none}
 #mlv .rv{display:grid;gap:10px;padding:18px;border-radius:16px;background:#fff;border:1px solid var(--line)}
 #mlv .rv img{inline-size:56px;block-size:56px;border-radius:50%;object-fit:cover}
@@ -381,7 +374,7 @@
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
         </form>
-        <p class="buy-note">30 יום להחליט, מיום שהמוצר אצלכם. <a href="#mlv-terms">כל התנאים כתובים כאן למטה</a>.</p>
+        <p class="buy-note">30 יום להחליט, מיום שהמוצר אצלכם. <a href="/pages/refund-policy">לתנאי ההחזרה המלאים</a>.</p>
         {%- comment -%} Risk-reversal near CTA. Shipping from 10_SHIPPING; returns 30d approved by owner; warranty = placeholder. {%- endcomment -%}
         <ul class="reass">
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם · עד 15 ימי עסקים, עם מספר מעקב</span></li>
@@ -407,20 +400,6 @@
       </ul>
       {%- assign need_logo = images['malinvo_logo_dark.png'] -%}
       <p class="need-n">הפילטר של <span class="need-brand" dir="ltr">{%- if need_logo -%}<img class="need-logo" src="{{ need_logo | image_url: height: 60 }}" srcset="{{ need_logo | image_url: height: 60 }} 1x, {{ need_logo | image_url: height: 120 }} 2x, {{ need_logo | image_url: height: 180 }} 3x" width="{{ need_logo.width }}" height="{{ need_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}MALINVO{%- endif %} Nova</span> מפחית כלור שיורי במי המקלחת.</p>
-    </div>
-  </section>
-
-  <section class="sec" id="mlv-terms">
-    <div class="n">
-      <span class="kick">בשקיפות</span>
-      <h2>משלוח והחזרות, בלי אותיות קטנות</h2>
-      <dl class="terms">
-        <div><dt>משלוח</dt><dd>חינם, לכל הארץ.</dd></div>
-        <div><dt>זמן אספקה</dt><dd>1–3 ימי עסקים טיפול בהזמנה, ועד 15 ימי עסקים משלוח. מספר מעקב נשלח במייל.</dd></div>
-        <div><dt>החזרה</dt><dd>30 יום מיום הקבלה.</dd></div>
-        <div><dt>חשוב לדעת</dt><dd>בהחזרה משינוי דעת, משלוח ההחזרה עליכם. מוצר שהותקן עשוי לקבל זיכוי חלקי, ופילטר שנפתח אינו מוחזר.</dd></div>
-      </dl>
-      <p class="terms-l"><a href="/pages/shipping-policy">מדיניות המשלוחים</a><span aria-hidden="true"> · </span><a href="/pages/refund-policy">מדיניות ההחזרות</a></p>
     </div>
   </section>
 
