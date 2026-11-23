@@ -12,12 +12,10 @@
     "main": {
       "type": "malinvo-home",
       "settings": {
-        "hero_image_m": "shopify://shop_images/malinvo_black_06_grip_scale.png",
-        "hero_image_d": "shopify://shop_images/malinvo_black_06_grip_scale.png",
+        "hero_image_m": "shopify://shop_images/malinvo_nova_filter_scene.jpg",
+        "hero_image_d": "shopify://shop_images/malinvo_nova_filter_scene.jpg",
         "hero_fit": "cover",
-        "hero_blend": false,
-        "final_image_m": "shopify://shop_images/malinvo_black_06_grip_scale.png",
-        "final_image_d": "shopify://shop_images/malinvo_black_06_grip_scale.png"
+        "hero_blend": false
       }
     }
   },

@@ -6,8 +6,8 @@
   @example
   {% render 'mlvh-final', url: product_url, img_m: section.settings.final_image_m %}
 {%- enddoc -%}
-{%- assign fim = img_m | default: img_d | default: images['malinvo_black_06_grip_scale.png'] -%}
-{%- assign fid = img_d | default: img_m | default: images['malinvo_black_06_grip_scale.png'] -%}
+{%- assign fim = img_m | default: img_d -%}
+{%- assign fid = img_d | default: img_m -%}
 <section class="final{% unless fim %} no-img{% endunless %}" id="mlvh-final">
   {%- if fim -%}
     <figure class="final-m">
@@ -18,8 +18,8 @@
     </figure>
   {%- endif -%}
   <div class="n">
-    <h2>גם המים יכולים להיות בחירה שלכם.</h2>
-    <p class="lead">ראש מקלחת מסנן, שמתקינים בדקה על הצינור הקיים.</p>
-    <a href="{{ url }}" class="btn" data-cta>לעמוד המוצר</a>
+    <h2>הגיע תור המקלחת.</h2>
+    <p class="lead">את המים לשתייה כבר סידרתם. ראש מקלחת עם פילטר מתחלף, שמתקינים בדקה על הצינור הקיים.</p>
+    <a href="{{ url }}" class="btn" data-cta>להתקין לילדים ולכם</a>
   </div>
 </section>

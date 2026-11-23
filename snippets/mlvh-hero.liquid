@@ -20,15 +20,15 @@
 <section class="hero" id="mlvh-hero" aria-labelledby="mlvh-h1">
   <div class="hero-in">
     <div class="hero-t">
-      <h1 id="mlvh-h1">בחרתם להם את השמפו הכי עדין. ומה עם המים עצמם?</h1>
-      <p class="hsub">MALINVO Nova, ראש מקלחת מסנן.</p>
-      <a href="{{ url }}" class="btn" data-cta>לעמוד המוצר</a>
+      <h1 id="mlvh-h1">ראש מקלחת עם פילטר לילדים ולכם.</h1>
+      <p class="hsub">החול והחלודה מהצנרת נשארים בפילטר, לא במים שעליכם.</p>
+      <a href="{{ url }}" class="btn" data-cta>לצפייה ב-MALINVO Nova</a>
     </div>
     {%- if him -%}
       <div class="hero-m{% if fit == 'cover' %} is-cover{% endif %}{% if blend %} is-blend{% endif %}">
         <picture>
           {%- if hid != him -%}<source media="(min-width:901px)" srcset="{{ hid | image_url: width: 900 }} 900w, {{ hid | image_url: width: 1400 }} 1400w" sizes="50vw" width="{{ hid.width }}" height="{{ hid.height }}">{%- endif -%}
-          <img src="{{ him | image_url: width: 640 }}" srcset="{{ him | image_url: width: 360 }} 360w, {{ him | image_url: width: 480 }} 480w, {{ him | image_url: width: 640 }} 640w" sizes="(min-width:901px) 50vw, 100vw" width="{{ him.width }}" height="{{ him.height }}" loading="eager" fetchpriority="high" decoding="async" alt="{{ him.alt | default: 'ראש המקלחת MALINVO Nova באחיזת יד, בחדר רחצה' | escape }}">
+          <img src="{{ him | image_url: width: 640 }}" srcset="{{ him | image_url: width: 360 }} 360w, {{ him | image_url: width: 480 }} 480w, {{ him | image_url: width: 640 }} 640w" sizes="(min-width:901px) 50vw, 100vw" width="{{ him.width }}" height="{{ him.height }}" loading="eager" fetchpriority="high" decoding="async" alt="{{ him.alt | default: 'ראש המקלחת MALINVO Nova השחור והפילטר המתחלף שלו' | escape }}">
         </picture>
       </div>
     {%- endif -%}

@@ -27,10 +27,10 @@
   assign home_og_image = null
   if request.page_type == 'index'
     if page_title == blank or page_title == shop.name
-      assign seo_title = 'MALINVO | ראש מקלחת אובאלי עם פילטר פחם פעיל'
+      assign seo_title = 'MALINVO Nova | ראש מקלחת עם פילטר לילדים ולכם'
     endif
     if page_description == blank
-      assign seo_description = 'ראש מקלחת אובאלי MALINVO עם פילטר פחם פעיל ב-4 שכבות: מפחית כלור, חול וחלודה, זרם חזק והתקנה בדקה. מחליפים פילטר, לא ראש.'
+      assign seo_description = 'ראש מקלחת עם פילטר מתחלף: חול, חלודה ומשקעים נתפסים בו, וכלור שיורי מופחת. עיצוב מט בשחור או בלבן. 30 יום להחליט.'
     endif
     unless page_image
       assign home_og_image = images['malinvo_nova_g1_hero_black.jpg']
