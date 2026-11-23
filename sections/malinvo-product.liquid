@@ -42,6 +42,12 @@
 #mlv .track::-webkit-scrollbar{display:none}
 #mlv .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1/1;background:#f3ece5;border-radius:var(--r);overflow:hidden}
 #mlv .slide img{width:100%;height:100%;object-fit:contain;display:block}
+#mlv .slide video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
+#mlv .th.is-vid{position:relative}
+#mlv .th.is-vid::after{content:"";position:absolute;inset:0;margin:auto;width:0;height:0;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent #fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+#mlv .vs-vid{max-width:340px;margin:26px auto 0;border-radius:var(--r);overflow:hidden;background:#000;border:1px solid var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+#mlv .vs-vid video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover}
+#mlv .vs-vid figcaption{padding:10px 14px;background:#fff;font:700 .95rem/1.3 var(--disp);color:var(--ink);text-align:center}
 #mlv .dots{display:none;justify-content:center;gap:8px;padding-top:10px}
 #mlv .dots i{width:7px;height:7px;border-radius:50%;background:#c9d3d6;transition:transform 200ms var(--ease-out),background-color 200ms ease}
 #mlv .dots i.on{background:var(--ink);transform:scale(1.35)}
@@ -349,7 +355,9 @@
                 {%- assign gnum = gp[1] | plus: 0 -%}
                 {%- assign gm = product.media | where: 'id', gnum | first -%}
                 {%- assign galt = gm.alt | default: 'ראש מקלחת MALINVO עם פילטר מתחלף' -%}
-                {%- if forloop.first -%}
+                {%- if gm.media_type == 'video' -%}
+                  {{ gm | video_tag: controls: true, muted: true, loop: true, playsinline: true, preload: 'metadata', image_size: '900x' }}
+                {%- elsif forloop.first -%}
                   {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, fetchpriority: 'high', loading: 'eager', decoding: 'async', preload: true, alt: galt }}
                 {%- else -%}
                   {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, loading: 'lazy', decoding: 'async', alt: galt }}
@@ -367,7 +375,7 @@
           <div class="thumbs">
             {%- for it in gal -%}
               {%- assign gp = it | split: '|' -%}
-              <button type="button" class="th" data-to="{{ forloop.index0 }}" aria-label="תמונה {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
+              {%- assign th_num = gp[1] | plus: 0 -%}{%- assign th_m = product.media | where: 'id', th_num | first -%}<button type="button" class="th{% if th_m.media_type == 'video' %} is-vid{% endif %}" data-to="{{ forloop.index0 }}" aria-label="תמונה {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
                 {%- if gp[0] == 'm' -%}
                   {%- assign gnum = gp[1] | plus: 0 -%}
                   {%- assign gm = product.media | where: 'id', gnum | first -%}
@@ -502,6 +510,13 @@
           </ul>
         </article>
       </div>
+      {%- assign nova_vid = product.media | where: 'media_type', 'video' | first -%}
+      {%- if nova_vid -%}
+      <figure class="vs-vid">
+        {{ nova_vid | video_tag: autoplay: true, muted: true, loop: true, playsinline: true, controls: false, preload: 'metadata', image_size: '720x' }}
+        <figcaption>הזרם של Nova, בצילום אמיתי</figcaption>
+      </figure>
+      {%- endif -%}
       <p style="text-align:center;margin:26px 0 0"><a class="btn" href="#bundle-up" data-to-buy>לבחירת חבילה</a></p>
     </div>
   </section>
