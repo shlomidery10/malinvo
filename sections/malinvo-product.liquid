@@ -105,27 +105,26 @@
 #mlv .trio li{display:inline-flex;align-items:center;gap:6px}
 #mlv .track:focus-visible{outline:3px solid var(--teal-d);outline-offset:-3px}
 .mlv-sticky:focus-visible{outline:3px solid #d9a27a;outline-offset:3px}
-#mlv .study{margin:22px 0 0;border:1px solid var(--ink);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-#mlv .study-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;padding:12px 16px;background:var(--ink);color:#fff}
-#mlv .study-tag{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.95rem;letter-spacing:.02em}
-#mlv .study-tag svg{inline-size:18px;block-size:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#mlv .study-org{font-size:.85rem;opacity:.85}
-#mlv .study-b{padding:18px 16px 16px}
-#mlv .study-k{margin:0 0 6px;font-size:.78rem;font-weight:800;letter-spacing:.08em;color:var(--teal-d)}
-#mlv .study-q{margin:0;font-family:var(--disp);font-weight:800;font-size:1.22rem;line-height:1.4;color:var(--ink)}
-#mlv .study-r{display:grid;margin:16px 0 20px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-#mlv .study-r>div{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;padding:12px 14px;border-block-start:1px solid var(--line);color:var(--ink2)}
-#mlv .study-r>div:first-child{border-block-start:0}
-#mlv .study-r b{font-weight:800;color:var(--ink)}
-#mlv .study-r>.is-hi{background:var(--ink);color:#fff;border-color:var(--ink)}
-#mlv .study-r>.is-hi b{color:#fff}
-#mlv .study-m{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
-#mlv .study-m>div{padding:10px 8px;border-radius:10px;background:var(--mist,#f4f6f6);text-align:center}
-#mlv .study-m dt{font-family:var(--disp);font-weight:800;font-size:1.3rem;color:var(--ink);line-height:1.1}
-#mlv .study-m dd{margin:4px 0 0;font-size:.8rem;color:var(--ink2);line-height:1.3}
-#mlv .study-c{padding:12px 16px;border-block-start:1px solid var(--line);background:#fafafa;font-size:.74rem;line-height:1.5;color:var(--ink2);text-align:left}
-#mlv .study-c a{color:var(--teal-d);text-underline-offset:2px;white-space:nowrap}
-@media(min-width:750px){#mlv .study-q{font-size:1.45rem}#mlv .study-b{padding:24px 24px 22px}#mlv .study-h,#mlv .study-c{padding-inline:24px}}
+#mlv .big{background:#0b0d0e;color:#fff;padding-block:clamp(44px,8vw,88px)}
+#mlv .big :where(p){margin:0}
+#mlv .big-k{display:block;margin-block-end:16px;font-size:.8rem;font-weight:700;letter-spacing:.08em;color:#aab2b4}
+#mlv .big-n{font:900 clamp(5.4rem,22vw,8.5rem)/.9 var(--disp);color:#e23b2e}
+#mlv .big-n small{font-size:.28em;font-weight:800;color:#fff;margin-inline-start:.25em}
+#mlv .big-t{margin:14px 0 0;font:800 clamp(1.4rem,4.6vw,2rem)/1.32 var(--disp);color:#fff;text-wrap:balance}
+#mlv .big-t mark{background:#e23b2e;color:#fff;padding:0 .22em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#mlv .big-by{margin-block-start:16px;font-size:.95rem;color:#aab2b4}
+#mlv .big-inf{margin-block-start:14px;font:700 1.1rem/1.45 var(--disp);color:#fff}
+#mlv .big-f{display:grid;gap:10px;margin:22px 0 0;padding:18px 0 0;list-style:none;border-block-start:1px solid #2c3133;font-size:.95rem;line-height:1.55;color:#c9d0d1}
+#mlv .big-f li{padding-inline-start:16px;border-inline-start:3px solid #e23b2e}
+#mlv .big-src{margin-block-start:16px;font-size:.72rem;line-height:1.6;color:#6f797b;text-align:left}
+#mlv .big-src a{color:#8b9698;text-underline-offset:2px;white-space:nowrap}
+#mlv .big-s{margin-block-start:clamp(34px,6vw,56px);padding-block-start:clamp(34px,6vw,56px);border-block-start:1px solid #2c3133}
+#mlv .big-s .big-n{color:#3fd0b0}
+#mlv .big-s .big-t mark{background:#3fd0b0;color:#0b0d0e}
+#mlv .big-s .big-by{font-size:1.05rem;color:#fff}
+#mlv .big-s .btn{margin-block-start:22px;background:#fff;color:#0b0d0e}
+#mlv .journey-h{margin:0 0 14px;font:800 clamp(1.3rem,4vw,1.7rem)/1.3 var(--disp);color:var(--ink);text-wrap:balance}
+#mlv .journey-e{margin:16px 0 4px;font-weight:700;color:var(--ink);line-height:1.5}
 #mlv .need-brand{display:inline-flex;align-items:baseline;gap:.3em;white-space:nowrap}
 #mlv .need-logo{display:block;block-size:1.05em;inline-size:auto}
 #mlv .need-n{margin-block-start:18px;font-weight:600;color:var(--ink);line-height:1.55}
@@ -368,15 +367,15 @@
           <span class="mlv-sep" aria-hidden="true"></span>
           <span class="mlv-nova">Nova<span class="mlv-tm">&trade;</span></span>
         </h1>
-        <p class="mlv-tag">בחרתם להם את השמפו הכי עדין. ומה עם המים עצמם?</p>
-        <p class="mlv-sub">MALINVO Nova, ראש מקלחת מסנן. מפחית כלור שיורי ותופס חול וחלודה מהצנרת, לפני שהמים מגיעים אליהם.</p>
+        <p class="mlv-tag">מסננים את מה שהם שותים. ומקלחים אותם בלי.</p>
+        <p class="mlv-sub">המים עוברים צנרת ישנה ודוד, עם כלור שמוסיפים להם בכוונה. MALINVO Nova מסנן אותם רגע לפני שהם מגיעים לילדים ואליכם.</p>
         <a class="mlv-vouch-badge" href="#mlv-reviews" data-vouch-badge hidden>
           <span class="mlv-vouch-stars" aria-hidden="true"><span class="mlv-vouch-fill">★★★★★</span>★★★★★</span>
           <b class="mlv-vouch-avg"></b>
           <span class="mlv-vouch-count"></span>
         </a>
         <ul class="mlv-usp">
-          <li><div><b>מים מסוננים בכל מקלחת.</b> הפילטר מפחית כלור שיורי ותופס חלקיקים, חול וחלודה מהצנרת.</div></li>
+          <li><div><b>עוצר את מה שהצנרת מוסיפה.</b> חול, חלודה ומשקעים נתפסים בפילטר, והכלור השיורי מופחת.</div></li>
           <li><div><b>זרם מלא וצפוף.</b> חורים זעירים מרכזים את המים, בלי לשנות את הלחץ בבית.</div></li>
           <li><div><b>מתקינים בדקה.</b> מבריגים לצינור המקלחת הקיים, בלי כלים ובלי אינסטלטור.</div></li>
           <li><div><b>מחליפים רק את הפילטר.</b> הראש נשאר אצלכם.</div></li>
@@ -406,34 +405,51 @@
   {%- comment -%} The need, stated from a published study. Wording follows the paper: blood trihalomethane levels in adults were highest after a 10-minute shower and lowest after drinking 1 L of tap water. Source: Backer et al., J Expo Anal Environ Epidemiol 2000 (PMID 10981726); the study did not test this product. Source line and that note were removed from the page at the owner's request. {%- endcomment -%}
   <section class="sec mist" id="mlv-need">
     <div class="n">
-      <span class="kick">למה גם המקלחת</span>
-      <h2>על מי השתייה שלהם אתם כבר מקפידים.</h2>
-      <p class="lead">ומה עם המים שבמקלחת?</p>
-      <figure class="study">
-        <div class="study-h">
-          <span class="study-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M7.5 15h9"/></svg>מחקר מדעי שפורסם</span>
-          <span class="study-org">חוקרי ה-CDC, ארה״ב · 2000</span>
-        </div>
-        <div class="study-b">
-          <p class="study-k">הממצא</p>
-          <p class="study-q">אחרי מקלחת של 10 דקות נמדדו בדם יותר תוצרי לוואי של כלור מאשר אחרי שתיית ליטר שלם של מי ברז.</p>
-          <div class="study-r" role="list" aria-label="רמת תוצרי הלוואי של הכלור שנמדדה בדם">
-            <div class="is-hi" role="listitem"><span>מקלחת של 10 דקות</span><b>הרמה הגבוהה ביותר</b></div>
-            <div role="listitem"><span>שתיית ליטר מי ברז</span><b>הרמה הנמוכה ביותר</b></div>
-          </div>
-          <p class="study-k">איך זה נבדק</p>
-          <dl class="study-m">
-            <div><dt>31</dt><dd>מבוגרים השתתפו</dd></div>
-            <div><dt>10 דק׳</dt><dd>משך כל חשיפה</dd></div>
-            <div><dt>3</dt><dd>בדיקות דם לכל משתתף</dd></div>
-          </dl>
-        </div>
-        <figcaption class="study-c" dir="ltr" lang="en">Backer LC, Ashley DL, Bonin MA, et al. <i>Journal of Exposure Analysis and Environmental Epidemiology</i>. 2000;10(4):321-326. <a href="https://doi.org/10.1038/sj.jea.7500098" target="_blank" rel="noopener nofollow">doi:10.1038/sj.jea.7500098</a></figcaption>
-      </figure>
-      {%- assign need_logo = images['malinvo_logo_dark.png'] -%}
-      <p class="need-n">הפילטר של <span class="need-brand" dir="ltr">{%- if need_logo -%}<img class="need-logo" src="{{ need_logo | image_url: height: 60 }}" srcset="{{ need_logo | image_url: height: 60 }} 1x, {{ need_logo | image_url: height: 120 }} 2x, {{ need_logo | image_url: height: 180 }} 3x" width="{{ need_logo.width }}" height="{{ need_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}MALINVO{%- endif %} Nova</span> מפחית כלור שיורי במי המקלחת.</p>
+      <span class="kick">שאלה אחת לפני שאתם סוגרים את היום</span>
+      <h2>יש לכם פילטר על השיש. ומה יש במקלחת?</h2>
+      <p class="lead">כל כוס מים בבית עוברת אצלכם בדיקה. ואז הילד נכנס למקלחת ומקבל את אותם מים בדיוק: חמים, על כל הגוף, עשר דקות. בלי שום פילטר בדרך.</p>
     </div>
   </section>
+
+  {%- assign real_img = null -%}
+  {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
+  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result %}
+
+  {%- comment -%} The unseen part, from published studies, then the answer. All three studies were on adults and none tested this product; the page says "adults" in the text. Sources: Backer 2000 (PMID 10981726), Jo/Weisel/Lioy 1990 (PMID 2287784), Backer 2008 (PMID 18197300). {%- endcomment -%}
+  <section class="big" id="mlv-study">
+    <div class="n">
+      <div class="big-p">
+        <span class="big-k">ומה שלא רואים בעין</span>
+        <p class="big-n">10<small>דקות</small></p>
+        <h2 class="big-t">מספיקות כדי שבדם יימדדו <mark>יותר תוצרי לוואי של כלור</mark> מאשר אחרי שתיית ליטר שלם של מי ברז.</h2>
+        <p class="big-by">מחקר של חוקרי ה-CDC בארה״ב, בדיקות דם ל-31 מבוגרים.</p>
+        <p class="big-inf">המחקר נעשה על מבוגרים. את המסקנה לגבי גוף קטן תסיקו בעצמכם.</p>
+        <ul class="big-f">
+          <li>במחקר של אוניברסיטת ראטגרס נמדד כלורופורם בנשיפה אחרי מקלחת רגילה: 6 עד 21 מיקרוגרם למ״ק, לעומת פחות מ-0.86 לפני המקלחת.</li>
+          <li>במחקר המשך של ה-CDC על 100 משתתפים, האוויר בתא המקלחת היה המנבא החזק ביותר למה שנמדד בדם.</li>
+        </ul>
+        <p class="big-src" dir="ltr" lang="en"><a href="https://doi.org/10.1038/sj.jea.7500098" target="_blank" rel="noopener nofollow">Backer et al., 2000</a> · <a href="https://doi.org/10.1111/j.1539-6924.1990.tb00541.x" target="_blank" rel="noopener nofollow">Jo, Weisel, Lioy, 1990</a> · <a href="https://doi.org/10.1289/ehp.10049" target="_blank" rel="noopener nofollow">Backer et al., 2008</a></p>
+      </div>
+      <div class="big-s">
+        <p class="big-n">4<small>שכבות</small></p>
+        <p class="big-t">של סינון בתוך הידית, ביניהן סיב פחם פעיל. הן <mark>עוצרות חול, חלודה ומשקעים ומפחיתות כלור שיורי</mark>, רגע לפני שהמים יוצאים.</p>
+        <p class="big-by">את המים לשתייה כבר סידרתם. הגיע תור המקלחת.</p>
+        <a class="btn" href="#bundle-up" data-to-buy>להתקין לילדים ולכם</a>
+      </div>
+    </div>
+  </section>
+
+  {%- if section.blocks.size > 0 -%}
+  <section class="sec" id="mlv-reviews">
+    <div class="n" style="text-align:center;margin-bottom:28px">
+      <span class="kick">ביקורות</span>
+      <h2>מה אומרים אחרי המקלחת הראשונה</h2>
+    </div>
+    <div class="w">
+      {%- for block in section.blocks -%}{%- if block.type == '@app' -%}<div {{ block.shopify_attributes }}>{% render block %}</div>{%- endif -%}{%- endfor -%}
+    </div>
+  </section>
+  {%- endif -%}
 
   {%- assign cmp_stream = images['craftad-e9e8e197.png'] -%}
   {%- if cmp_stream -%}
@@ -450,30 +466,16 @@
   </section>
   {%- endif -%}
 
-  {%- if section.blocks.size > 0 -%}
-  <section class="sec" id="mlv-reviews">
-    <div class="n" style="text-align:center;margin-bottom:28px">
-      <span class="kick">ביקורות</span>
-      <h2>מה אומרים אחרי המקלחת הראשונה</h2>
-    </div>
-    <div class="w">
-      {%- for block in section.blocks -%}{%- if block.type == '@app' -%}<div {{ block.shopify_attributes }}>{% render block %}</div>{%- endif -%}{%- endfor -%}
-    </div>
-  </section>
-  {%- endif -%}
-
-  {%- assign real_img = null -%}
-  {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
-  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result %}
   {% render 'mlv-benefits', img: section.settings.benefits_image %}
   {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
   {% render 'mlv-compare' %}
 
   <section class="sec" id="mlv-adults">
     <div class="n" style="text-align:center">
-      <span class="kick">לכל המשפחה</span>
-      <h2>וגם המקלחת שלכם</h2>
-      <p class="lead">אותו פילטר, אותם מים: פחות כלור שיורי גם במקלחת של ההורים.</p>
+      <span class="kick">העור והשיער שלך</span>
+      <h2>את קונה קרם, מרכך ושמן לשיער. ואז מתקלחת בכלור.</h2>
+      <p class="lead">כולנו מכירים את הרגע אחרי הבריכה: העור מתוח, השיער קשה, והריח נשאר גם אחרי שטיפה. בבית זה קורה בשקט, כל בוקר וכל ערב. עשר דקות ביום הן כ-60 שעות בשנה מתחת למים האלה.</p>
+      <p class="lead" style="margin-block-start:14px"><strong>אותה מקלחת, אותו זמן. עם פחות כלור, ובלי מה שהצנרת מוסיפה.</strong></p>
     </div>
   </section>
 
@@ -525,6 +527,9 @@
 ;;צריך אינסטלטור?::לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.
 ;;איך יהיה הזרם, גם אם הלחץ אצלי לא חזק?::הראש לא מגדיל ולא מחליש את הלחץ שבצנרת. החורים הזעירים בפני הראש מרכזים את המים לזרם צפוף, שלרוב מרגיש מלא גם כשהלחץ בבית בינוני.
 ;;מה הפילטר מפחית?::שני דברים שמגיעים אליכם דרך הצנרת: כלור שיורי - הריח של "מי ברז" במקלחת, וחלקיקים כמו חול וחלודה שנסחפים מהצינורות. הפילטר מפחית את הכלור השיורי ותופס את החלקיקים לפני שהמים מגיעים אליכם. ארבע שכבות סינון בתוך הידית, שמחליפים כשצריך.
+;;יש לי לפעמים מים צהובים מהברז. זה יעזור?::המים הצהובים שרואים אחרי הפסקת מים הם חלודה שנסחפה מהצינורות. חלקיקי חלודה כאלה נתפסים בפילטר, וזו גם הסיבה שבבניינים ישנים הוא מתכהה מהר יותר.
+;;זה מתאים לילדים ולתינוקות?::זה ראש מקלחת לכל המשפחה. הפילטר עובד על המים לפני שהם יוצאים, לא על מי שמתקלח.
+;;זה יעזור לעור יבש?::הפילטר משנה את מה שמגיע לעור: פחות כלור שיורי ופחות חלקיקים. את התחושה תבדקו בעצמכם כבר במקלחות הראשונות. אם לא הרגשתם הבדל, יש 30 יום להחזרה.
 ;;כל כמה זמן מחליפים את הפילטר?::כשהפילטר מתכהה ונראה משומש - מחליפים. הברגה אחת, הראש נשאר. הקצב משתנה לפי המים ולפי כמות המקלחות בבית, אז מציצים מדי פעם ומחליפים כשרואים שצריך.
 ;;כמה זמן לוקח המשלוח?::המשלוח חינם. מכינים את ההזמנה תוך 1–3 ימי עסקים, והמשלוח עצמו לוקח עד 15 ימי עסקים, עם מספר מעקב שנשלח במייל. ימי עסקים הם ימים א׳–ה׳, לא כולל חגים. אם יהיה עיכוב חריג, נעדכן אתכם במייל.
 ;;מה אם לא מתאים לי? אפשר להחזיר?::<strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/pages/refund-policy">מדיניות ההחזרות</a>.
@@ -559,9 +564,9 @@
         {%- endif -%}
       </figure>
       <h2>30 יום להחליט, אצלכם בבית</h2>
-      <p class="lead">מזמינים, מנסים, ויש לכם 30 יום להחליט.</p>
+      <p class="lead">תתקינו, תתקלחו, ותסתכלו על הפילטר. אם זה לא זה, מחזירים.</p>
       <ul class="trio"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>משלוח חינם</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>מעקב במייל</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</li></ul>
-      <a href="#bundle-up" class="btn" data-to-buy>לבחירת חבילה</a>
+      <a href="#bundle-up" class="btn" data-to-buy>להתקין לילדים ולכם</a>
     </div>
   </section>
 </div>

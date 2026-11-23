@@ -14,7 +14,7 @@
 {%- assign ph3 = images['malinvo_black_03_filter_inside.png'] -%}
 <section class="sec" id="{{ section_id | default: 'mlv-steps' }}">
   <div class="w">
-    <h2>מהקופסה למקלחת בשלושה צעדים</h2>
+    <h2>דקה אחת, בלי אינסטלטור</h2>
     <ol class="steps" data-stagger>
       <li class="step">
         {%- if img1 or no_placeholder != true -%}<figure>{%- if img1 -%}<img src="{{ img1 | image_url: width: 600 }}" srcset="{{ img1 | image_url: width: 240 }} 240w, {{ img1 | image_url: width: 360 }} 360w, {{ img1 | image_url: width: 600 }} 600w" sizes="(min-width:901px) 300px, (min-resolution: 3dppx) 72px, 104px" width="{{ img1.width }}" height="{{ img1.height }}" loading="lazy" decoding="async" alt="">{%- else -%}<img src="{{ ph1 | image_url: width: 600 }}" srcset="{{ ph1 | image_url: width: 240 }} 240w, {{ ph1 | image_url: width: 360 }} 360w, {{ ph1 | image_url: width: 600 }} 600w" sizes="(min-width:901px) 360px, (min-resolution: 3dppx) 72px, 104px" width="{{ ph1.width }}" height="{{ ph1.height }}" loading="lazy" decoding="async" alt="">{%- endif -%}</figure>{%- endif -%}

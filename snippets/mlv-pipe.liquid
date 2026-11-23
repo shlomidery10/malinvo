@@ -24,12 +24,12 @@
 <section class="pipe sec" id="{{ pipe_id }}">
   <div class="w pipe-g{% if img_tall %} has-img{% endif %}">
     <div class="pipe-h">
-      <span class="kick">מה קורה בדרך</span>
+      <span class="kick">הדרך של המים</span>
       <h2{% if img_tall %} class="vh"{% endif %}>מה מגיע אליכם מהצנרת</h2>
-      {%- unless img_tall -%}<p class="lead">המים עוברים דרך ארוכה בצנרת עד למקלחת שלכם, ובדרך נאספים בהם משקעים, חלודה, חול ולכלוך.</p>{%- endunless -%}
+      {%- unless img_tall -%}<p class="journey-h">עד שהמים מגיעים לילד שלכם, הם כבר עברו הרבה.</p>{%- endunless -%}
     </div>
     {%- if img_tall -%}
-      {%- assign pipe_alt = 'איור: בצנרת יש חלודה, משקעים, חול ולכלוך. המים עוברים דרך הפילטר, והוא תופס חלקיקים, חול וחלודה' -%}
+      {%- assign pipe_alt = 'המחשה: צינורות מים ישנים וחלודים, עם הכיתוב מה מגיע אליכם מהצנרת' -%}
       <figure class="pipe-m">
         <picture>
           <source media="(min-width:750px)" srcset="{{ img_wide | image_url: width: 1000 }} 1000w, {{ img_wide | image_url: width: 1840 }} 1840w" sizes="(min-width:960px) 920px, 100vw" width="{{ img_wide.width }}" height="{{ img_wide.height }}">
@@ -44,12 +44,15 @@
       </figure>
     {%- endif -%}
     <div class="pipe-p{% if chamber_img %} has-chamber{% endif %}">
-      {%- if img_tall -%}<p class="lead">המים עוברים דרך ארוכה בצנרת עד למקלחת שלכם, ובדרך נאספים בהם משקעים, חלודה, חול ולכלוך.</p>{%- endif -%}
+      {%- if img_tall -%}<p class="journey-h">עד שהמים מגיעים לילד שלכם, הם כבר עברו הרבה.</p>{%- endif -%}
       <ol class="nums{% if hide_points_mobile %} hide-m{% endif %}">
-        <li><div><b>בצנרת</b><span>משקעים, חלודה, חול ולכלוך נאספים בדרך.</span></div></li>
-        <li><div><b>בפילטר</b><span>המים עוברים דרך הפילטר שבידית, והוא תופס חלקיקים, חול וחלודה.</span></div></li>
-        <li><div><b>מחליפים בקלות</b><span>כשהפילטר מסיים את תפקידו, מבריגים חדש במקומו. הראש נשאר.</span></div></li>
+        <li><div><b>הקו ברחוב</b><span>כלור שמוסיפים בכוונה, כדי שהמים יישארו מחוטאים עד הברז. ואחרי עבודות תשתית בשכונה, גם חול ולכלוך שנכנסו לקו.</span></div></li>
+        <li><div><b>הצנרת של הבניין</b><span>צינורות ברזל בני עשרות שנים מחלידים מבפנים. ראיתם פעם מים צהובים אחרי הפסקת מים? זה מה שיושב על הדפנות גם בשאר הימים, בכמות שלא רואים.</span></div></li>
+        <li><div><b>הדוד</b><span>המים החמים של המקלחת עוברים דרכו. מתי ניקו אותו בפעם האחרונה? משקעים מצטברים בתחתית במשך שנים.</span></div></li>
+        <li><div><b>המים שעמדו</b><span>המים הראשונים של הבוקר ישבו בצינור כל הלילה. אחרי חופשה, שבוע שלם.</span></div></li>
+        <li><div><b>המקלחת</b><span>ומכאן זה נוחת ישר על העור והשיער שלהם. או על פילטר.</span></div></li>
       </ol>
+      <p class="journey-e">אתם לא יכולים להחליף את הצנרת של הבניין. אתם כן יכולים להחליט מה יוצא ממנה.</p>
       {%- if chamber_img -%}
         <figure class="pipe-real pipe-chamber">
           <figcaption><b>התא השקוף, בצילום אמיתי</b></figcaption>
