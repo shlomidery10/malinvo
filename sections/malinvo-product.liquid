@@ -181,6 +181,10 @@
 #mlv .bens b{display:block;font-size:1.02rem;line-height:1.4}
 #mlv .bens span{display:block;font-size:.95rem;line-height:1.5;color:var(--ink2)}
 #mlv .bens-f{margin-top:18px;font-size:.95rem;color:var(--muted)}
+#mlv .inst__lead{text-align:center;margin-inline:auto}
+#mlv .inst{max-width:560px;margin:24px auto 0;border-radius:var(--r);overflow:hidden;background:#fff;border:1px solid var(--line)}
+#mlv .inst img{display:block;width:100%;height:auto}
+#mlv .inst__note{max-width:560px;margin:14px auto 0;text-align:center;color:var(--ink2);font-size:.95rem}
 #mlv .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:32px;counter-reset:s}
 #mlv .step{counter-increment:s;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 #mlv .step figure{position:relative;aspect-ratio:1/1;background:#f3ece5}
@@ -535,7 +539,7 @@
   </section>
 
   {% render 'mlv-benefits', img: section.settings.benefits_image %}
-  {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
+  {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image %}
   {% render 'mlv-compare' %}
 
   {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
@@ -751,6 +755,7 @@
     { "type": "header", "content": "סקשן 3: יתרונות" },
     { "type": "image_picker", "id": "benefits_image", "label": "תמונת מוצר נקייה (1:1)" },
     { "type": "header", "content": "סקשן 4: שלושה צעדים" },
+    { "type": "image_picker", "id": "install_image", "label": "דקה אחת: תמונת התקנה (3:4)", "info": "ריק = תמונת 4 השלבים המובנית" },
     { "type": "image_picker", "id": "step1_image", "label": "צעד 1: מחברים (1:1)" },
     { "type": "image_picker", "id": "step2_image", "label": "צעד 2: תולים (1:1)" },
     { "type": "image_picker", "id": "step3_image", "label": "צעד 3: מתקלחים ורואים (1:1)" },

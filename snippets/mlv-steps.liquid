@@ -4,6 +4,8 @@
   @param {image} [img2] - Step 2 tile, 1:1
   @param {image} [img3] - Step 3 tile, 1:1
   @param {string} [section_id] - Section id (default: mlv-steps)
+  @param {boolean} [diagram] - Product page: one 2x2 install diagram instead of the 3 tiles
+  @param {image} [diagram_image] - Optional override for the diagram (default asset mlv-install-steps.webp)
   @param {boolean} [no_placeholder] - A step without an image renders as text only (home page)
   @example
   {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
@@ -15,6 +17,18 @@
 <section class="sec" id="{{ section_id | default: 'mlv-steps' }}">
   <div class="w">
     <h2>דקה אחת, בלי אינסטלטור</h2>
+    {%- if diagram -%}
+    <p class="lead inst__lead">בלי כלים ובלי קידוחים. ארבע תנועות, ומתקלחים.</p>
+    <figure class="inst">
+      {%- capture inst_alt -%}ארבעה שלבי התקנה: פותחים את הידית, מכניסים את הפילטר לידית, סוגרים את הידית, מחברים לצינור המקלחת{%- endcapture -%}
+      {%- if diagram_image -%}
+        {{ diagram_image | image_url: width: 1200 | image_tag: widths: '360, 560, 800, 1200', sizes: '(min-width: 700px) 560px, calc(100vw - 32px)', loading: 'lazy', alt: inst_alt }}
+      {%- else -%}
+        <img src="{{ 'mlv-install-steps.webp' | asset_url }}" width="1200" height="1600" loading="lazy" decoding="async" alt="{{ inst_alt }}">
+      {%- endif -%}
+    </figure>
+    <p class="inst__note">כשהפילטר מתכהה ונראה משומש, מחליפים רק אותו. הראש נשאר.</p>
+    {%- else -%}
     <ol class="steps" data-stagger>
       <li class="step">
         {%- if img1 or no_placeholder != true -%}<figure>{%- if img1 -%}<img src="{{ img1 | image_url: width: 600 }}" srcset="{{ img1 | image_url: width: 240 }} 240w, {{ img1 | image_url: width: 360 }} 360w, {{ img1 | image_url: width: 600 }} 600w" sizes="(min-width:901px) 300px, (min-resolution: 3dppx) 72px, 104px" width="{{ img1.width }}" height="{{ img1.height }}" loading="lazy" decoding="async" alt="">{%- else -%}<img src="{{ ph1 | image_url: width: 600 }}" srcset="{{ ph1 | image_url: width: 240 }} 240w, {{ ph1 | image_url: width: 360 }} 360w, {{ ph1 | image_url: width: 600 }} 600w" sizes="(min-width:901px) 360px, (min-resolution: 3dppx) 72px, 104px" width="{{ ph1.width }}" height="{{ ph1.height }}" loading="lazy" decoding="async" alt="">{%- endif -%}</figure>{%- endif -%}
@@ -29,5 +43,6 @@
         <div><h3>מתקלחים</h3><p>מתקלחים כרגיל. כשהפילטר מתכהה ונראה משומש, מבריגים פילטר חדש.</p></div>
       </li>
     </ol>
+    {%- endif -%}
   </div>
 </section>
