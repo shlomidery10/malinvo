@@ -521,7 +521,15 @@
       {%- assign nova_vid = product.media | where: 'media_type', 'video' | first -%}
       {%- if nova_vid -%}
       <figure class="vs-vid">
-        {{ nova_vid | video_tag: autoplay: true, muted: true, loop: true, playsinline: true, controls: false, preload: 'metadata', image_size: '720x' }}
+        {%- liquid
+          assign vsrc = nova_vid.sources | where: 'mime_type', 'video/mp4' | first
+          assign vurl = vsrc.url | append: '' | replace: 'HD-1080p-2.5Mbps', 'HD-720p-1.6Mbps'
+        -%}
+        <video data-lazy-vid="{{ vurl }}" data-fallback="{{ vsrc.url }}" muted loop playsinline preload="none" poster="{{ nova_vid.preview_image | image_url: width: 720 }}" width="{{ vsrc.width }}" height="{{ vsrc.height }}" aria-hidden="true"></video>
+        <script>
+          (function(){var v=document.currentScript.previousElementSibling;if(!v||!('IntersectionObserver' in window)){v&&(v.src=v.dataset.lazyVid);return;}
+          new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!v.src){v.onerror=function(){if(v.src!==v.dataset.fallback){v.src=v.dataset.fallback;v.play();}};v.src=v.dataset.lazyVid;}var p=v.play();p&&p.catch(function(){});}else if(v.src){v.pause();}});},{rootMargin:'200px 0px'}).observe(v);})();
+        </script>
         <figcaption>הזרם של Nova, בצילום אמיתי</figcaption>
       </figure>
       {%- endif -%}
