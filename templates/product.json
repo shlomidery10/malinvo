@@ -114,11 +114,11 @@
         }
       },
       "block_order": [
-        "r1",
         "r2",
         "r3",
         "r4",
-        "r5"
+        "r5",
+        "r1"
       ],
       "settings": {
         "place_after_hero": true,
