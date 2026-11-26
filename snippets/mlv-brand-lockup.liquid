@@ -1,0 +1,20 @@
+{% doc %}
+  MALINVO Nova brand lockup: the real logo image + "Nova™" on one line. One lockup per page.
+  Dark logo on light backgrounds (default); light logo on dark backgrounds.
+  @param {boolean} [light] - Use the light logo (for dark backgrounds)
+  @example
+  {% render 'mlv-brand-lockup' %}
+{% enddoc %}
+{%- assign lock_logo = 'mlv-logo-dark.png' | asset_url -%}
+{%- if light -%}{%- assign lock_logo = 'mlv-logo-light.png' | asset_url -%}{%- endif -%}
+<span class="mlv-lock">
+  <img class="mlv-lock__logo" src="{{ lock_logo }}" width="320" height="80" loading="lazy" decoding="async" alt="MALINVO">
+  <span class="mlv-lock__n">Nova<sup>™</sup></span>
+</span>
+<style>
+  :is(#mlv,#mlvh) .mlv-lock{display:inline-flex;align-items:center;gap:8px;line-height:1}
+  :is(#mlv,#mlvh) .mlv-lock__logo{height:18px;width:auto;display:block}
+  :is(#mlv,#mlvh) .mlv-lock__n{font-family:"Rubik","Heebo",sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:.01em;color:#b06a3f}
+  :is(#mlv,#mlvh) .mlv-lock__n sup{font-size:.5em;font-weight:700;vertical-align:super;margin-inline-start:1px}
+  @media(min-width:901px){:is(#mlv,#mlvh) .mlv-lock__logo{height:20px}}
+</style>

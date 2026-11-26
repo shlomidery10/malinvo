@@ -1,0 +1,168 @@
+{%- comment -%}
+  Shower-water "ingredients label" (from the Main.dc.html mock).
+  Lives in templates/product.json right after "main". Because the gallery and buy box are inside the single
+  malinvo-product section, a tiny inline script moves this section to sit directly after that hero
+  (setting "place_after_hero"). The CTA scrolls to the add-to-cart button (BundleUp's button when present).
+{%- endcomment -%}
+{%- liquid
+  assign bg = section.settings.bg_color | default: '#F3F1EE'
+  assign accent = section.settings.accent_color | default: '#A33A2B'
+  assign img = section.settings.image
+-%}
+<style>
+#mlv-ing{--ing-bg:{{ bg }};--ing-ink:#161616;--ing-red:{{ accent }};--ing-muted:#5A5550;background:var(--ing-bg);color:var(--ing-ink);font-family:"Heebo",system-ui,sans-serif;direction:rtl;text-align:right;-webkit-font-smoothing:antialiased}
+#mlv-ing .ing__w{box-sizing:border-box;max-width:560px;margin-inline:auto;padding:44px 20px 40px;display:flex;flex-direction:column;gap:24px}
+#mlv-ing h2.ing__h{margin:0;font-family:"Heebo",system-ui,sans-serif;font-size:28px;line-height:1.25;font-weight:900;letter-spacing:0;color:var(--ing-ink);text-wrap:balance}
+#mlv-ing .ing__h-2{display:block;color:var(--ing-red)}
+#mlv-ing .ing__img{margin:0;height:230px;border-radius:18px;overflow:hidden;background:#DCD6CF}
+#mlv-ing .ing__img img,#mlv-ing .ing__img svg{width:100%;height:100%;object-fit:cover;display:block}
+#mlv-ing .ing__lbl{background:#fff;border:3px solid var(--ing-ink);padding:16px 16px 14px;display:flex;flex-direction:column}
+#mlv-ing .ing__t{margin:0;font-size:30px;font-weight:900;line-height:1}
+#mlv-ing .ing__sub{margin:4px 0 0;font-size:14px;font-weight:500;line-height:1.4}
+#mlv-ing .ing__bar{height:10px;background:var(--ing-ink);margin:10px 0 8px}
+#mlv-ing .ing__bar--s{height:6px}
+#mlv-ing .ing__rows{margin:0;padding:0;list-style:none}
+#mlv-ing .ing__hd{display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--ing-ink)}
+#mlv-ing .ing__row{display:grid;grid-template-columns:132px 22px minmax(0,1fr);align-items:center;column-gap:8px;padding:12px 0;border-bottom:1px solid var(--ing-ink)}
+#mlv-ing .ing__n{font-size:16px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}
+#mlv-ing .ing__row svg{display:block;width:22px;height:14px}
+#mlv-ing .ing__e{font-size:14px;font-weight:700;line-height:1.4;color:var(--ing-red)}
+#mlv-ing .ing__ft{margin:0;font-size:13px;line-height:1.5}
+#mlv-ing .ing__ft + .ing__ft{margin-top:4px}
+#mlv-ing .ing__ft b{font-weight:800}
+#mlv-ing .ing__end{display:flex;flex-direction:column;gap:14px;padding-top:4px}
+#mlv-ing .ing__close{margin:0;font-size:19px;line-height:1.45;font-weight:800;text-wrap:pretty}
+#mlv-ing .ing__cta{display:flex;align-items:center;justify-content:center;min-height:54px;padding:0 20px;border-radius:14px;background:var(--ing-ink);color:#fff;font-size:16px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:transparent;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 200ms ease}
+#mlv-ing .ing__cta:active{transform:scale(.98)}
+@media(hover:hover) and (pointer:fine){#mlv-ing .ing__cta:hover{background:#33302d;color:#fff}}
+#mlv-ing .ing__cta:focus-visible{outline:3px solid var(--ing-red);outline-offset:3px}
+#mlv-ing .ing__src{margin:0;font-size:11px;line-height:1.6;color:var(--ing-muted)}
+#mlv-ing .ing__src p{margin:0}
+#mlv-ing .ing__src a{color:#1F6E99}
+#mlv-ing .ing__src a:hover{color:#134B6A}
+@media(max-width:359px){#mlv-ing .ing__row{grid-template-columns:108px 18px minmax(0,1fr)}}
+@media(min-width:750px){#mlv-ing .ing__w{padding-block:72px 64px}#mlv-ing h2.ing__h{font-size:34px}#mlv-ing .ing__img{height:300px}}
+@media(prefers-reduced-motion:reduce){#mlv-ing .ing__cta{transition:none}}
+</style>
+
+<div id="mlv-ing" data-place="{% if section.settings.place_after_hero %}hero{% endif %}">
+  <div class="ing__w">
+    {%- if section.settings.heading_1 != blank or section.settings.heading_2 != blank -%}
+      <h2 class="ing__h">
+        {{- section.settings.heading_1 | escape -}}
+        {%- if section.settings.heading_2 != blank -%}<span class="ing__h-2">{{ section.settings.heading_2 | escape }}</span>{%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- if img -%}
+      <figure class="ing__img">
+        {{ img | image_url: width: 1100 | image_tag: widths: '390,560,780,1100', sizes: '(min-width: 600px) 520px, calc(100vw - 40px)', loading: 'lazy', decoding: 'async', alt: img.alt | default: section.settings.image_alt }}
+      </figure>
+    {%- elsif request.design_mode -%}
+      <figure class="ing__img">{{ 'lifestyle-1' | placeholder_svg_tag }}</figure>
+    {%- endif -%}
+
+    <div class="ing__lbl">
+      <p class="ing__t">{{ section.settings.label_title | escape }}</p>
+      {%- if section.settings.label_subtitle != blank -%}<p class="ing__sub">{{ section.settings.label_subtitle | escape }}</p>{%- endif -%}
+      <div class="ing__bar" aria-hidden="true"></div>
+      <div class="ing__hd" aria-hidden="true"><span>{{ section.settings.col_ingredient | escape }}</span><span>{{ section.settings.col_effect | escape }}</span></div>
+      <ul class="ing__rows">
+        {%- for block in section.blocks -%}
+          <li class="ing__row" {{ block.shopify_attributes }}>
+            <span class="ing__n">{{ block.settings.name | escape }}</span>
+            <svg aria-hidden="true" viewBox="0 0 22 14" fill="none" stroke="currentColor" style="color:var(--ing-red)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7H2M7 2L2 7l5 5"/></svg>
+            <span class="ing__e"><span class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap">: </span>{{ block.settings.effect | escape }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <div class="ing__bar ing__bar--s" aria-hidden="true"></div>
+      {%- if section.settings.usage_text != blank -%}<p class="ing__ft"><b>{{ section.settings.usage_label | escape }}</b> {{ section.settings.usage_text | escape }}</p>{%- endif -%}
+      {%- if section.settings.maker_text != blank -%}<p class="ing__ft"><b>{{ section.settings.maker_label | escape }}</b> {{ section.settings.maker_text | escape }}</p>{%- endif -%}
+    </div>
+
+    <div class="ing__end">
+      {%- if section.settings.closing_text != blank -%}<p class="ing__close">{{ section.settings.closing_text | escape }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a class="ing__cta" href="#mlv-buy" data-ing-cta>{{ section.settings.button_label | escape }}</a>{%- endif -%}
+    </div>
+
+    {%- if section.settings.sources != blank -%}<div class="ing__src">{{ section.settings.sources }}</div>{%- endif -%}
+  </div>
+</div>
+
+<script>
+(function(){
+  /* Place this section directly after the product hero (gallery + buy box). */
+  var me=document.getElementById('shopify-section-{{ section.id }}');
+  var hero=document.querySelector('#mlv > section.hero');
+  if(me&&hero&&me.querySelector('[data-place="hero"]')&&hero.nextElementSibling!==me)hero.after(me);
+  if(window.__mlvIngBound)return;window.__mlvIngBound=true;
+  /* CTA: scroll to the visible add-to-cart button (BundleUp's when present) and focus it. */
+  document.addEventListener('click',function(ev){
+    var a=ev.target.closest&&ev.target.closest('[data-ing-cta]');if(!a)return;
+    var c=[document.getElementById('BU-action-button'),document.querySelector('#mlv-form [name="add"]'),document.querySelector('form[action*="/cart/add"] [type="submit"]'),document.getElementById('mlv-buy')];
+    var t=null;for(var i=0;i<c.length;i++){if(c[i]&&c[i].getClientRects().length){t=c[i];break}}
+    if(!t)return;ev.preventDefault();
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    setTimeout(function(){try{t.focus({preventScroll:true})}catch(e){}},reduce?0:500);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "תווית רכיבים",
+  "tag": "div",
+  "class": "mlv-ing-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "checkbox", "id": "place_after_hero", "label": "להציג מיד אחרי הגלריה וקופסת הקנייה", "default": true, "info": "כשכבוי, הסקשן יוצג במיקום שלו ברשימת הסקשנים (בתחתית העמוד)." },
+    { "type": "header", "content": "כותרת" },
+    { "type": "text", "id": "heading_1", "label": "כותרת: שורה 1", "default": "אתם קוראים את הרכיבים של השמפו." },
+    { "type": "text", "id": "heading_2", "label": "כותרת: שורה 2 (בצבע ההדגשה)", "default": "את אלה אף אחד לא קורא." },
+    { "type": "header", "content": "תמונה" },
+    { "type": "image_picker", "id": "image", "label": "תמונה", "info": "תקריב של שיער יבש ומקורזל אחרי מקלחת. נחתכת לגובה 230px במובייל." },
+    { "type": "text", "id": "image_alt", "label": "טקסט חלופי לתמונה", "default": "תקריב של שיער יבש ומקורזל אחרי מקלחת", "info": "משמש אם לתמונה אין טקסט חלופי בקבצים." },
+    { "type": "header", "content": "התווית" },
+    { "type": "text", "id": "label_title", "label": "כותרת התווית", "default": "רכיבים" },
+    { "type": "text", "id": "label_subtitle", "label": "שורת משנה", "default": "מי המקלחת שלכם · מנה: מקלחת אחת" },
+    { "type": "text", "id": "col_ingredient", "label": "כותרת עמודה: רכיב", "default": "רכיב" },
+    { "type": "text", "id": "col_effect", "label": "כותרת עמודה: תוצאה", "default": "מה הוא עושה לכם" },
+    { "type": "text", "id": "usage_label", "label": "הוראות שימוש: כותרת", "default": "הוראות שימוש:" },
+    { "type": "text", "id": "usage_text", "label": "הוראות שימוש: טקסט", "default": "כל יום, על כל הגוף, עם המים הכי חמים." },
+    { "type": "text", "id": "maker_label", "label": "יצרן: כותרת", "default": "יצרן:" },
+    { "type": "text", "id": "maker_text", "label": "יצרן: טקסט", "default": "הצנרת בבניין שלכם." },
+    { "type": "header", "content": "סיום וכפתור" },
+    { "type": "textarea", "id": "closing_text", "label": "משפט סיום", "default": "את השמפו בחרתם בקפידה. את המים אף אחד לא בחר." },
+    { "type": "text", "id": "button_label", "label": "טקסט הכפתור", "default": "לסנן את הרכיבים האלה", "info": "הכפתור גולל לכפתור ההוספה לעגלה." },
+    { "type": "richtext", "id": "sources", "label": "מקורות (מוסתר כשריק)" },
+    { "type": "header", "content": "צבעים" },
+    { "type": "color", "id": "bg_color", "label": "רקע הסקשן", "default": "#F3F1EE" },
+    { "type": "color", "id": "accent_color", "label": "צבע הדגשה (חצים ותוצאות)", "default": "#A33A2B" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "שורת רכיב",
+      "settings": [
+        { "type": "text", "id": "name", "label": "רכיב", "default": "רכיב" },
+        { "type": "text", "id": "effect", "label": "מה הוא עושה", "default": "מה הוא עושה לכם" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "תווית רכיבים",
+      "blocks": [
+        { "type": "row", "settings": { "name": "טריהלומתאנים", "effect": "מתאדים במים חמים ונשאפים בכל מקלחת" } },
+        { "type": "row", "settings": { "name": "מתכות כבדות", "effect": "נשארות על העור והשיער" } },
+        { "type": "row", "settings": { "name": "כלור", "effect": "עור יבש ומגורה, שיער יבש ושביר" } },
+        { "type": "row", "settings": { "name": "חלודה ומשקעים", "effect": "שיער דהוי ומחוספס" } },
+        { "type": "row", "settings": { "name": "אבנית", "effect": "שכבה על השיער, שמסתבך ומאבד ברק" } }
+      ]
+    }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

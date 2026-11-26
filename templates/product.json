@@ -73,10 +73,63 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "ingredients_label": {
+      "type": "mlv-ingredients",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "name": "טריהלומתאנים",
+            "effect": "מתאדים במים חמים ונשאפים בכל מקלחת"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "name": "מתכות כבדות",
+            "effect": "נשארות על העור והשיער"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "name": "כלור",
+            "effect": "עור יבש ומגורה, שיער יבש ושביר"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "name": "חלודה ומשקעים",
+            "effect": "שיער דהוי ומחוספס"
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "name": "אבנית",
+            "effect": "שכבה על השיער, שמסתבך ומאבד ברק"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ],
+      "settings": {
+        "place_after_hero": true,
+        "col_ingredient": "רכיב",
+        "col_effect": "מה הוא עושה לכם"
+      }
     }
   },
   "order": [
     "main",
+    "ingredients_label",
     "17948660484d5ed3da"
   ]
 }

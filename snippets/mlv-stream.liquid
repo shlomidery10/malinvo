@@ -1,0 +1,23 @@
+{% doc %}
+  MALINVO stream section (benefit). Honest mechanism, no pressure/percentage promises and no measured
+  before/after claim (a comparison demo is still pending a real video). Shared by home (#mlvh) and product (#mlv).
+  @param {string} [section_id] - Section id (default: mlv-stream)
+  @example
+  {% render 'mlv-stream', section_id: 'mlvh-stream' %}
+{% enddoc %}
+{%- assign st_id = section_id | default: 'mlv-stream' -%}
+{%- assign st_img = 'mlv-stream.jpg' | asset_url -%}
+<section class="sec" id="{{ st_id }}">
+  <div class="w pipe-g has-img">
+    <div class="pipe-h">
+      <span class="kick">זרם</span>
+      <h2>זרם מלא ועוצמתי</h2>
+    </div>
+    <figure class="pipe-m">
+      <img src="{{ st_img }}" width="1080" height="1350" loading="lazy" decoding="async" alt="זרם מים צפוף יוצא מראש המקלחת של MALINVO">
+    </figure>
+    <div class="pipe-p">
+      <p class="lead">חורים זעירים בפני הראש מפזרים את המים, וכך נוצר זרם צפוף שמרגיש מלא במקלחת. ההרגשה היומיומית מתחת למים משתנה, ושם זה מתחיל.</p>
+    </div>
+  </div>
+</section>

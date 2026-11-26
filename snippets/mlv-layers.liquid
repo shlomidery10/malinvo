@@ -1,0 +1,41 @@
+{% doc %}
+  MALINVO "four layers + proof" section. Closes the curiosity loop opened by the hook:
+  the 4-layer illustration (real asset), the four layers in a fixed order with their jobs, a summary line,
+  and an honest, respectfully-marked placeholder for the real "filter after use" photo (awaiting a sample —
+  never fabricated). Shared by home (#mlvh) and product (#mlv).
+  @param {string} [section_id] - Section id (default: mlv-layers)
+  @example
+  {% render 'mlv-layers', section_id: 'mlvh-layers' %}
+{% enddoc %}
+{%- assign lay_id = section_id | default: 'mlv-layers' -%}
+{%- assign lay_img = 'mlv-filter-layers.jpg' | asset_url -%}
+<section class="lay sec mist" id="{{ lay_id }}">
+  <div class="w">
+    <div class="lay-h">
+      <span class="kick">מה הפילטר תופס</span>
+      <h2>ארבע שכבות. לכל אחת תפקיד.</h2>
+      <p class="lead">המים נכנסים לידית, עוברים בארבע שכבות, ויוצאים דרך פני הראש.</p>
+    </div>
+    <div class="lay-g">
+      <figure class="lay-fig">
+        <img src="{{ lay_img }}" width="1080" height="1350" loading="lazy" decoding="async" alt="איור ארבע שכבות הסינון בתוך הידית של ראש המקלחת MALINVO">
+      </figure>
+      <div class="lay-p">
+        <ol class="nums">
+          <li><div><b>יוני כסף</b><span>השכבה הראשונה בדרך של המים.</span></div></li>
+          <li><div><b>בד סינון דו-שכבתי</b><span>עוצר חלקיקים, חול ושאריות חלודה מהצנרת.</span></div></li>
+          <li><div><b>סיב פחם פעיל</b><span>מפחית כלור שיורי במים.</span></div></li>
+          <li><div><b>שכבת PP מדויקת</b><span>תופסת חלקיקים דקים שהשכבות הקודמות פספסו.</span></div></li>
+        </ol>
+        <p class="lay-sum">כלור שיורי, חלקיקים, חול וחלודה נשארים בפילטר. המים יוצאים נקיים יותר.</p>
+      </div>
+    </div>
+    <figure class="proof" aria-label="הפילטר אחרי שימוש — ממתין לדגימה">
+      <div class="proof-badge">ממתין לדגימה</div>
+      <figcaption>
+        <b>הפילטר שלנו אחרי שימוש — בקרוב כאן</b>
+        <span>אנחנו מצלמים פילטר MALINVO מראש מקלחת אמיתי, ביום הראשון ואחרי כמה שבועות שימוש בבית, בלי עריכה. ברגע שהצילום מוכן הוא ייכנס בדיוק כאן. אנחנו לא מפברקים הוכחות — את מה שהפילטר תפס, רואים בעין.</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>

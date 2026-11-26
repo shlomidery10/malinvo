@@ -38,8 +38,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {%- comment -%}Loaded without blocking first paint; display=swap already shows fallback text until the fonts arrive.{%- endcomment -%}
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&family=Rubik:wght@800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&family=Rubik:wght@800;900&display=swap"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Rubik:wght@800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Rubik:wght@800;900&display=swap"></noscript>
     {%- if request.page_type == 'product' -%}
       {%- render 'malinvo-product-schema', product: product -%}
     {%- endif -%}

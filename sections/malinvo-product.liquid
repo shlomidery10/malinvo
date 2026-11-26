@@ -293,6 +293,17 @@
 #mlv .mlv-vouch-avg{font-family:var(--disp);font-weight:800;color:var(--ink);font-size:.95rem;line-height:1}
 #mlv .mlv-vouch-count{color:var(--muted);font-size:.9rem;line-height:1;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 #mlv .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:880px;margin:26px auto 0}
+/* Brand lockup: MALINVO logo | NOVA on one line, sharing the wordmark's baseline. The logo PNG carries the dot above the I, so its letters are ~70% of the image height; NOVA and the divider are sized against that. */
+#mlv .mlv-lockup{--lk:clamp(22px,7.4vw,32px);display:inline-flex;align-self:center;align-items:baseline;gap:calc(var(--lk) * .5);margin:0 0 14px;line-height:1;white-space:nowrap}
+#mlv .mlv-lockup .mlv-logo{height:var(--lk);width:auto;display:block}
+#mlv .mlv-lockup .mlv-sep{width:1px;height:calc(var(--lk) * .74);background:#C07A4E;opacity:.8}
+#mlv .mlv-lockup .mlv-nova{font-family:"Heebo",sans-serif;font-weight:500;font-size:calc(var(--lk) * .8);line-height:1;letter-spacing:.28em;text-transform:uppercase;color:#15232B}
+#mlv .mlv-lockup .mlv-tm{position:relative;top:-.8em;margin-inline-start:-.42em;font-size:.42em;letter-spacing:0;font-weight:600;color:#C07A4E}
+/* v22: quiet scroll reveals, CSS only */
+@media(prefers-reduced-motion:no-preference){@supports(animation-timeline:view()){
+  @keyframes mlv-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  #mlv .sec h2,#mlv .sec .lead,#mlv .big-n,#mlv .big-t,#mlv-ing .ing__row{animation:mlv-in linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+}}
 #mlv .vs-c{min-width:0;border-radius:var(--r);overflow:hidden;background:#fff;border:1px solid var(--line);text-align:start}
 #mlv .vs-c.is-new{border-color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.1)}
 #mlv .vs-c figure{position:relative;margin:0}
@@ -432,6 +443,7 @@
     </div>
   </section>
 
+
   {%- comment -%} The need, stated from a published study. Wording follows the paper: blood trihalomethane levels in adults were highest after a 10-minute shower and lowest after drinking 1 L of tap water. Source: Backer et al., J Expo Anal Environ Epidemiol 2000 (PMID 10981726); the study did not test this product. Source line and that note were removed from the page at the owner's request. {%- endcomment -%}
   {%- if section.blocks.size > 0 -%}
   <section class="sec" id="mlv-reviews">
@@ -444,14 +456,6 @@
     </div>
   </section>
   {%- endif -%}
-
-  <section class="sec mist" id="mlv-need">
-    <div class="n">
-      <span class="kick">שאלה אחת לפני שאתם סוגרים את היום</span>
-      <h2>יש לכם פילטר על השיש. ומה יש במקלחת?</h2>
-      <p class="lead">המים במטבח עוברים פילטר לפני שהם מגיעים לכוס. המים במקלחת מגיעים לילדים ואליכם כמו שהם יצאו מהצנרת.</p>
-    </div>
-  </section>
 
   {%- assign real_img = null -%}
   {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
@@ -521,10 +525,6 @@
     </div>
   </section>
 
-  {% render 'mlv-benefits', img: section.settings.benefits_image %}
-  {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
-  {% render 'mlv-compare' %}
-
   <section class="sec" id="mlv-adults">
     <div class="n" style="text-align:center">
       <span class="kick">העור והשיער שלך</span>
@@ -533,6 +533,10 @@
       <p class="lead" style="margin-block-start:14px"><strong>אותה מקלחת, אותו זמן. עם פחות כלור, ובלי מה שהצנרת מוסיפה.</strong></p>
     </div>
   </section>
+
+  {% render 'mlv-benefits', img: section.settings.benefits_image %}
+  {% render 'mlv-steps', img1: section.settings.step1_image, img2: section.settings.step2_image, img3: section.settings.step3_image %}
+  {% render 'mlv-compare' %}
 
   {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
   {%- capture rv_html -%}
