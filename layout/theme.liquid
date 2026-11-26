@@ -32,6 +32,10 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    {%- if template.name == 'product' and product.featured_media -%}
+      {%- assign lcp = product.featured_media.preview_image -%}
+      <link rel="preload" as="image" fetchpriority="high" href="{{ lcp | image_url: width: 1200 }}" imagesrcset="{{ lcp | image_url: width: 600 }} 600w, {{ lcp | image_url: width: 750 }} 750w, {{ lcp | image_url: width: 900 }} 900w, {{ lcp | image_url: width: 1000 }} 1000w, {{ lcp | image_url: width: 1200 }} 1200w" imagesizes="(min-width: 1200px) 600px, (min-width: 900px) 52vw, (min-resolution: 3dppx) 64vw, (min-resolution: 2.5dppx) 78vw, 100vw">
+    {%- endif -%}
     {{ content_for_header }}
     <style>html,body{overflow-x:clip}img,video{max-width:100%}</style>
     {%- comment -%}MALINVO: one webfont source for the whole site (Heebo body, Rubik display). Theme font_face output is disabled in snippets/theme-styles-variables.liquid.{%- endcomment -%}

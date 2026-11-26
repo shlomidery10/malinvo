@@ -373,7 +373,7 @@
                 {%- if gm.media_type == 'video' -%}
                   {{ gm | video_tag: controls: true, muted: true, loop: true, playsinline: true, preload: 'metadata', image_size: '900x' }}
                 {%- elsif forloop.first -%}
-                  {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, fetchpriority: 'high', loading: 'eager', decoding: 'async', preload: true, alt: galt }}
+                  {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, fetchpriority: 'high', loading: 'eager', alt: galt }}
                 {%- else -%}
                   {{ gm.preview_image | image_url: width: 1200 | image_tag: widths: '600,750,900,1000,1200', sizes: gsizes, loading: 'lazy', decoding: 'async', alt: galt }}
                 {%- endif -%}
