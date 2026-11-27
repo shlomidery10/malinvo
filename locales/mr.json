@@ -344,7 +344,7 @@
       "subtext": "तुमचे गिफ्ट कार्ड",
       "shop_link": "ऑनलाइन स्टोअरला भेट द्या",
       "add_to_apple_wallet": "Apple Wallet मध्ये जोडा",
-      "qr_image_alt": "QR कोड — गिफ्ट कार्ड रिडीम करण्यासाठी स्कॅन करा",
+      "qr_image_alt": "QR कोड - गिफ्ट कार्ड रिडीम करण्यासाठी स्कॅन करा",
       "copy_code": "गिफ्ट कार्डचा कोड कॉपी करा",
       "expiration_date_html": "<bdi>{{ expires_on }}</bdi> रोजी कालबाह्य होईल",
       "copy_code_success": "कोड यशस्वीरीत्या कॉपी केला",

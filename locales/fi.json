@@ -70,7 +70,7 @@
     "increase_quantity": "Suurenna määrää",
     "quantity": "Määrä",
     "rating": "Tämän tuoteen tuotearvio on {{ rating }}/5",
-    "nested_product": "{{ product_title }} – {{ parent_title }}",
+    "nested_product": "{{ product_title }} - {{ parent_title }}",
     "remove": "Poista",
     "view_pricing_info": "Näytä hinnoittelutiedot",
     "slideshow": "Diaesitys",
@@ -310,7 +310,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Sisältää verot. Alennukset, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "Sisältää verot. Alennukset, maksut ja toimitus lasketaan kassalla.",
     "in_store_available": "Varastossa kaupassa",
-    "in_store_also_available": "Myynnissä myös kaupassa – voit ostaa tämän täältä paikan päältä",
+    "in_store_also_available": "Myynnissä myös kaupassa - voit ostaa tämän täältä paikan päältä",
     "in_store_only": "Osta paikan päältä tästä kaupasta. Nouto ei ole saatavilla täällä.",
     "in_store_available_at_html": "Varastossa sijainnissa <b>{{ location }}</b>"
   },
@@ -321,7 +321,7 @@
       "subtext": "Lahjakorttisi",
       "shop_link": "Vieraile verkkokaupassa",
       "add_to_apple_wallet": "Lisää Apple Walletiin",
-      "qr_image_alt": "QR-koodi – lunasta lahjakortti skannaamalla",
+      "qr_image_alt": "QR-koodi - lunasta lahjakortti skannaamalla",
       "copy_code": "Kopioi lahjakortin koodi",
       "copy_code_success": "Koodin kopioiminen onnistui",
       "expired": "Vanhentunut",
@@ -358,7 +358,7 @@
     }
   },
   "fields": {
-    "separator": "–"
+    "separator": "-"
   },
   "blogs": {
     "article": {

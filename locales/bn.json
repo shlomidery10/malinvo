@@ -344,7 +344,7 @@
       "subtext": "আপনার গিফট কার্ড",
       "shop_link": "অনলাইন স্টোরে যান",
       "add_to_apple_wallet": "Apple Wallet-এ যোগ করুন",
-      "qr_image_alt": "QR কোড — গিফট কার্ড রিডিম করতে স্ক্যান করুন",
+      "qr_image_alt": "QR কোড - গিফট কার্ড রিডিম করতে স্ক্যান করুন",
       "copy_code": "গিফট কার্ডের কোড কপি করুন",
       "expiration_date_html": "<bdi>{{ expires_on }}</bdi> তারিখে মেয়াদ শেষ হবে",
       "copy_code_success": "কোড সফলভাবে কপি করা হয়েছে",

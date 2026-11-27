@@ -310,7 +310,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "包含税款。折扣、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "包含税款。折扣、费用和运费将在结账时计算。",
     "in_store_available": "商店有库存",
-    "in_store_also_available": "商店也有售 —— 您可以亲自前往此处购买",
+    "in_store_also_available": "商店也有售 -- 您可以亲自前往此处购买",
     "in_store_only": "请前往此商店亲自购买。此处不提供取货服务。",
     "in_store_available_at_html": "<b>{{ location }}</b>有库存"
   },
@@ -321,7 +321,7 @@
       "subtext": "您的礼品卡",
       "shop_link": "访问在线商店",
       "add_to_apple_wallet": "添加到 Apple Wallet",
-      "qr_image_alt": "二维码 — 扫描兑换礼品卡",
+      "qr_image_alt": "二维码 - 扫描兑换礼品卡",
       "copy_code": "复制礼品卡代码",
       "copy_code_success": "已成功复制代码",
       "expired": "已过期",

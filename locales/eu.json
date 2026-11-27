@@ -330,7 +330,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Zergak barne. Deskontuak, tasak eta <a href=\"{{ link }}\">bidalketa</a> ordainketa-prozesuan kalkulatuko dira.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "Zergak barne. Deskontuak, tasak eta bidalketa ordainketa-prozesuan kalkulatuko dira.",
     "in_store_available": "Izakinak eskuragarri dendan",
-    "in_store_also_available": "Dendan ere salgai — aurrez aurre eros dezakezu hemen",
+    "in_store_also_available": "Dendan ere salgai - aurrez aurre eros dezakezu hemen",
     "in_store_only": "Erosi aurrez aurre denda honetan. Hemen ez da bilketarik eskaintzen.",
     "in_store_available_at_html": "Izakinak eskuragarri <b>{{ location }}</b> kokapenean"
   },
@@ -344,7 +344,7 @@
       "subtext": "Zure opari-txartela",
       "shop_link": "Bisitatu sareko denda",
       "add_to_apple_wallet": "Gehitu Apple Wallet zorroan",
-      "qr_image_alt": "QR kodea — eskaneatu opari-txartela erabiltzeko",
+      "qr_image_alt": "QR kodea - eskaneatu opari-txartela erabiltzeko",
       "copy_code": "Kopiatu opari-txartelaren kodea",
       "expiration_date_html": "Iraungitze-data: <bdi>{{ expires_on }}</bdi>",
       "copy_code_success": "Kodea behar bezala kopiatu da",

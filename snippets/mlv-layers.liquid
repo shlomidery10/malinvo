@@ -1,9 +1,10 @@
 {% doc %}
   MALINVO "four layers + proof" section. Closes the curiosity loop opened by the hook:
   the 4-layer illustration (real asset), the four layers in a fixed order with their jobs, a summary line,
-  and an honest, respectfully-marked placeholder for the real "filter after use" photo (awaiting a sample —
+  and the real "filter after use" photo once it exists (nothing renders in its place until then;
   never fabricated). Shared by home (#mlvh) and product (#mlv).
   @param {string} [section_id] - Section id (default: mlv-layers)
+  @param {image} [proof_img] - Real photo of a used MALINVO filter. Without it the proof block is not rendered.
   @example
   {% render 'mlv-layers', section_id: 'mlvh-layers' %}
 {% enddoc %}
@@ -30,12 +31,12 @@
         <p class="lay-sum">כלור שיורי, חלקיקים, חול וחלודה נשארים בפילטר. המים יוצאים נקיים יותר.</p>
       </div>
     </div>
-    <figure class="proof" aria-label="הפילטר אחרי שימוש — ממתין לדגימה">
-      <div class="proof-badge">ממתין לדגימה</div>
-      <figcaption>
-        <b>הפילטר שלנו אחרי שימוש — בקרוב כאן</b>
-        <span>אנחנו מצלמים פילטר MALINVO מראש מקלחת אמיתי, ביום הראשון ואחרי כמה שבועות שימוש בבית, בלי עריכה. ברגע שהצילום מוכן הוא ייכנס בדיוק כאן. אנחנו לא מפברקים הוכחות — את מה שהפילטר תפס, רואים בעין.</span>
-      </figcaption>
+    {%- if proof_img -%}
+    <figure class="proof">
+      <img src="{{ proof_img | image_url: width: 900 }}" width="{{ proof_img.width }}" height="{{ proof_img.height }}" loading="lazy" decoding="async" alt="{{ proof_img.alt | default: 'פילטר MALINVO אחרי שימוש בבית' | escape }}">
+      <figcaption><b>הפילטר שלנו אחרי שימוש</b></figcaption>
     </figure>
+    {%- endif -%}
+
   </div>
 </section>

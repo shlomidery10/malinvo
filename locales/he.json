@@ -344,7 +344,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "מיסים כלולים. הנחות, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "מיסים כלולים. הנחות, עמלות ושילוח יחושבו בשלב התשלום.",
     "in_store_available": "במלאי בחנות",
-    "in_store_also_available": "נמכר גם בחנות — ניתן לרכוש כאן פיזית",
+    "in_store_also_available": "נמכר גם בחנות - ניתן לרכוש כאן פיזית",
     "in_store_only": "ניתן לרכוש פיזית בחנות זו. אפשרות איסוף אינה זמינה כאן.",
     "in_store_available_at_html": "במלאי ב-<b>{{ location }}</b>"
   },

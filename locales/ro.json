@@ -318,7 +318,7 @@
     "in_store_available_at_html": "În stoc la <b>{{ location }}</b>",
     "in_store_available": "În stoc în magazin",
     "in_store_only": "Cumpărați personal din acest magazin. Ridicarea nu este disponibilă aici.",
-    "in_store_also_available": "Disponibil și în magazin — îl puteți cumpăra personal de aici"
+    "in_store_also_available": "Disponibil și în magazin - îl puteți cumpăra personal de aici"
   },
   "gift_cards": {
     "issued": {
@@ -327,7 +327,7 @@
       "subtext": "Cardul tău cadou",
       "shop_link": "Vizitează magazinul online",
       "add_to_apple_wallet": "Adaugă la Apple Wallet",
-      "qr_image_alt": "Cod QR – scanează pentru valorificarea cardului cadou",
+      "qr_image_alt": "Cod QR - scanează pentru valorificarea cardului cadou",
       "copy_code": "Copiază codul cardului cadou",
       "copy_code_success": "Codul a fost copiat cu succes",
       "expired": "Expirat",

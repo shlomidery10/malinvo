@@ -330,7 +330,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "გადასახადები შედის ფასში. ფასდაკლებები, მოსაკრებლები და <a href=\"{{ link }}\">მიწოდება</a> გამოითვლება შეკვეთის გაფორმებისას.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "გადასახადები შედის ფასში. ფასდაკლებები, მოსაკრებლები და მიწოდება გამოითვლება შეკვეთის გაფორმებისას.",
     "in_store_available": "მაღაზიაში მარაგშია",
-    "in_store_also_available": "ასევე იყიდება მაღაზიაში — შეგიძლია შეიძინო ადგილზე",
+    "in_store_also_available": "ასევე იყიდება მაღაზიაში - შეგიძლია შეიძინო ადგილზე",
     "in_store_only": "შეიძინე ადგილზე ამ მაღაზიაში. აქ გატანა არ არის ხელმისაწვდომი.",
     "in_store_available_at_html": "მარაგშია <b>{{ location }}</b> ლოკაციაზე"
   },
@@ -344,7 +344,7 @@
       "subtext": "შენი სასაჩუქრე ბარათი",
       "shop_link": "ონლაინ მაღაზიის მონახულება",
       "add_to_apple_wallet": "Apple Wallet-ში დამატება",
-      "qr_image_alt": "QR კოდი — დაასკანირე სასაჩუქრე ბარათის გასანაღდებლად",
+      "qr_image_alt": "QR კოდი - დაასკანირე სასაჩუქრე ბარათის გასანაღდებლად",
       "copy_code": "სასაჩუქრე ბარათის კოდის კოპირება",
       "expiration_date_html": "ვადა ეწურება: <bdi>{{ expires_on }}</bdi>",
       "copy_code_success": "კოდის კოპირება წარმატებით დასრულდა",

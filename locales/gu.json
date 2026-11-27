@@ -344,7 +344,7 @@
       "subtext": "તમારું ગિફ્ટ કાર્ડ",
       "shop_link": "ઑનલાઇન સ્ટોરની મુલાકાત લો",
       "add_to_apple_wallet": "Apple Walletમાં ઉમેરો",
-      "qr_image_alt": "QR કોડ — ગિફ્ટ કાર્ડ રિડીમ કરવા માટે સ્કેન કરો",
+      "qr_image_alt": "QR કોડ - ગિફ્ટ કાર્ડ રિડીમ કરવા માટે સ્કેન કરો",
       "copy_code": "ગિફ્ટ કાર્ડનો કોડ કૉપિ કરો",
       "expiration_date_html": "<bdi>{{ expires_on }}</bdi> ના રોજ સમાપ્ત થાય છે",
       "copy_code_success": "કોડ સફળતાપૂર્વક કૉપિ કર્યો",

@@ -358,7 +358,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "الضرائب مشمولة. تُحسب الخصومات والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "الضرائب مشمولة. تُحسب الخصومات والرسوم والشحن عند الدفع.",
     "in_store_available": "متوفر في المتجر",
-    "in_store_also_available": "يُباع أيضًا في المتجر — يمكنك الشراء من هنا شخصيًا",
+    "in_store_also_available": "يُباع أيضًا في المتجر - يمكنك الشراء من هنا شخصيًا",
     "in_store_only": "اشترِ شخصيًا من هذا المتجر. خدمة استلام الطلب غير متوفرة هنا.",
     "in_store_available_at_html": "متوفر في <b>{{ location }}</b>"
   },
@@ -372,7 +372,7 @@
       "subtext": "بطاقة الهدايا الخاصة بك",
       "shop_link": "زيارة المتجر الإلكتروني",
       "add_to_apple_wallet": "الإضافة إلى Apple Wallet",
-      "qr_image_alt": "رمز QR — امسحه ضوئيًا لاسترداد بطاقة الهدايا",
+      "qr_image_alt": "رمز QR - امسحه ضوئيًا لاسترداد بطاقة الهدايا",
       "copy_code": "نسخ كود بطاقة الهدايا",
       "copy_code_success": "تم نسخ الكود بنجاح",
       "expired": "منتهية الصلاحية",

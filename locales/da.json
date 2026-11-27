@@ -310,7 +310,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Skatter inkluderet. Rabatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "Skatter inkluderet. Rabatter, gebyrer og forsendelse beregnes ved betaling.",
     "in_store_available": "På lager i butikken",
-    "in_store_also_available": "Sælges også i butikken – du kan købe det fysisk her",
+    "in_store_also_available": "Sælges også i butikken - du kan købe det fysisk her",
     "in_store_only": "Køb fysisk i denne butik. Afhentning tilbydes ikke her.",
     "in_store_available_at_html": "På lager på <b>{{ location }}</b>"
   },
@@ -321,7 +321,7 @@
       "subtext": "Dit gavekort",
       "shop_link": "Besøg webshop",
       "add_to_apple_wallet": "Føj til Apple Wallet",
-      "qr_image_alt": "QR-kode – scan for at indløse gavekort",
+      "qr_image_alt": "QR-kode - scan for at indløse gavekort",
       "copy_code": "Kopiér gavekortskode",
       "copy_code_success": "Koden er blevet kopieret",
       "expired": "Udløbet",

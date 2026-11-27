@@ -194,7 +194,7 @@
               "type": "mlv-footer-contact",
               "settings": {
                 "fallback_email": "support.malinvo@gmail.com",
-                "hours": "עונים בימים א׳–ה׳, בדרך כלל עד יום עסקים אחד."
+                "hours": "עונים בימים א׳-ה׳, בדרך כלל עד יום עסקים אחד."
               },
               "blocks": {}
             }

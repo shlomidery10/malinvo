@@ -310,7 +310,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Steuern inbegriffen. Rabatte, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "Steuern inbegriffen. Rabatte, Gebühren und Versand werden im Checkout berechnet.",
     "in_store_available": "Im Geschäft vorrätig",
-    "in_store_also_available": "Auch im Geschäft erhältlich – du kannst diesen Artikel hier vor Ort kaufen.",
+    "in_store_also_available": "Auch im Geschäft erhältlich - du kannst diesen Artikel hier vor Ort kaufen.",
     "in_store_only": "Kauf vor Ort in diesem Geschäft möglich. Eine Abholung wird hier nicht angeboten.",
     "in_store_available_at_html": "Vorrätig in <b>{{ location }}</b>"
   },
@@ -321,7 +321,7 @@
       "subtext": "Dein Gutschein",
       "shop_link": "Onlineshop besuchen",
       "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",
-      "qr_image_alt": "QR-Code – Scannen, um Gutschein einzulösen",
+      "qr_image_alt": "QR-Code - Scannen, um Gutschein einzulösen",
       "copy_code": "Geschenkgutscheincode kopieren",
       "copy_code_success": "Code erfolgreich kopiert",
       "expired": "Abgelaufen",

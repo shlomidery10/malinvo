@@ -310,7 +310,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Включени данъци. Отстъпките, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "Включени данъци. Отстъпките, таксите и доставката се изчисляват при плащане.",
     "in_store_available": "В наличност в магазина",
-    "in_store_also_available": "Продава се и в магазина — можете да го закупите тук на място",
+    "in_store_also_available": "Продава се и в магазина - можете да го закупите тук на място",
     "in_store_only": "Закупете на място в този магазин. Тук не се предлага получаване.",
     "in_store_available_at_html": "В наличност в <b>{{ location }}</b>"
   },
@@ -321,7 +321,7 @@
       "subtext": "Вашият ваучер за подарък",
       "shop_link": "Посетете магазина онлайн",
       "add_to_apple_wallet": "Добавяне към Apple Wallet",
-      "qr_image_alt": "QR код – сканирайте го, за да използвате ваучера за подарък",
+      "qr_image_alt": "QR код - сканирайте го, за да използвате ваучера за подарък",
       "copy_code": "Копиране на кода на ваучер за подарък",
       "copy_code_success": "Кодът е копиран успешно",
       "expired": "Изтекъл",

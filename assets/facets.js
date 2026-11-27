@@ -177,7 +177,7 @@ class FacetsFormComponent extends Component {
    */
   #dispatchCollectionUpdateEvent(renderPromise) {
     // Build collection object with available identifiers
-    // Only use numeric IDs — non-numeric values like "all" fail GID validation
+    // Only use numeric IDs - non-numeric values like "all" fail GID validation
     /** @type {any} */
     const rawId = this.dataset.collectionId;
     const collectionData = {
@@ -953,7 +953,7 @@ class FacetStatusComponent extends Component {
     const currency = facetStatus.dataset.currency || '';
     const minInputNum = this.#parseCents(minInputValue, '0', currency);
     const maxInputNum = this.#parseCents(maxInputValue, facetStatus.dataset.rangeMax, currency);
-    facetStatus.innerHTML = `<bdi>${this.#formatMoney(minInputNum)}–${this.#formatMoney(maxInputNum)}</bdi>`;
+    facetStatus.innerHTML = `<bdi>${this.#formatMoney(minInputNum)}-${this.#formatMoney(maxInputNum)}</bdi>`;
   }
 
   /**

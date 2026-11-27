@@ -77,7 +77,7 @@
     "view_pricing_info": "Zobrazit informace o cenách",
     "slideshow": "Prezentace",
     "header_navigation_label": "Primární",
-    "home_logo_alt": "{{ store_name }} – Domů",
+    "home_logo_alt": "{{ store_name }} - Domů",
     "active_filters": "Aktivní filtry:",
     "featured_product": "Doporučený produkt",
     "product_details": "Podrobnosti o produktu",
@@ -322,7 +322,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Včetně daní. Slevy, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "Včetně daní. Slevy, poplatky a doprava se vypočítají v pokladně.",
     "in_store_available": "Skladem v obchodě",
-    "in_store_also_available": "V prodeji také v obchodě – můžete zakoupit osobně zde",
+    "in_store_also_available": "V prodeji také v obchodě - můžete zakoupit osobně zde",
     "in_store_only": "Zakupte osobně v tomto obchodě. Vyzvednutí zde není k dispozici.",
     "in_store_available_at_html": "Skladem v lokalitě <b>{{ location }}</b>"
   },

@@ -310,7 +310,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "세금 포함. 할인, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "세금 포함. 할인, 수수료, 배송은 체크아웃 시 계산됩니다.",
     "in_store_available": "스토어에 재고 있음",
-    "in_store_also_available": "스토어에서도 판매 중 — 이곳에서 직접 구매할 수 있습니다",
+    "in_store_also_available": "스토어에서도 판매 중 - 이곳에서 직접 구매할 수 있습니다",
     "in_store_only": "이 스토어에서 직접 구매하십시오. 이곳에서는 픽업을 제공하지 않습니다.",
     "in_store_available_at_html": "<b>{{ location }}</b>에 재고 있음"
   },
@@ -321,7 +321,7 @@
       "subtext": "기프트 카드",
       "shop_link": "온라인 스토어 방문",
       "add_to_apple_wallet": "Apple Wallet에 추가",
-      "qr_image_alt": "QR 코드 — 스캔하여 기프트 카드 사용",
+      "qr_image_alt": "QR 코드 - 스캔하여 기프트 카드 사용",
       "copy_code": "기프트 카드 코드 복사",
       "copy_code_success": "코드 복사 완료",
       "expired": "만료됨",

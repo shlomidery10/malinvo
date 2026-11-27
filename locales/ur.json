@@ -330,7 +330,7 @@
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "ٹیکس شامل ہیں۔ رعایتوں، فیس اور <a href=\"{{ link }}\">شپنگ</a> کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
     "taxes_included_shipping_at_checkout_without_policy_with_fees": "ٹیکس شامل ہیں۔ رعایتوں، فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
     "in_store_available": "اسٹور میں اسٹاک میں موجود",
-    "in_store_also_available": "اسٹور میں بھی فروخت ہوتا ہے — آپ اسے یہاں خود آ کر خرید سکتے ہیں",
+    "in_store_also_available": "اسٹور میں بھی فروخت ہوتا ہے - آپ اسے یہاں خود آ کر خرید سکتے ہیں",
     "in_store_only": "اس اسٹور پر خود آ کر خریدیں۔ یہاں پک اپ کی سہولت دستیاب نہیں ہے۔",
     "in_store_available_at_html": "<b>{{ location }}</b> پر اسٹاک میں موجود"
   },
@@ -344,7 +344,7 @@
       "subtext": "آپ کا گفٹ کارڈ",
       "shop_link": "آن لائن سٹور وزٹ کریں",
       "add_to_apple_wallet": "Apple Wallet میں شامل کریں",
-      "qr_image_alt": "QR کوڈ — گفٹ کارڈ ریڈیم کرنے کے لیے سکین کریں",
+      "qr_image_alt": "QR کوڈ - گفٹ کارڈ ریڈیم کرنے کے لیے سکین کریں",
       "copy_code": "گفٹ کارڈ کا کوڈ کاپی کریں",
       "copy_code_success": "کوڈ کامیابی کے ساتھ کاپی ہو گیا",
       "expired": "میعاد ختم ہو گئی",
