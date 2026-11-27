@@ -71,6 +71,10 @@
 #mlv .mlv-vouch-badge.is-cta{align-self:center;margin-top:-2px}
 #mlv .mlv-vouch-badge[data-vouch-pending]{visibility:hidden}
 #bundle-up{scroll-margin-top:90px}
+/* Desktop CLS: BundleUp mounts its offers (~620px) in place of #mlv-form after load, which pushed the badge, buy note and reassurance list down. While .bu-wait is set (JS only, see the script after the form) the form holds the widget's measured height; the class drops as soon as the widget mounts, when the page has no BundleUp data, or 8s after load. */
+#mlv .buy.bu-wait #mlv-form{min-height:622px}
+@media(min-width:901px) and (max-width:1000px),(max-width:420px){#mlv .buy.bu-wait #mlv-form{min-height:645px}}
+@media(max-width:370px){#mlv .buy.bu-wait #mlv-form{min-height:715px}}
 /* Vouch Review Widget section at the page bottom: kept only as the data source for the star badge; the visible reviews are the carousel in #mlv-reviews */
 [id$="__17948660484d5ed3da"]{display:none!important}
 #mlv #bundle-up,#mlv #bundle-up *{font-family:var(--body)}
@@ -461,6 +465,7 @@
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
         </form>
+        <script>(function(b){b.classList.add('bu-wait');var done=function(){b.classList.remove('bu-wait')};document.addEventListener('DOMContentLoaded',function(){if(!document.getElementById('bundle-data'))done()});window.addEventListener('load',function(){setTimeout(done,8000)});if('MutationObserver' in window){var mo=new MutationObserver(function(){if(b.querySelector('#bundle-up')){done();mo.disconnect()}});mo.observe(b,{childList:true})}})(document.currentScript.parentNode)</script>
         <a class="mlv-vouch-badge is-cta" href="#mlv-reviews" data-vouch-badge data-vouch-pending aria-hidden="true" tabindex="-1">
           <span class="mlv-vouch-stars" aria-hidden="true"><span class="mlv-vouch-fill">★★★★★</span>★★★★★</span>
           <b class="mlv-vouch-avg"></b>
