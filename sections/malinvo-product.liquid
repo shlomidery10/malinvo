@@ -307,6 +307,14 @@
   .mlv-sticky{left:0;right:0;width:min(560px,calc(100% - 48px));margin-inline:auto;bottom:20px}
   .mlv-sticky__logo{height:20px}
 }
+/* Landscape phones (short screens): the square slide was ~2 screens tall, and the header plus the sticky bar covered ~39% of the screen. Cap the slide to 70% of the screen and slim the bar to one line (price line hidden; the bar's aria-label keeps the price). */
+@media(orientation:landscape) and (max-height:500px){
+  #mlv .slide{aspect-ratio:auto;height:70vh;height:70svh}
+  #mlv .gal{top:70px}
+  .mlv-sticky{left:0;right:0;width:min(560px,calc(100% - 48px));margin-inline:auto;min-height:52px;bottom:calc(6px + env(safe-area-inset-bottom))}
+  .mlv-sticky__d{display:none}
+  .mlv-sticky__t{gap:0}
+}
 @media(max-width:560px){
   #mlv .cmp{font-size:.9rem}
   #mlv .cmp th,#mlv .cmp td{padding:12px 8px}
