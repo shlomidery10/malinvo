@@ -137,6 +137,23 @@
   #mlv #bundle-up .offer-price-wrapper{margin-inline-start:auto}
   #mlv #bundle-up .offer-title p,#mlv #bundle-up .offer-sub-title p{overflow-wrap:normal;word-break:normal;hyphens:none}
 }
+/* Amounts never split from their "₪" sign, and "#1"/"#2" stay whole */
+#mlv #bundle-up .bu-savings strong,#mlv #bundle-up .mlv-unit,#mlv #bundle-up .item-index{white-space:nowrap}
+/* 200% zoom on a 375px phone (~188px) and other very narrow screens: drop the offer image and stack the card's text column (title, savings pill, subtitle, then the price row) so prices and the pill are never clipped by the card */
+@media(max-width:300px){
+  #mlv #bundle-up .card-content-wrapper{padding:9px 10px}
+  #mlv #bundle-up .header-wrapper{align-items:flex-start;gap:8px}
+  #mlv #bundle-up .offer-thumbnail{display:none}
+  #mlv #bundle-up .offer-text-section{flex:1 1 0;min-width:0}
+  #mlv #bundle-up .offer-header{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:6px}
+  #mlv #bundle-up .offer-start-section{flex:none;width:100%}
+  #mlv #bundle-up .offer-price-wrapper{flex:none;max-width:100%;margin-inline-start:0}
+  #mlv #bundle-up .bundle-offer-card_pricing{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+  #mlv #bundle-up .mlv-unit{flex-basis:100%}
+  #mlv #bundle-up .offer-title-label,#mlv #bundle-up .offer-title-label p,#mlv #bundle-up .offer-title-label span{white-space:normal;max-width:100%}
+  #mlv #bundle-up .offer-title p,#mlv #bundle-up .offer-sub-title p{overflow-wrap:anywhere}
+  #mlv #bundle-up .card-tag{right:10px;max-width:calc(100% - 20px)}
+}
 #mlv .reass{display:grid;gap:8px;font-size:.95rem;font-weight:600;line-height:1.4}
 #mlv .reass li{display:flex;align-items:center;gap:11px;background:#faf5ef;border:1px solid #ecdccb;border-radius:12px;padding:11px 14px}
 #mlv .reass svg,#mlv .trio svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--teal-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
@@ -316,6 +333,13 @@
   .mlv-sticky{left:0;right:0;width:min(560px,calc(100% - 48px));margin-inline:auto;min-height:52px;bottom:calc(6px + env(safe-area-inset-bottom))}
   .mlv-sticky__d{display:none}
   .mlv-sticky__t{gap:0}
+}
+/* 200% zoom on a phone (<=240px wide): the sticky header (60px) plus the buy bar took ~39% of the screen. The header scrolls away with the page, and the bar keeps only its button (the bar's aria-label still carries the price and launch note). */
+@media(max-width:240px){
+  .header-section:has(> #header-component[sticky]){position:relative!important}
+  .mlv-sticky{min-height:0;padding-block:4px;padding-inline:4px;left:8px;right:8px;bottom:calc(6px + env(safe-area-inset-bottom));justify-content:center}
+  .mlv-sticky__t{display:none}
+  .mlv-sticky__c{flex:1 1 auto;justify-content:center;padding:0 10px}
 }
 @media(max-width:560px){
   #mlv .cmp{font-size:.9rem}
