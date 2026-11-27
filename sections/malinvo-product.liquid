@@ -800,6 +800,19 @@
     enhance();
     if('MutationObserver' in window){var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
   })();
+  /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
+  (function(){
+    var L={{ 'accessibility.slideshow_previous' | t | json }},N={{ 'accessibility.slideshow_next' | t | json }};
+    var map={'Previous':L,'Next':N,'Previous reviews':L,'Next reviews':N,'Previous image':L,'Next image':N};
+    var sel='#mlv-reviews button[aria-label],.review-widget button[aria-label],.review-image-modal button[aria-label]';
+    var relabel=function(){[].slice.call(document.querySelectorAll(sel)).forEach(function(b){var v=map[b.getAttribute('aria-label')];if(v)b.setAttribute('aria-label',v)})};
+    relabel();
+    if(!('MutationObserver' in window))return;
+    var t,later=function(){clearTimeout(t);t=setTimeout(relabel,60)};
+    var rv=document.getElementById('mlv-reviews');if(rv)new MutationObserver(later).observe(rv,{childList:true,subtree:true});
+    new MutationObserver(later).observe(document.body,{childList:true});
+    document.addEventListener('DOMContentLoaded',relabel);
+  })();
   /* Hero color swap: when the first set in the selected bundle offer is the alternate color, slide 1 shows that color's hero */
   (function(){
     var dataEl=document.querySelector('[data-hero-alt]');if(!dataEl)return;
