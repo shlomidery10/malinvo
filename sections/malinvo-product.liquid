@@ -274,6 +274,10 @@
   .mlv-sticky__sep{flex:none;width:1.5px;height:14px;background:#b87a55}
   .mlv-sticky__n{font-family:Heebo,sans-serif;font-weight:500;font-size:13px;letter-spacing:.24em;margin-inline-end:-.24em;text-transform:uppercase;color:#f6efe8}
   @media(max-width:389px){.mlv-sticky__sep,.mlv-sticky__n{display:none}}
+  /* Narrow phones: the launch note ("· מחיר השקה עד 31.12" / "· נשארו X ימים") ran under the button. Below 390px the line keeps only the price; the button's aria-label still carries the launch date. */
+  .mlv-sticky__d{overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .mlv-sticky__l[hidden]{display:none}
+  @media(max-width:389px){.mlv-sticky__l{display:none}}
   .mlv-sticky__t{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
   .mlv-sticky__t .mlv-sticky__b{top:0}
   .mlv-sticky__d{font:600 12px/1.2 Heebo,Rubik,system-ui,sans-serif;color:#f6efe8;opacity:.88;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -763,7 +767,7 @@
 </div>
 {% render 'mlv-img-loader' %}
 {%- assign st_launch = false -%}{%- if from_v.compare_at_price > from_v.price -%}{%- assign st_launch = true -%}{%- endif -%}
-<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up" aria-label="לבחירת חבילה של MALINVO Nova, מ-{{ from_price }}{% if st_launch %}, מחיר השקה עד 31.12.2026{% endif %}"><span class="mlv-sticky__t"><span class="mlv-sticky__b" dir="ltr">{%- assign st_logo = images['malinvo_logo_light.png'] -%}{%- if st_logo -%}<img class="mlv-sticky__logo" src="{{ st_logo | image_url: height: 60 }}" srcset="{{ st_logo | image_url: height: 60 }} 1x, {{ st_logo | image_url: height: 120 }} 2x, {{ st_logo | image_url: height: 180 }} 3x" width="{{ st_logo.width }}" height="{{ st_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}<span class="mlv-sticky__p">MALINVO</span>{%- endif -%}<span class="mlv-sticky__sep" aria-hidden="true"></span><span class="mlv-sticky__n">Nova</span></span><span class="mlv-sticky__d"{% if st_launch %} data-launch-sticky data-from="{{ from_price }}"{% endif %}>מ-<bdi>{{ from_price }}</bdi>{% if st_launch %} · מחיר השקה עד 31.12{% endif %}</span></span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
+<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up" aria-label="לבחירת חבילה של MALINVO Nova, מ-{{ from_price }}{% if st_launch %}, מחיר השקה עד 31.12.2026{% endif %}"><span class="mlv-sticky__t"><span class="mlv-sticky__b" dir="ltr">{%- assign st_logo = images['malinvo_logo_light.png'] -%}{%- if st_logo -%}<img class="mlv-sticky__logo" src="{{ st_logo | image_url: height: 60 }}" srcset="{{ st_logo | image_url: height: 60 }} 1x, {{ st_logo | image_url: height: 120 }} 2x, {{ st_logo | image_url: height: 180 }} 3x" width="{{ st_logo.width }}" height="{{ st_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}<span class="mlv-sticky__p">MALINVO</span>{%- endif -%}<span class="mlv-sticky__sep" aria-hidden="true"></span><span class="mlv-sticky__n">Nova</span></span><span class="mlv-sticky__d"{% if st_launch %} data-launch-sticky{% endif %}>מ-<bdi>{{ from_price }}</bdi>{% if st_launch %}<span class="mlv-sticky__l"> · מחיר השקה עד 31.12</span>{% endif %}</span></span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
 
 <script>
 (function(){
@@ -948,7 +952,8 @@
     var q=function(s){return [].slice.call(document.querySelectorAll(s))};
     if(ms<=0){
       q('[data-launch-hide],[data-launch-note]').forEach(function(el){el.hidden=true});
-      q('[data-launch-sticky]').forEach(function(el){el.textContent='מ-'+el.getAttribute('data-from')});
+      q('[data-launch-sticky] .mlv-sticky__l').forEach(function(el){el.hidden=true});
+      var sb=document.getElementById('mlv-sticky');if(sb)sb.setAttribute('aria-label',sb.getAttribute('aria-label').replace(/, מחיר השקה[^,]*$/,''));
       q('[data-launch-swap]').forEach(function(el){el.textContent=el.getAttribute('data-launch-swap')});
       return;
     }
@@ -957,7 +962,8 @@
       var reg=el.getAttribute('data-reg')||'';
       el.textContent=d>7?'מחיר השקה עד 31.12 - '+left:d>1?'מחיר השקה - '+left+'. מ-1.1 המחיר '+reg:'היום זה היום האחרון במחיר השקה';
     });
-    if(d<=7)q('[data-launch-sticky]').forEach(function(el){el.textContent=(d>1?left:'יום אחרון')+' · מ-'+el.getAttribute('data-from')});
+    /* Sticky bar: only the launch part (its own span, hidden below 390px) changes; the "מ-₪..." price stays as rendered */
+    if(d<=7)q('[data-launch-sticky] .mlv-sticky__l').forEach(function(el){el.textContent=' · '+(d>1?left:'יום אחרון')});
   })();
 
   /* Order button shows the selected bundle price ("להוספה לעגלה · ₪499.90"); re-applied when BundleUp re-renders or the shopper picks another card */
