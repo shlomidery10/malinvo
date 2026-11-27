@@ -226,6 +226,10 @@
 #mlv .acc>div{overflow:hidden;min-height:0}
 #mlv .ans{padding:0 0 20px;color:var(--ink2);font-size:.97rem}
 #mlv .ans a{color:var(--teal-d);font-weight:600;text-underline-offset:3px;overflow-wrap:anywhere;padding-block:11px}
+#mlv .mlv-guides{display:grid;gap:10px;margin-top:22px}
+#mlv .mlv-guides li{min-width:0;padding:16px 18px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+#mlv .mlv-guides a{display:inline-flex;align-items:center;min-height:44px;font-weight:800;color:var(--teal-d);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px;overflow-wrap:anywhere}
+#mlv .mlv-guides p{margin-top:2px;font-size:.95rem;line-height:1.5;color:var(--ink2)}
 #mlv .final{text-align:center;background:var(--sand)}
 #mlv .final-m{max-width:520px;margin:0 auto 28px;border-radius:var(--r);overflow:hidden;background:#f3ece5}
 #mlv .final-m img{display:block;width:100%;height:auto}
@@ -685,6 +689,21 @@
     </div>
   </section>
 
+  {%- comment -%} Guides: internal links to the blog's latest 3 articles (merchant-picked blog, else "news"). Hidden when the blog has no articles. {%- endcomment -%}
+  {%- assign g_blog = section.settings.guides_blog | default: blogs.news -%}
+  {%- if g_blog and g_blog.articles_count > 0 -%}
+  <section class="sec mist" id="mlv-guides" aria-labelledby="mlv-guides-h">
+    <div class="n">
+      <h2 id="mlv-guides-h">{{ section.settings.guides_heading | default: 'מדריכים' | escape }}</h2>
+      <ul class="mlv-guides">
+        {%- for a in g_blog.articles limit: 3 -%}
+        <li><a href="{{ a.url }}">{{ a.title | escape }}</a>{%- if a.excerpt_or_content != blank -%}<p>{{ a.excerpt_or_content | strip_html | truncatewords: 18 | escape }}</p>{%- endif -%}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+  {%- endif -%}
+
   <section class="final sec" id="mlv-final">
     <div class="n">
       {%- assign fimg = section.settings.final_image -%}
@@ -946,6 +965,9 @@
     { "type": "image_picker", "id": "step1_image", "label": "צעד 1: מחברים (1:1)" },
     { "type": "image_picker", "id": "step2_image", "label": "צעד 2: תולים (1:1)" },
     { "type": "image_picker", "id": "step3_image", "label": "צעד 3: מתקלחים ורואים (1:1)" },
+    { "type": "header", "content": "מדריכים (מוסתר כשאין כתבות)" },
+    { "type": "text", "id": "guides_heading", "label": "כותרת", "default": "מדריכים" },
+    { "type": "blog", "id": "guides_blog", "label": "בלוג", "info": "ריק = הבלוג news. מוצגות 3 הכתבות האחרונות." },
     { "type": "header", "content": "סקשן 7: 30 יום להחליט" },
     { "type": "image_picker", "id": "final_image", "label": "תמונת אמון (1:1)" },
     { "type": "header", "content": "תמונת פילטר אמיתית אחרי שימוש (מוסתר עד שממלאים)" },
