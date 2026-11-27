@@ -224,7 +224,19 @@
 
   {%- liquid
     # MALINVO: savings and free-shipping rows, computed from the cart itself.
-    # Savings = every line-level and cart-level discount (e.g. the BundleUp pair price).
+    # Savings = regular-price value of the lines minus the cart total, matching the product page:
+    # each unit counts at its compare-at price when that is higher than its original price.
+    # Without compare-at prices this equals the line-level plus cart-level discounts.
+    assign regular_total = 0
+    for item in cart.items
+      assign unit_regular = item.original_price
+      if item.variant.compare_at_price > item.original_price
+        assign unit_regular = item.variant.compare_at_price
+      endif
+      assign line_regular = unit_regular | times: item.quantity
+      assign regular_total = regular_total | plus: line_regular
+    endfor
+    assign cart_savings = regular_total | minus: cart.total_price
     # Free shipping shows only when the cart total reaches the theme setting, in the shop currency.
     assign free_shipping_min = settings.cart_free_shipping_threshold | default: 0 | times: 100
     assign show_free_shipping = false
@@ -233,10 +245,10 @@
     endif
   -%}
   <div class="cart-totals__container{% if settings.show_installments %} cart-totals__container--has-installments{% endif %}">
-    {%- if cart.total_discount > 0 -%}
+    {%- if cart_savings > 0 -%}
       <span class="cart-totals__item cart-totals__savings cart-primary-typography">
         <span>{{ 'content.cart_savings' | t }}</span>
-        <span class="cart-totals__savings-value"><bdi>{{ cart.total_discount | money }}</bdi></span>
+        <span class="cart-totals__savings-value"><bdi>{{ cart_savings | money }}</bdi></span>
       </span>
     {%- endif -%}
     {%- if show_free_shipping -%}
