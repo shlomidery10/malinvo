@@ -4,8 +4,9 @@
   1. After the hero photo has arrived, the next two photos below the screen are fetched, then (after
      DOMContentLoaded) the rest, top to bottom: one at a time while the page is loading, two at a time after.
   2. A photo that gets within 1400px of the screen is fetched at once (fast scrolling, anchor links).
-  3. Product gallery: slide 2 is fetched once slide 1 and the page scripts are in, slide 3 after the page has
-     loaded; the first touch on the gallery fetches the rest.
+  3. Product gallery: slide 2 is fetched once slide 1 and the page scripts are in; the first touch on the
+     gallery fetches the rest.
+  App blocks (Vouch reviews) are left to the browser's native lazy loading, so their photos load on scroll.
   4. A photo below the first screen that still arrives while it is on screen fades in over the cream placeholder.
   5. The payment icons that the bundle app adds are requested at the size they are shown (same files, same CDN).
   Steps 1 to 3 are skipped when the visitor asked the browser to save data.
@@ -29,7 +30,7 @@ img.mlv-fade{transition:opacity 180ms ease}
   var settle=function(i,ms,cb){if(ok(i))return cb();var d=false,t,f=function(){if(d)return;d=true;clearTimeout(t);cb()};t=setTimeout(f,ms);i.addEventListener('load',f);i.addEventListener('error',f)};
   var track=root.querySelector('[data-track]');
   var slides=track?arr(track.querySelectorAll('img')):[];
-  var queue=arr(root.querySelectorAll('img[loading="lazy"]')).filter(function(i){return !i.closest('[data-track],.thumbs')});
+  var queue=arr(root.querySelectorAll('img[loading="lazy"]')).filter(function(i){return !i.closest('[data-track],.thumbs,.shopify-app-block')});
   var save=!!(navigator.connection&&navigator.connection.saveData);
 
   /* 4. soft fade for a photo that arrives late (never for the first screen) */
@@ -62,7 +63,7 @@ img.mlv-fade{transition:opacity 180ms ease}
   if(hero)settle(hero,12000,first);else first();
   var rest=function(){var go=function(){setTimeout(function(){budget=1e3;pump();if(slides[1])eager(slides[1])},300)};if(hero)settle(hero,12000,go);else go()};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',rest);else rest();
-  var loaded=function(){lanes=2;pump();setTimeout(function(){if(slides[2])eager(slides[2])},1500)};
+  var loaded=function(){lanes=2;pump()};
   if(document.readyState==='complete')loaded();else window.addEventListener('load',loaded);
 
   /* 2. anything that gets close is fetched at once */

@@ -4,6 +4,7 @@
   @param {image} [img2] - Step 2 tile, 1:1
   @param {image} [img3] - Step 3 tile, 1:1
   @param {string} [section_id] - Section id (default: mlv-steps)
+  @param {string} [kick] - Optional small label above the heading
   @param {boolean} [diagram] - Product page: one 2x2 install diagram instead of the 3 tiles
   @param {image} [diagram_image] - Optional override for the diagram (default asset mlv-install-steps.webp)
   @param {boolean} [no_placeholder] - A step without an image renders as text only (home page)
@@ -16,6 +17,7 @@
 {%- assign ph3 = images['malinvo_black_03_filter_inside.png'] -%}
 <section class="sec" id="{{ section_id | default: 'mlv-steps' }}">
   <div class="w">
+    {%- if kick != blank -%}<span class="kick">{{ kick }}</span>{%- endif -%}
     <h2>דקה אחת, בלי אינסטלטור</h2>
     {%- if diagram -%}
     <p class="lead inst__lead">בלי כלים ובלי קידוחים. ארבע תנועות, ומתקלחים.</p>

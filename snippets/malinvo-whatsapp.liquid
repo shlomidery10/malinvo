@@ -20,8 +20,21 @@
     .mlv-wa:hover{transform:scale(1.06)}
     .mlv-wa:active{transform:scale(.96)}
     @media (max-width:900px){
+      .mlv-wa{inline-size:48px;block-size:48px}
+      .mlv-wa svg{inline-size:26px;block-size:26px}
       .mlv-wa--raised{inset-block-end:calc(84px + env(safe-area-inset-bottom))}
     }
+    .mlv-wa.is-away{opacity:0;visibility:hidden;pointer-events:none;transition:opacity 160ms ease,visibility 0s 160ms}
+    .mlv-wa{transition:transform 160ms cubic-bezier(.23,1,.32,1),opacity 160ms ease}
     @media (prefers-reduced-motion:reduce){.mlv-wa{transition:none}}
   {%- endstyle -%}
+  <script>
+    (function(){
+      var wa=document.querySelector('.mlv-wa');if(!wa||!('IntersectionObserver' in window))return;
+      var seen=false,watch=function(){var b=document.getElementById('bundle-up');if(!b)return false;
+        new IntersectionObserver(function(es){wa.classList.toggle('is-away',es[0].isIntersecting)}).observe(b);return true};
+      if(watch())return;
+      if('MutationObserver' in window){var mo=new MutationObserver(function(){if(!seen&&watch()){seen=true;mo.disconnect()}});mo.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){mo.disconnect()},15000)}
+    })();
+  </script>
 {%- endif -%}

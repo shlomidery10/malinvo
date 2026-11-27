@@ -3,6 +3,7 @@
   (product page) and snippets/mlv-sections-css.liquid (home page). The brand name is the real logo image,
   with visually hidden text for screen readers and search engines.
   @param {string} [section_id] - Section id (default: mlv-compare)
+  @param {string} [kick] - Optional small label above the heading
   @example
   {% render 'mlv-compare' %}
 {% enddoc %}
@@ -11,10 +12,11 @@
 {%- assign cmp_logo = images['malinvo_logo_dark.png'] -%}
 {%- assign cmp_prod = images['malinvo_black_01_hero.png'] -%}
 {%- capture cmp_brand -%}
-  {%- if cmp_logo -%}<span class="cmp-vh">MALINVO</span><img class="cmp-logo" src="{{ cmp_logo | image_url: height: 120 }}" srcset="{{ cmp_logo | image_url: height: 120 }} 1x, {{ cmp_logo | image_url: height: 240 }} 2x, {{ cmp_logo | image_url: height: 360 }} 3x" width="{{ cmp_logo.width }}" height="{{ cmp_logo.height }}" loading="lazy" decoding="async" alt="" aria-hidden="true">{%- else -%}MALINVO{%- endif -%}
+  {%- if cmp_logo -%}<img class="cmp-logo" src="{{ cmp_logo | image_url: height: 120 }}" srcset="{{ cmp_logo | image_url: height: 120 }} 1x, {{ cmp_logo | image_url: height: 240 }} 2x, {{ cmp_logo | image_url: height: 360 }} 3x" width="{{ cmp_logo.width }}" height="{{ cmp_logo.height }}" loading="lazy" decoding="async" alt="MALINVO">{%- else -%}MALINVO{%- endif -%}
 {%- endcapture -%}
 <section class="mist sec" id="{{ section_id | default: 'mlv-compare' }}">
   <div class="n">
+    {%- if kick != blank -%}<span class="kick">{{ kick }}</span>{%- endif -%}
     <h2 class="cmp-h">{{ cmp_brand }} מול ראש מקלחת רגיל</h2>
     <table class="cmp">
       <thead>
@@ -36,7 +38,7 @@
 <style>
   :is(#mlv,#mlvh) .cmp-vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
   :is(#mlv,#mlvh) .cmp-h .cmp-logo{display:inline-block;height:.68em;width:auto;vertical-align:baseline;margin-inline-end:.12em}
-  :is(#mlv,#mlvh) .cmp thead .us img.cmp-prod{display:block;width:80px;height:80px;margin:0 auto 8px;border-radius:14px;object-fit:contain;background:#f6efe8}
+  :is(#mlv,#mlvh) .cmp thead .us img.cmp-prod{display:block;width:80px;height:80px;margin:0 auto 8px;border-radius:14px;object-fit:cover;object-position:60% 55%;background:#f6efe8}
   :is(#mlv,#mlvh) .cmp thead .us img.cmp-logo{display:block;width:auto;height:13px;margin:0 auto;border-radius:0;object-fit:contain}
   @media(max-width:560px){:is(#mlv,#mlvh) .cmp thead .us img.cmp-prod{width:64px;height:64px}:is(#mlv,#mlvh) .cmp thead .us img.cmp-logo{height:11px}}
 </style>

@@ -1,17 +1,19 @@
 {% doc %}
   MALINVO section 3: four benefits next to a clean product photo. Styles live in sections/malinvo-product.liquid.
   @param {image} [img] - Clean product photo, 1:1
+  @param {string} [kick] - Optional small label above the heading
   @example
   {% render 'mlv-benefits', img: section.settings.benefits_image %}
 {% enddoc %}
 <section class="mist sec" id="mlv-benefits">
   <div class="w split">
     <div>
+      {%- if kick != blank -%}<span class="kick">{{ kick }}</span>{%- endif -%}
       <h2>מה יש בתוך הראש</h2>
       <ul class="bens" data-stagger>
         <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="17" y="6" width="14" height="36" rx="4"/><path d="M17 13h14M17 35h14M21 19h6M21 24h6M21 29h6"/></svg></i><div><b>פילטר שרואים אותו עובד</b><span>הוא מתכהה עם הזמן. כל מה שמכהה אותו היה בדרך אליכם. כשמגיע הזמן, מבריגים חדש והראש נשאר.</span></div></li>
-        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M4 24c5-8 12-12 20-12s15 4 20 12c-5 8-12 12-20 12S9 32 4 24z"/><circle cx="24" cy="24" r="6"/></svg></i><div><b>ארבע שכבות סינון</b><span>יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הן תופסות חול, חלודה ומשקעים, ומפחיתות כלור שיורי.</span></div></li>
-        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M20 17v14M28 17v14"/></svg></i><div><b>הברגה לצינור הקיים</b><span>מתברג לצינור המקלחת הרגיל, בלי כלים.</span></div></li>
+        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 14h28M10 21h28M10 28h28M10 35h28"/></svg></i><div><b>ארבע שכבות סינון</b><span>יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP. הן תופסות חול, חלודה ומשקעים, ומפחיתות כלור שיורי.</span></div></li>
+        <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M18 8h12v8H18zM16 16h16M18 20l12 4M18 26l12 4M18 32l12 4M24 36v6"/></svg></i><div><b>הברגה לצינור הקיים</b><span>מתברג לצינור המקלחת הרגיל, בלי כלים.</span></div></li>
         <li><i aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7s-9 12-9 19a9 9 0 0 0 18 0c0-7-9-19-9-19z"/><path d="M9 28s-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8zM39 28s-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8z"/></svg></i><div><b>לוח עם חורים זעירים</b><span>מרכז את המים לזרם מלא וצפוף. הלחץ בבית לא משתנה.</span></div></li>
       </ul>
       <p class="bens-f">עיצוב אובאלי נקי בגימור מט, שנראה טוב בכל חדר רחצה.</p>
