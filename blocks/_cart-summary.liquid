@@ -61,6 +61,13 @@
     top: var(--header-height, 0);
   }
 
+  /* MALINVO phone compaction (see cart-products): tighter gap between totals and the checkout button on the cart page */
+  @media screen and (max-width: 749px) {
+    .cart-page .cart-summary__inner {
+      gap: var(--gap-md);
+    }
+  }
+
   .cart-summary {
     @media screen and (max-width: 749px) {
       border: none;

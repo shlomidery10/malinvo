@@ -222,7 +222,29 @@
     endif
   -%}
 
+  {%- liquid
+    # MALINVO: savings and free-shipping rows, computed from the cart itself.
+    # Savings = every line-level and cart-level discount (e.g. the BundleUp pair price).
+    # Free shipping shows only when the cart total reaches the theme setting, in the shop currency.
+    assign free_shipping_min = settings.cart_free_shipping_threshold | default: 0 | times: 100
+    assign show_free_shipping = false
+    if free_shipping_min > 0 and cart.currency.iso_code == shop.currency and cart.total_price >= free_shipping_min
+      assign show_free_shipping = true
+    endif
+  -%}
   <div class="cart-totals__container{% if settings.show_installments %} cart-totals__container--has-installments{% endif %}">
+    {%- if cart.total_discount > 0 -%}
+      <span class="cart-totals__item cart-totals__savings cart-primary-typography">
+        <span>{{ 'content.cart_savings' | t }}</span>
+        <span class="cart-totals__savings-value"><bdi>{{ cart.total_discount | money }}</bdi></span>
+      </span>
+    {%- endif -%}
+    {%- if show_free_shipping -%}
+      <span class="cart-totals__item cart-totals__shipping cart-primary-typography">
+        <span>{{ 'content.cart_shipping' | t }}</span>
+        <span class="cart-totals__shipping-value">{{ 'content.cart_shipping_free' | t }}</span>
+      </span>
+    {%- endif -%}
     <span
       class="cart-totals__item cart-totals__total"
       role="status"
@@ -308,6 +330,23 @@
 
   .cart-totals__tax-note {
     color: var(--color-foreground-subdued);
+  }
+
+  /* MALINVO phone compaction (see cart-products) */
+  @media screen and (max-width: 749px) {
+    .cart-page .cart-totals {
+      gap: var(--gap-md);
+    }
+  }
+
+  .cart-totals__savings,
+  .cart-totals__shipping {
+    font-size: var(--cart-font-size--sm);
+  }
+
+  .cart-totals__savings-value,
+  .cart-totals__shipping-value {
+    font-weight: var(--font-weight-bold);
   }
 
   .cart-totals__tax-note a {
