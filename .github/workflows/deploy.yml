@@ -1,36 +1,61 @@
 name: Deploy theme to Shopify
 
-# Auto-deploy the Shopify theme on every push to main.
-# Add these as GitHub repo Secrets (Settings -> Secrets and variables -> Actions):
+# Deploys to the store's LIVE (published) theme on every push to main,
+# pushing ONLY the theme files that the push changed. Files edited elsewhere
+# (theme editor, a local `shopify theme push`) are never overwritten unless
+# the commit itself changed them.
+# Repo Secrets (Settings -> Secrets and variables -> Actions):
 #   SHOPIFY_CLI_THEME_TOKEN  = Theme Access password (from the Shopify "Theme Access" app)
 #   SHOPIFY_STORE            = fpevad-a6.myshopify.com
-#   SHOPIFY_THEME_ID         = 169069641893
-# config/settings_data.json is NOT pushed, so live app-embed settings
-# (BundleUp / Cartify / Vouch / Sense-RTL) are never overwritten.
+# config/settings_data.json is never pushed, so live app-embed settings
+# (BundleUp / Cartify / Vouch / Sense-RTL) and theme-editor settings stay as they are.
+# Manual run (Actions > Deploy theme to Shopify > Run workflow): set "base" to a
+# commit to deploy every theme file changed between that commit and main.
 
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      base:
+        description: "Deploy files changed since this commit (SHA)"
+        required: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: List changed theme files
+        id: files
+        env:
+          BASE_INPUT: ${{ github.event.inputs.base }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          base="${BASE_INPUT:-$BEFORE}"
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            base="$(git rev-parse HEAD~1)"
+          fi
+          git diff --name-only --diff-filter=AM "$base" HEAD -- assets blocks config layout locales sections snippets templates \
+            | grep -v '^config/settings_data.json$' > changed.txt || true
+          echo "Changed since $base:"
+          cat changed.txt
+          echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-node@v4
+        if: steps.files.outputs.count != '0'
         with:
           node-version: '22'
-      - run: npm install -g @shopify/cli@latest
-      - run: shopify version
-      - name: Push theme to Shopify
+      - if: steps.files.outputs.count != '0'
+        run: npm install -g @shopify/cli@latest
+      - name: Push changed files to the live theme
+        if: steps.files.outputs.count != '0'
         env:
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-          SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
-        run: >
-          shopify theme push
-          --store "${{ secrets.SHOPIFY_STORE }}"
-          --theme "${{ secrets.SHOPIFY_THEME_ID }}"
-          --allow-live
-          --nodelete
-          --ignore "config/settings_data.json"
-          --force
+          STORE: ${{ secrets.SHOPIFY_STORE }}
+        run: |
+          store="$(printf '%s' "$STORE" | tr -d '[:space:]')"
+          args=()
+          while IFS= read -r f; do [ -n "$f" ] && args+=(--only "$f"); done < changed.txt
+          shopify theme push --store "$store" --live --allow-live --nodelete "${args[@]}"
