@@ -800,7 +800,10 @@
   });
   /* every "choose a bundle" control lands on the bundle picker */
   var buy=document.getElementById('mlv-buy');
-  var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(tg)tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
+  /* after the scroll, focus moves to the checked offer radio (else the picker itself, tabindex -1), so keyboard users land in the picker and not on the sticky bar that hides */
+  var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(!tg)return;tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    var f=tg.querySelector('.bu-offer-radio:checked')||tg.querySelector('.bu-offer-radio');if(!f){f=tg;if(!f.hasAttribute('tabindex'))f.setAttribute('tabindex','-1')}
+    try{f.focus({preventScroll:true})}catch(e){}};
   [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){a.addEventListener('click',toPicker)});
   /* sticky bar (phones, tablets, desktop): hidden until the visitor scrolls past the buy box, and hidden while a bundle card, the order button or an in-page "choose a bundle" CTA is on screen.
      The observer root reaches 110px below the viewport (bar 60px + 12-20px offset + gap), so the bar has slid away before a CTA scrolling up from the bottom reaches the bar's band. */
