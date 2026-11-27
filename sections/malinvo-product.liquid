@@ -644,7 +644,7 @@
 
   {% render 'mlv-benefits', img: section.settings.benefits_image, kick: 'מה בפנים' %}
   {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
-  {% render 'mlv-compare', kick: 'השוואה', price: from_price %}
+  {% render 'mlv-compare', kick: 'השוואה', price: from_price, claims: show_claims %}
 
   {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
   {%- capture rv_html -%}
@@ -985,7 +985,7 @@
   "blocks": [ { "type": "@app" } ],
   "settings": [
     { "type": "header", "content": "תוכן בריאות ולפני/אחרי" },
-    { "type": "checkbox", "id": "show_claims", "label": "הצגת תוכן בריאות ולפני/אחרי (לא מומלץ למודעות)", "default": false, "info": "כבוי: מוסתרים מחקר ה-CDC, סקשן העור והשיער וכרטיסי הלפני/אחרי של שיער וקרקפת. הפילטר לפני/אחרי נשאר." },
+    { "type": "checkbox", "id": "show_claims", "label": "הצגת תוכן בריאות ולפני/אחרי (לא מומלץ למודעות)", "default": false, "info": "כבוי: מוסתרים מחקר ה-CDC, סקשן העור והשיער, כרטיסי הלפני/אחרי של שיער וקרקפת, שאלת העור היבש ב-FAQ ושורת המחיר של מותגים מובילים בהשוואה. הפילטר לפני/אחרי נשאר." },
     { "type": "header", "content": "הורים מספרים (מוסתר עד שממלאים)" },
     { "type": "paragraph", "content": "רק ביקורות אמיתיות של לקוחות. ביקורת מוצגת כשיש לה גם טקסט וגם שם." },
     { "type": "textarea", "id": "review1_text", "label": "ביקורת 1: טקסט" },
