@@ -171,6 +171,7 @@
     "disclosures": "Toelichtingen"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "autoplay": "Automatisch afspelen",
     "background": "Achtergrond",
     "border_radius": "Hoekradius",
@@ -1093,6 +1094,7 @@
     "disclosures": "Toelichtingen"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "carousel_layout_on_mobile": "Op mobiel wordt altijd een carrousel gebruikt",
     "video_alt_text": "Beschrijf de video voor gebruikers van ondersteunende technologie",
     "video_autoplay": "Video's worden standaard gedempt",

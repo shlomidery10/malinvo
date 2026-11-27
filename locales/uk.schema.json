@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>Ми будемо працювати швидко, щоб відправити ваше замовлення якомога швидше. Після відправлення замовлення ви отримаєте електронний лист із подальшою інформацією. Час доставки залежить від вашого місцезнаходження.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "Значки завжди використовуються на мобільних пристроях",
     "applies_on_image_only": "Застосовується лише до зображень",
     "aspect_ratio_adjusted": "Скориговано в деяких макетах",
@@ -690,6 +691,7 @@
     "below_media": "Під мультимедіа"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "Акордеон",
     "account": "Акаунт",
     "actions_display_style": "Стиль меню",

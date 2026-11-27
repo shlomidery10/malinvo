@@ -171,6 +171,7 @@
     "disclosures": "Bildirimler"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "autoplay": "Otomatik oynatma",
     "background": "Arka plan",
     "border_radius": "Köşe yarıçapı",
@@ -1093,6 +1094,7 @@
     "disclosures": "Bildirimler"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "video_alt_text": "Yardımcı teknoloji kullanıcıları için videoyu açıklayın",
     "video_autoplay": "Videolar varsayılan olarak sessize alınır",
     "video_external": "Bir YouTube veya Vimeo URL'si kullanın",

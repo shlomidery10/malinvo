@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>Treballarem ràpidament per enviar la comanda al més aviat possible. Quan s'hagi enviat la comanda, rebràs un correu electrònic amb més informació. Els terminis de lliurament varien en funció de la teva ubicació.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "Les icones s'utilitzen sempre a la versió per a mòbils",
     "applies_on_image_only": "Només s'aplica a les imatges",
     "aspect_ratio_adjusted": "Ajustada en alguns dissenys",
@@ -690,6 +691,7 @@
     "below_media": "Sota els elements multimèdia"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "Acordió",
     "account": "Compte",
     "actions_display_style": "Estil del menú",

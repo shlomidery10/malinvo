@@ -171,6 +171,7 @@
     "disclosures": "Ilmoitukset"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "alignment": "Tasaus",
     "autoplay": "Automaattinen toisto",
     "background": "Tausta",
@@ -1093,6 +1094,7 @@
     "disclosures": "Ilmoitukset"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "carousel_layout_on_mobile": "Mobiilissa käytetään aina karusellia.",
     "video_alt_text": "Kuvaile video avustavan teknologian käyttäjille",
     "video_autoplay": "Videot mykistetään oletusarvoisesti",

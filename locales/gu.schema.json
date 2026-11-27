@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>અમે શક્ય તેટલી વહેલી તકે તમારો ઑર્ડર શિપ કરવા માટે ઝડપથી કામ કરીશું. એકવાર તમારો ઑર્ડર શિપ થઈ જાય, પછી તમને વધુ માહિતી સાથેનો ઇમેઇલ મળશે. ડિલિવરીનો સમય તમારા લોકેશનના આધારે બદલાય છે.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "આઇકનનો હંમેશાં મોબાઇલ પર ઉપયોગ થાય છે",
     "applies_on_image_only": "માત્ર ઇમેજ પર લાગુ પડે છે",
     "aspect_ratio_adjusted": "કેટલાક લેઆઉટમાં ઍડજસ્ટ કરવામાં આવે છે",
@@ -690,6 +691,7 @@
     "below_media": "મીડિયાની નીચે"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "એકોર્ડિયન",
     "account": "એકાઉન્ટ",
     "actions_display_style": "મેનૂની સ્ટાઇલ",

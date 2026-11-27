@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>Azkar egingo dugu lan zure eskaera ahalik eta lasterren bidaltzeko. Eskaera bidalitakoan, mezu elektroniko bat jasoko duzu informazio gehiagorekin. Entregatzeko denborak zure kokapenaren araberakoak dira.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "Gailu mugikorretan beti erabiltzen dira ikonoak",
     "applies_on_image_only": "Irudietan soilik aplikatzen da",
     "aspect_ratio_adjusted": "Diseinu batzuetan doituta",
@@ -690,6 +691,7 @@
     "below_media": "Multimedia-edukiaren azpian"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "Akordeoia",
     "account": "Kontua",
     "actions_display_style": "Menuaren estiloa",

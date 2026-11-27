@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>Mēs rīkosimies ātri, lai nosūtītu tavu pasūtījumu pēc iespējas ātrāk. Kad pasūtījums būs nosūtīts, tu saņemsi e-pastu ar plašāku informāciju. Piegādes laiks atšķiras atkarībā no tavas atrašanās vietas.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "Mobilajās ierīcēs vienmēr tiek izmantotas ikonas",
     "applies_on_image_only": "Attiecas tikai uz attēliem",
     "aspect_ratio_adjusted": "Pielāgots dažos izkārtojumos",
@@ -690,6 +691,7 @@
     "below_media": "Zem multivides"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "Izplešams saraksts",
     "account": "Konts",
     "actions_display_style": "Izvēlnes stils",

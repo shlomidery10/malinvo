@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>যত তাড়াতাড়ি সম্ভব আপনার অর্ডার শিপ করতে আমরা দ্রুত কাজ করব। আপনার অর্ডার শিপ করা হলে, আপনি আরও বিস্তারিত তথ্য সহ একটি ইমেইল পাবেন। আপনার লোকেশনের ওপর ভিত্তি করে ডেলিভারির সময় ভিন্ন হতে পারে।</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "মোবাইলে সবসময় আইকন ব্যবহৃত হয়",
     "applies_on_image_only": "শুধুমাত্র ছবির ক্ষেত্রে প্রযোজ্য",
     "aspect_ratio_adjusted": "কিছু লেআউটে অ্যাডজাস্ট করা হয়েছে",
@@ -690,6 +691,7 @@
     "below_media": "মিডিয়ার নিচে"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "অ্যাকর্ডিয়ন",
     "account": "অ্যাকাউন্ট",
     "actions_display_style": "মেনুর স্টাইল",
