@@ -923,6 +923,20 @@
       });
       [].slice.call(host.querySelectorAll('#bundle-up .card-tag h6:not([role])')).forEach(function(h){h.setAttribute('role','none')});
       [].slice.call(host.querySelectorAll('#bundle-up img[alt="offer product"]')).forEach(function(im){im.alt=''});
+      /* Heading navigation lands on the picker: one h2 kept right before #bundle-up (the app's "קנו יותר וחסכו יותר!" is a plain paragraph) */
+      var bu=document.getElementById('bundle-up');
+      if(bu&&host.contains(bu)){
+        var h=document.getElementById('mlv-bu-h');
+        if(!h){h=document.createElement('h2');h.id='mlv-bu-h';h.className='vh';h.textContent='בחירת חבילה'}
+        if(bu.previousElementSibling!==h)bu.parentNode.insertBefore(h,bu);
+      }
+      /* Each offer radio sits in a label that wraps the whole card, so its name was every text in it (struck-through price and colour groups included). Name it from the card's own title, price and per-unit line instead. */
+      var txt=function(e){return e?e.textContent.replace(/\s+/g,' ').trim():''};
+      [].slice.call(host.querySelectorAll('#bundle-up .bu-offer-radio')).forEach(function(r){
+        var card=r.closest('.bundle-offer-card');if(!card)return;
+        var name=[txt(card.querySelector('.offer-title')),txt(card.querySelector('.offer-price')).replace(/₪\s+/,'₪'),txt(card.querySelector('.mlv-unit'))].filter(Boolean).join(', ');
+        if(name&&r.getAttribute('aria-label')!==name)r.setAttribute('aria-label',name);
+      });
     };
     /* Per-unit price under each multi-unit offer ("₪249.95 ליחידה"), computed from the offer's own price and BundleUp's quantity. Runs straight from the observer (before paint) so the line never shifts the cards after they show. */
     var qty=null;
@@ -937,7 +951,7 @@
         if(u.textContent!==txt)u.textContent=txt;
       });
     };
-    enhance();units();
+    units();enhance();
     if('MutationObserver' in window){var t;new MutationObserver(function(){units();clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
   })();
   /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image", "Close modal"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
@@ -973,14 +987,15 @@
     document.addEventListener('change',function(ev){if(ev.target.closest&&ev.target.closest('#bundle-up'))setTimeout(apply,80)});
   })();
 
-  /* Screen readers hear "added to cart" after any successful /cart/add (our form, BundleUp, Cartify all go through fetch) */
+  /* Screen readers hear "added to cart" after any successful /cart/add (our form, BundleUp, Cartify all go through fetch).
+     BundleUp sends one /cart/add per bundle part, so successes less than 1.5s apart count as one user action and are announced once. */
   (function(){
     if(!window.fetch||window.__mlvCartLive)return;window.__mlvCartLive=true;
     var lr=document.createElement('p');lr.className='vh';lr.setAttribute('role','status');lr.setAttribute('aria-live','polite');root.appendChild(lr);
-    var of=window.fetch;
+    var of=window.fetch,lastAdd=0;
     window.fetch=function(input,init){
       var p=of.apply(this,arguments);
-      try{var u=typeof input==='string'?input:((input&&input.url)||String(input||''));if(/\/cart\/add/.test(String(u))){p.then(function(r){if(r&&r.ok){lr.textContent='';setTimeout(function(){lr.textContent='המוצר נוסף לעגלה'},60)}}).catch(function(){})}}catch(e){}
+      try{var u=typeof input==='string'?input:((input&&input.url)||String(input||''));if(/\/cart\/add/.test(String(u))){p.then(function(r){if(r&&r.ok){var now=Date.now(),dup=now-lastAdd<1500;lastAdd=now;if(dup)return;lr.textContent='';setTimeout(function(){lr.textContent='המוצר נוסף לעגלה'},60)}}).catch(function(){})}}catch(e){}
       return p;
     };
   })();
