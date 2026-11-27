@@ -4,10 +4,23 @@
   Intended for use in a block similar to the text block.
 
   @param {boolean} [has_discounts_enabled] - Whether discounts are enabled, used to display alternate tax/duty text.
+  @param {boolean} [shipping_included] - MALINVO: true when the caller already shows a free-shipping row. Drops the
+    "shipping calculated at checkout" clause where a tax-only string exists (taxes included, no checkout fees);
+    other combinations keep their full sentence because no clean tax-only translation exists for them.
+
+  @example
+  {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code, shipping_included: show_free_shipping %}
 {%- enddoc -%}
 
 <small>
-  {%- if cart.checkout_fees_enabled -%}
+  {%- if shipping_included and cart.checkout_fees_enabled != true and cart.taxes_included -%}
+    {%- comment -%} Same tax wording the full sentences below use for each combination. {%- endcomment -%}
+    {%- if cart.duties_included or has_discounts_enabled -%}
+      {{ 'content.duties_and_taxes_included' | t }}
+    {%- else -%}
+      {{ 'content.taxes_included' | t }}
+    {%- endif -%}
+  {%- elsif cart.checkout_fees_enabled -%}
     {%- if cart.duties_included and cart.taxes_included -%}
       {%- if shop.shipping_policy.body == blank -%}
         {%- if has_discounts_enabled -%}
