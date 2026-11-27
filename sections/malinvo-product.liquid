@@ -137,6 +137,23 @@
   #mlv #bundle-up .offer-price-wrapper{margin-inline-start:auto}
   #mlv #bundle-up .offer-title p,#mlv #bundle-up .offer-sub-title p{overflow-wrap:normal;word-break:normal;hyphens:none}
 }
+/* Amounts never split from their "₪" sign, and "#1"/"#2" stay whole */
+#mlv #bundle-up .bu-savings strong,#mlv #bundle-up .mlv-unit,#mlv #bundle-up .item-index{white-space:nowrap}
+/* 200% zoom on a 375px phone (~188px) and other very narrow screens: drop the offer image and stack the card's text column (title, savings pill, subtitle, then the price row) so prices and the pill are never clipped by the card */
+@media(max-width:300px){
+  #mlv #bundle-up .card-content-wrapper{padding:9px 10px}
+  #mlv #bundle-up .header-wrapper{align-items:flex-start;gap:8px}
+  #mlv #bundle-up .offer-thumbnail{display:none}
+  #mlv #bundle-up .offer-text-section{flex:1 1 0;min-width:0}
+  #mlv #bundle-up .offer-header{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:6px}
+  #mlv #bundle-up .offer-start-section{flex:none;width:100%}
+  #mlv #bundle-up .offer-price-wrapper{flex:none;max-width:100%;margin-inline-start:0}
+  #mlv #bundle-up .bundle-offer-card_pricing{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+  #mlv #bundle-up .mlv-unit{flex-basis:100%}
+  #mlv #bundle-up .offer-title-label,#mlv #bundle-up .offer-title-label p,#mlv #bundle-up .offer-title-label span{white-space:normal;max-width:100%}
+  #mlv #bundle-up .offer-title p,#mlv #bundle-up .offer-sub-title p{overflow-wrap:anywhere}
+  #mlv #bundle-up .card-tag{right:10px;max-width:calc(100% - 20px)}
+}
 #mlv .reass{display:grid;gap:8px;font-size:.95rem;font-weight:600;line-height:1.4}
 #mlv .reass li{display:flex;align-items:center;gap:11px;background:#faf5ef;border:1px solid #ecdccb;border-radius:12px;padding:11px 14px}
 #mlv .reass svg,#mlv .trio svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--teal-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
@@ -316,6 +333,13 @@
   .mlv-sticky{left:0;right:0;width:min(560px,calc(100% - 48px));margin-inline:auto;min-height:52px;bottom:calc(6px + env(safe-area-inset-bottom))}
   .mlv-sticky__d{display:none}
   .mlv-sticky__t{gap:0}
+}
+/* 200% zoom on a phone (<=240px wide): the sticky header (60px) plus the buy bar took ~39% of the screen. The header scrolls away with the page, and the bar keeps only its button (the bar's aria-label still carries the price and launch note). */
+@media(max-width:240px){
+  .header-section:has(> #header-component[sticky]){position:relative!important}
+  .mlv-sticky{min-height:0;padding-block:4px;padding-inline:4px;left:8px;right:8px;bottom:calc(6px + env(safe-area-inset-bottom));justify-content:center}
+  .mlv-sticky__t{display:none}
+  .mlv-sticky__c{flex:1 1 auto;justify-content:center;padding:0 10px}
 }
 @media(max-width:560px){
   #mlv .cmp{font-size:.9rem}
@@ -899,6 +923,20 @@
       });
       [].slice.call(host.querySelectorAll('#bundle-up .card-tag h6:not([role])')).forEach(function(h){h.setAttribute('role','none')});
       [].slice.call(host.querySelectorAll('#bundle-up img[alt="offer product"]')).forEach(function(im){im.alt=''});
+      /* Heading navigation lands on the picker: one h2 kept right before #bundle-up (the app's "קנו יותר וחסכו יותר!" is a plain paragraph) */
+      var bu=document.getElementById('bundle-up');
+      if(bu&&host.contains(bu)){
+        var h=document.getElementById('mlv-bu-h');
+        if(!h){h=document.createElement('h2');h.id='mlv-bu-h';h.className='vh';h.textContent='בחירת חבילה'}
+        if(bu.previousElementSibling!==h)bu.parentNode.insertBefore(h,bu);
+      }
+      /* Each offer radio sits in a label that wraps the whole card, so its name was every text in it (struck-through price and colour groups included). Name it from the card's own title, price and per-unit line instead. */
+      var txt=function(e){return e?e.textContent.replace(/\s+/g,' ').trim():''};
+      [].slice.call(host.querySelectorAll('#bundle-up .bu-offer-radio')).forEach(function(r){
+        var card=r.closest('.bundle-offer-card');if(!card)return;
+        var name=[txt(card.querySelector('.offer-title')),txt(card.querySelector('.offer-price')).replace(/₪\s+/,'₪'),txt(card.querySelector('.mlv-unit'))].filter(Boolean).join(', ');
+        if(name&&r.getAttribute('aria-label')!==name)r.setAttribute('aria-label',name);
+      });
     };
     /* Per-unit price under each multi-unit offer ("₪249.95 ליחידה"), computed from the offer's own price and BundleUp's quantity. Runs straight from the observer (before paint) so the line never shifts the cards after they show. */
     var qty=null;
@@ -913,7 +951,7 @@
         if(u.textContent!==txt)u.textContent=txt;
       });
     };
-    enhance();units();
+    units();enhance();
     if('MutationObserver' in window){var t;new MutationObserver(function(){units();clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
   })();
   /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image", "Close modal"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
@@ -949,14 +987,15 @@
     document.addEventListener('change',function(ev){if(ev.target.closest&&ev.target.closest('#bundle-up'))setTimeout(apply,80)});
   })();
 
-  /* Screen readers hear "added to cart" after any successful /cart/add (our form, BundleUp, Cartify all go through fetch) */
+  /* Screen readers hear "added to cart" after any successful /cart/add (our form, BundleUp, Cartify all go through fetch).
+     BundleUp sends one /cart/add per bundle part, so successes less than 1.5s apart count as one user action and are announced once. */
   (function(){
     if(!window.fetch||window.__mlvCartLive)return;window.__mlvCartLive=true;
     var lr=document.createElement('p');lr.className='vh';lr.setAttribute('role','status');lr.setAttribute('aria-live','polite');root.appendChild(lr);
-    var of=window.fetch;
+    var of=window.fetch,lastAdd=0;
     window.fetch=function(input,init){
       var p=of.apply(this,arguments);
-      try{var u=typeof input==='string'?input:((input&&input.url)||String(input||''));if(/\/cart\/add/.test(String(u))){p.then(function(r){if(r&&r.ok){lr.textContent='';setTimeout(function(){lr.textContent='המוצר נוסף לעגלה'},60)}}).catch(function(){})}}catch(e){}
+      try{var u=typeof input==='string'?input:((input&&input.url)||String(input||''));if(/\/cart\/add/.test(String(u))){p.then(function(r){if(r&&r.ok){var now=Date.now(),dup=now-lastAdd<1500;lastAdd=now;if(dup)return;lr.textContent='';setTimeout(function(){lr.textContent='המוצר נוסף לעגלה'},60)}}).catch(function(){})}}catch(e){}
       return p;
     };
   })();
