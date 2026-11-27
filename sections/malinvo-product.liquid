@@ -389,6 +389,17 @@
 /* Reviews carousel (Vouch app block): kept out of layout until the visitor scrolls near it, so its photos load on scroll. Review content is untouched. */
 #mlv-reviews.is-wait .w{min-height:430px}
 #mlv-reviews.is-wait .w>*{display:none}
+/* Vouch carousel layout only (content untouched). Vouch shows 240px cards, so a part of the next card shows cut mid-word, and its 28px arrows hang over the card edges. Here whole cards fill the row (1 on phones, 2 on tablets, 4 on desktop), and the arrows are 44px in their own row under the cards, so nothing is clipped or covered. Vouch's arrows scroll by one card width + gap, so they keep working at any card width. */
+#mlv-reviews .review-carousel-widget{padding-block-end:56px}
+#mlv-reviews .review-carousel-track{scroll-snap-type:x mandatory;padding-inline:4px;scroll-padding-inline:4px}
+#mlv-reviews .review-carousel-card{flex:0 0 100%;width:auto;max-width:none;scroll-snap-align:start}
+#mlv-reviews .review-carousel-nav{top:auto;bottom:0;width:44px;height:44px;transform:none}
+#mlv-reviews .review-carousel-nav:active{transform:scale(.93)}
+#mlv-reviews .review-carousel-nav svg{width:16px;height:16px}
+#mlv-reviews .review-carousel-nav.prev{inset-inline-start:calc(50% + 6px);inset-inline-end:auto}
+#mlv-reviews .review-carousel-nav.next{inset-inline-end:calc(50% + 6px);inset-inline-start:auto}
+@media(min-width:600px){#mlv-reviews .review-carousel-card{flex-basis:calc((100% - var(--rc-card-gap,16px)) / 2)}}
+@media(min-width:990px){#mlv-reviews .review-carousel-card{flex-basis:calc((100% - 3 * var(--rc-card-gap,16px)) / 4)}}
 /* Stream video: visible pause/play control (WCAG 2.2.2) */
 #mlv .vs-vid{position:relative}
 #mlv .vs-vid__btn{position:absolute;top:10px;inset-inline-end:10px;z-index:2;display:grid;place-items:center;inline-size:44px;block-size:44px;padding:0;border:0;border-radius:50%;background:rgba(13,27,30,.78);color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
