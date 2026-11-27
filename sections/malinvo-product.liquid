@@ -866,10 +866,10 @@
     enhance();units();
     if('MutationObserver' in window){var t;new MutationObserver(function(){units();clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
   })();
-  /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
+  /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image", "Close modal"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
   (function(){
-    var L={{ 'accessibility.slideshow_previous' | t | json }},N={{ 'accessibility.slideshow_next' | t | json }};
-    var map={'Previous':L,'Next':N,'Previous reviews':L,'Next reviews':N,'Previous image':L,'Next image':N};
+    var L={{ 'accessibility.slideshow_previous' | t | json }},N={{ 'accessibility.slideshow_next' | t | json }},C={{ 'accessibility.close_dialog' | t | json }};
+    var map={'Previous':L,'Next':N,'Previous reviews':L,'Next reviews':N,'Previous image':L,'Next image':N,'Close modal':C};
     var sel='#mlv-reviews button[aria-label],.review-widget button[aria-label],.review-image-modal button[aria-label]';
     var relabel=function(){[].slice.call(document.querySelectorAll(sel)).forEach(function(b){var v=map[b.getAttribute('aria-label')];if(v)b.setAttribute('aria-label',v)})};
     relabel();
