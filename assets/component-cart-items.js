@@ -313,6 +313,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
       completeQuantityUpdate = () => resolve(rejected);
     });
     CartItemsComponent.#pendingQuantityUpdates.add(quantityUpdate);
+    const lineFocus = this.#captureLineFocus();
 
     try {
       this.#disableCartItems();
@@ -426,6 +427,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
     } finally {
       try {
         this.#enableCartItems();
+        this.#restoreLineFocus(lineFocus);
         cartPerformance.measureFromMarker(cartPerformaceUpdateMarker);
       } finally {
         CartItemsComponent.#pendingQuantityUpdates.delete(quantityUpdate);
@@ -583,6 +585,79 @@ export class CartItemsComponent extends createViewEventElement(Component) {
         if (error?.name !== 'AbortError') console.warn('[cart-items] Event promise rejected:', error);
       });
   };
+
+  /**
+   * Records which cart line control has focus before a quantity update re-renders the cart page.
+   * The drawer is left alone: its dialog owns focus containment and restoration.
+   * @returns {{ key: string, index: number, control: string } | null}
+   */
+  #captureLineFocus() {
+    const active = document.activeElement;
+    if (this.isDrawer || !(active instanceof HTMLElement) || !this.contains(active)) return null;
+
+    const rows = this.refs.cartItemRows ?? [];
+    const index = rows.findIndex((row) => row.contains(active));
+    const row = rows[index];
+    if (!row) return null;
+
+    return { key: row.dataset.key ?? '', index, control: CartItemsComponent.#controlSignature(active) };
+  }
+
+  /**
+   * Puts focus back after the section render replaced the focused control: the same control on the same line,
+   * else that line's quantity input; for a removed line, the line now in its place (or the last line);
+   * for an emptied cart, the cart heading. Does nothing when focus already sits on a live element.
+   * @param {{ key: string, index: number, control: string } | null} state
+   */
+  #restoreLineFocus(state) {
+    if (!state) return;
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && active !== document.body && active.isConnected) return;
+
+    const root = this.isConnected
+      ? this
+      : document.querySelector(`cart-items-component[data-section-id="${CSS.escape(this.dataset.sectionId ?? '')}"]`);
+    if (!(root instanceof HTMLElement)) return;
+
+    const rows = Array.from(root.querySelectorAll('[ref="cartItemRows[]"]')).filter(
+      (row) => row instanceof HTMLElement && row.isConnected && !row.classList.contains('removing')
+    );
+    const focusable = (/** @type {Element} */ el) =>
+      el instanceof HTMLElement && !el.hidden && !el.matches(':disabled') && el.getClientRects().length > 0;
+    const quantityInput = (/** @type {Element | undefined} */ row) =>
+      row ? Array.from(row.querySelectorAll('input[name="updates[]"]')).find(focusable) : undefined;
+
+    /** @type {Element | undefined} */
+    let target;
+    const sameRow = rows.find((row) => row instanceof HTMLElement && row.dataset.key === state.key);
+    if (sameRow) {
+      target =
+        Array.from(sameRow.querySelectorAll('button, input, a[href], select')).find(
+          (el) => focusable(el) && CartItemsComponent.#controlSignature(el) === state.control
+        ) ?? quantityInput(sameRow);
+    } else if (rows.length) {
+      const nextRow = rows[Math.min(state.index, rows.length - 1)];
+      target = quantityInput(nextRow) ?? Array.from(nextRow?.querySelectorAll('button, input, a[href]') ?? []).find(focusable);
+    }
+
+    if (!(target instanceof HTMLElement)) {
+      const heading = document.querySelector('.cart-page__title h1, .cart-page h1');
+      if (!(heading instanceof HTMLElement)) return;
+      if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+      target = heading;
+    }
+
+    target.focus();
+  }
+
+  /**
+   * A stable description of a line control that survives a section re-render.
+   * @param {Element} el
+   * @returns {string}
+   */
+  static #controlSignature(el) {
+    return [el.tagName, el.getAttribute('name') ?? '', el.getAttribute('ref') ?? '', el.classList.contains('cart-items__remove') ? 'remove' : ''].join('|');
+  }
 
   /**
    * Disables the cart items.

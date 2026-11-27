@@ -533,7 +533,7 @@
 
   {%- assign real_img = null -%}
   {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
-  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true %}
+  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true, claims: show_claims %}
 
   {%- comment -%} The unseen part, from published studies, then the answer. All three studies were on adults and none tested this product; the page says "adults" in the text. Sources: Backer 2000 (PMID 10981726), Jo/Weisel/Lioy 1990 (PMID 2287784), Backer 2008 (PMID 18197300). {%- endcomment -%}
   <section class="big" id="mlv-study">
@@ -644,7 +644,7 @@
 
   {% render 'mlv-benefits', img: section.settings.benefits_image, kick: 'מה בפנים' %}
   {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
-  {% render 'mlv-compare', kick: 'השוואה', price: from_price %}
+  {% render 'mlv-compare', kick: 'השוואה', price: from_price, claims: show_claims %}
 
   {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
   {%- capture rv_html -%}
@@ -689,7 +689,7 @@
     <div class="n">
       <span class="kick">שאלות</span>
       <h2>שאלות נפוצות</h2>
-      {%- comment -%} One source for the visible FAQ and its FAQPage markup, so they cannot drift apart. Entry: question::answer, entries separated by ;; {%- endcomment -%}
+      {%- comment -%} One source for the visible FAQ and its FAQPage markup, so they cannot drift apart. Entry: question::answer, entries separated by ;; The dry-skin entry is a skin claim: it renders (visible and in FAQPage) only with show_claims. {%- endcomment -%}
       {%- capture faq_raw -%}
 מתאים לדירה שכורה?::כן. הראש מתחבר לצינור המקלחת בהברגה, בלי קידוחים ובלי שינוי בצנרת. כשעוברים דירה, מפרקים ולוקחים אותו איתכם.
 ;;צריך אינסטלטור?::לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.
@@ -697,7 +697,9 @@
 ;;מה הפילטר מפחית?::שני דברים שמגיעים אליכם דרך הצנרת: כלור שיורי - הריח של "מי ברז" במקלחת, וחלקיקים כמו חול וחלודה שנסחפים מהצינורות. הפילטר מפחית את הכלור השיורי ותופס את החלקיקים לפני שהמים מגיעים אליכם. ארבע שכבות סינון בתוך הידית, שמחליפים כשצריך.
 ;;יש לי לפעמים מים צהובים מהברז. זה יעזור?::המים הצהובים שרואים אחרי הפסקת מים הם חלודה שנסחפה מהצינורות. הפילטר תופס חלקיקי חלודה כאלה, וזו גם הסיבה שבבניינים ישנים הוא מתכהה מהר יותר. אחרי הפסקת מים כדאי בכל מקרה לתת למים לזרום דקה לפני שנכנסים.
 ;;זה מתאים לילדים ולתינוקות?::זה ראש מקלחת לכל המשפחה. הפילטר עובד על המים לפני שהם יוצאים, לא על מי שמתקלח.
+{%- if show_claims %}
 ;;זה יעזור לעור יבש?::הפילטר משנה את מה שמגיע לעור: פחות כלור שיורי ופחות חלקיקים. את התחושה תבדקו בעצמכם כבר במקלחות הראשונות. אם לא הרגשתם הבדל, יש 30 יום להחזרה.
+{%- endif %}
 ;;כל כמה זמן מחליפים את הפילטר?::כשהפילטר מתכהה ונראה משומש - מחליפים. הברגה אחת, הראש נשאר. הקצב משתנה לפי המים ולפי כמות המקלחות בבית, אז מציצים מדי פעם ומחליפים כשרואים שצריך.
 ;;כמה זמן לוקח המשלוח?::המשלוח חינם. מכינים את ההזמנה תוך 1-3 ימי עסקים, והמשלוח עצמו לוקח עד 15 ימי עסקים, עם מספר מעקב שנשלח במייל. ימי עסקים הם ימים א׳-ה׳, לא כולל חגים. אם יהיה עיכוב חריג, נעדכן אתכם במייל.
 ;;מה אם לא מתאים לי? אפשר להחזיר?::<strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/pages/refund-policy">מדיניות ההחזרות</a>.
@@ -798,16 +800,20 @@
   });
   /* every "choose a bundle" control lands on the bundle picker */
   var buy=document.getElementById('mlv-buy');
-  var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(tg)tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
+  /* after the scroll, focus moves to the checked offer radio (else the picker itself, tabindex -1), so keyboard users land in the picker and not on the sticky bar that hides */
+  var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(!tg)return;tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    var f=tg.querySelector('.bu-offer-radio:checked')||tg.querySelector('.bu-offer-radio');if(!f){f=tg;if(!f.hasAttribute('tabindex'))f.setAttribute('tabindex','-1')}
+    try{f.focus({preventScroll:true})}catch(e){}};
   [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){a.addEventListener('click',toPicker)});
-  /* mobile sticky bar: hidden until the visitor scrolls past the buy box, and hidden while a bundle card, the order button or an in-page "choose a bundle" CTA is on screen above the bar */
+  /* sticky bar (phones, tablets, desktop): hidden until the visitor scrolls past the buy box, and hidden while a bundle card, the order button or an in-page "choose a bundle" CTA is on screen.
+     The observer root reaches 110px below the viewport (bar 60px + 12-20px offset + gap), so the bar has slid away before a CTA scrolling up from the bottom reaches the bar's band. */
   var st=document.getElementById('mlv-sticky');
   if(st){
     var show=function(on){st.classList.toggle('on',on);st.setAttribute('aria-hidden',on?'false':'true');st.tabIndex=on?0:-1};
     st.addEventListener('click',function(){toPicker()});
     if(!('IntersectionObserver' in window)){show(true)}
     else{
-      var vis={past:!buy,c:false,b:false},ctas=new Set(),om={rootMargin:'0px 0px -72px 0px'};
+      var vis={past:!buy,c:false,b:false},ctas=new Set(),om={rootMargin:'0px 0px 110px 0px'};
       var upd=function(){show(vis.past&&!vis.c&&!vis.b&&ctas.size===0)};
       if(buy)new IntersectionObserver(function(e){var x=e[e.length-1];vis.past=!x.isIntersecting&&x.boundingClientRect.top<0;upd()}).observe(buy);
       var co=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting)ctas.add(x.target);else ctas.delete(x.target)});upd()},om);
@@ -863,10 +869,10 @@
     enhance();units();
     if('MutationObserver' in window){var t;new MutationObserver(function(){units();clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
   })();
-  /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
+  /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image", "Close modal"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
   (function(){
-    var L={{ 'accessibility.slideshow_previous' | t | json }},N={{ 'accessibility.slideshow_next' | t | json }};
-    var map={'Previous':L,'Next':N,'Previous reviews':L,'Next reviews':N,'Previous image':L,'Next image':N};
+    var L={{ 'accessibility.slideshow_previous' | t | json }},N={{ 'accessibility.slideshow_next' | t | json }},C={{ 'accessibility.close_dialog' | t | json }};
+    var map={'Previous':L,'Next':N,'Previous reviews':L,'Next reviews':N,'Previous image':L,'Next image':N,'Close modal':C};
     var sel='#mlv-reviews button[aria-label],.review-widget button[aria-label],.review-image-modal button[aria-label]';
     var relabel=function(){[].slice.call(document.querySelectorAll(sel)).forEach(function(b){var v=map[b.getAttribute('aria-label')];if(v)b.setAttribute('aria-label',v)})};
     relabel();
@@ -982,7 +988,7 @@
   "blocks": [ { "type": "@app" } ],
   "settings": [
     { "type": "header", "content": "תוכן בריאות ולפני/אחרי" },
-    { "type": "checkbox", "id": "show_claims", "label": "הצגת תוכן בריאות ולפני/אחרי (לא מומלץ למודעות)", "default": false, "info": "כבוי: מוסתרים מחקר ה-CDC, סקשן העור והשיער וכרטיסי הלפני/אחרי של שיער וקרקפת. הפילטר לפני/אחרי נשאר." },
+    { "type": "checkbox", "id": "show_claims", "label": "הצגת תוכן בריאות ולפני/אחרי (לא מומלץ למודעות)", "default": false, "info": "כבוי: מוסתרים מחקר ה-CDC, סקשן העור והשיער, כרטיסי הלפני/אחרי של שיער וקרקפת, שאלת העור היבש ב-FAQ ושורת המחיר של מותגים מובילים בהשוואה. הפילטר לפני/אחרי נשאר." },
     { "type": "header", "content": "הורים מספרים (מוסתר עד שממלאים)" },
     { "type": "paragraph", "content": "רק ביקורות אמיתיות של לקוחות. ביקורת מוצגת כשיש לה גם טקסט וגם שם." },
     { "type": "textarea", "id": "review1_text", "label": "ביקורת 1: טקסט" },

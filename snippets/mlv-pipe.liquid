@@ -14,19 +14,27 @@
   @param {string} [buy_url] - Link to the bundle picker (default: #bundle-up)
   @param {boolean} [hide_points_mobile] - Hide the three numbered points up to 900px (they are in the infographic)
   @param {boolean} [cta_button] - Render the link as a primary button
+  @param {boolean} [claims] - Section setting show_claims. Off (default): neutral "reaches you" copy. On: the original child/skin/hair wording
   @example
-  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d %}
+  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, claims: section.settings.show_claims %}
 {% enddoc %}
 {%- assign img_wide = img_d | default: img_m -%}
 {%- assign img_tall = img_m | default: img_d -%}
 {%- assign pipe_id = section_id | default: 'mlv-pipe' -%}
 {%- assign pipe_buy = buy_url | default: '#bundle-up' -%}
+{%- if claims -%}
+  {%- assign pipe_lead = 'עד שהמים מגיעים לילד שלכם, הם כבר עברו הרבה.' -%}
+  {%- assign pipe_last = 'ומכאן זה נוחת ישר על העור והשיער שלהם. או על פילטר.' -%}
+{%- else -%}
+  {%- assign pipe_lead = 'עד שהמים מגיעים אליכם, הם עוברים קילומטרים של צנרת.' -%}
+  {%- assign pipe_last = 'מה שנאסף בדרך, מגיע למקלחת. או לפילטר.' -%}
+{%- endif -%}
 <section class="pipe sec" id="{{ pipe_id }}">
   <div class="w pipe-g{% if img_tall %} has-img{% endif %}">
     <div class="pipe-h">
       <span class="kick">הדרך של המים</span>
       <h2{% if img_tall %} class="vh"{% endif %}>מה מגיע אליכם מהצנרת</h2>
-      {%- unless img_tall -%}<p class="journey-h">עד שהמים מגיעים לילד שלכם, הם כבר עברו הרבה.</p>{%- endunless -%}
+      {%- unless img_tall -%}<p class="journey-h">{{ pipe_lead }}</p>{%- endunless -%}
     </div>
     {%- if img_tall -%}
       {%- assign pipe_alt = 'המחשה: צינורות מים ישנים וחלודים, עם הכיתוב מה מגיע אליכם מהצנרת' -%}
@@ -44,13 +52,13 @@
       </figure>
     {%- endif -%}
     <div class="pipe-p{% if chamber_img %} has-chamber{% endif %}">
-      {%- if img_tall -%}<p class="journey-h">עד שהמים מגיעים לילד שלכם, הם כבר עברו הרבה.</p>{%- endif -%}
+      {%- if img_tall -%}<p class="journey-h">{{ pipe_lead }}</p>{%- endif -%}
       <ol class="nums{% if hide_points_mobile %} hide-m{% endif %}">
         <li><div><b>הקו ברחוב</b><span>כלור שמוסיפים בכוונה, כדי שהמים יישארו מחוטאים עד הברז. ואחרי עבודות תשתית בשכונה, גם חול ולכלוך שנכנסו לקו.</span></div></li>
         <li><div><b>הצנרת של הבניין</b><span>צינורות ברזל בני עשרות שנים מחלידים מבפנים. ראיתם פעם מים צהובים אחרי הפסקת מים? זה מה שיושב על הדפנות גם בשאר הימים, בכמות שלא רואים.</span></div></li>
         <li><div><b>הדוד</b><span>המים החמים של המקלחת עוברים דרכו. מתי ניקו אותו בפעם האחרונה? משקעים מצטברים בתחתית במשך שנים.</span></div></li>
         <li><div><b>המים שעמדו</b><span>המים הראשונים של הבוקר ישבו בצינור כל הלילה. אחרי חופשה, שבוע שלם.</span></div></li>
-        <li><div><b>המקלחת</b><span>ומכאן זה נוחת ישר על העור והשיער שלהם. או על פילטר.</span></div></li>
+        <li><div><b>המקלחת</b><span>{{ pipe_last }}</span></div></li>
       </ol>
       <p class="journey-e">אתם לא יכולים להחליף את הצנרת של הבניין. אתם כן יכולים להחליט מה יוצא ממנה.</p>
       {%- if chamber_img -%}
