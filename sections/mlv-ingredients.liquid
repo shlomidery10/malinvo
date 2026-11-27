@@ -4,6 +4,8 @@
   malinvo-product section, a tiny inline script moves this section to sit directly after that hero
   (setting "place_after_hero"). The CTA scrolls to the add-to-cart button (BundleUp's button when present).
 {%- endcomment -%}
+{%- comment -%} Claims toggle: the label lists health effects, so it renders only when the merchant turns show_claims on (default off). {%- endcomment -%}
+{%- if section.settings.show_claims -%}
 {%- liquid
   assign bg = section.settings.bg_color | default: '#F3F1EE'
   assign accent = section.settings.accent_color | default: '#A33A2B'
@@ -109,6 +111,7 @@
   });
 })();
 </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -117,6 +120,7 @@
   "class": "mlv-ing-section",
   "max_blocks": 8,
   "settings": [
+    { "type": "checkbox", "id": "show_claims", "label": "הצגת תוכן בריאות ולפני/אחרי (לא מומלץ למודעות)", "default": false, "info": "כבוי: הסקשן לא מוצג בכלל." },
     { "type": "checkbox", "id": "place_after_hero", "label": "להציג מיד אחרי הגלריה וקופסת הקנייה", "default": true, "info": "כשכבוי, הסקשן יוצג במיקום שלו ברשימת הסקשנים (בתחתית העמוד)." },
     { "type": "header", "content": "כותרת" },
     { "type": "text", "id": "heading_1", "label": "כותרת: שורה 1", "default": "אתם קוראים את הרכיבים של השמפו." },
