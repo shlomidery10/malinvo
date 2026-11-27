@@ -503,6 +503,14 @@
     font-size: var(--font-size--sm);
   }
 
+  /* iOS Safari zooms the page into any field under 16px on focus; keep cart fields at 16px or more on phones */
+  @media screen and (max-width: 749px) {
+    .cart-discount__input,
+    .cart-note__instructions {
+      font-size: max(16px, var(--font-size--sm));
+    }
+  }
+
   .cart-discount__input::placeholder {
     color: rgb(var(--color-input-text-rgb) / var(--opacity-subdued-text));
   }
