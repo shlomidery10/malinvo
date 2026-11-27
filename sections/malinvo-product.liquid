@@ -800,14 +800,15 @@
   var buy=document.getElementById('mlv-buy');
   var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(tg)tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
   [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){a.addEventListener('click',toPicker)});
-  /* mobile sticky bar: hidden until the visitor scrolls past the buy box, and hidden while a bundle card, the order button or an in-page "choose a bundle" CTA is on screen above the bar */
+  /* sticky bar (phones, tablets, desktop): hidden until the visitor scrolls past the buy box, and hidden while a bundle card, the order button or an in-page "choose a bundle" CTA is on screen.
+     The observer root reaches 110px below the viewport (bar 60px + 12-20px offset + gap), so the bar has slid away before a CTA scrolling up from the bottom reaches the bar's band. */
   var st=document.getElementById('mlv-sticky');
   if(st){
     var show=function(on){st.classList.toggle('on',on);st.setAttribute('aria-hidden',on?'false':'true');st.tabIndex=on?0:-1};
     st.addEventListener('click',function(){toPicker()});
     if(!('IntersectionObserver' in window)){show(true)}
     else{
-      var vis={past:!buy,c:false,b:false},ctas=new Set(),om={rootMargin:'0px 0px -72px 0px'};
+      var vis={past:!buy,c:false,b:false},ctas=new Set(),om={rootMargin:'0px 0px 110px 0px'};
       var upd=function(){show(vis.past&&!vis.c&&!vis.b&&ctas.size===0)};
       if(buy)new IntersectionObserver(function(e){var x=e[e.length-1];vis.past=!x.isIntersecting&&x.boundingClientRect.top<0;upd()}).observe(buy);
       var co=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting)ctas.add(x.target);else ctas.delete(x.target)});upd()},om);
