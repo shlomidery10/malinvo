@@ -54,6 +54,20 @@
     }
   }
 
+  /* In the drawer layout the header renders a second search button (.search-action--hidden-on-menu)
+     for the mobile order, and both land in the same grid cell. Keep that copy as the only search
+     control, so the header shows one icon and one named button. */
+  [data-menu-style='drawer'] .header__columns:has(.search-action--hidden-on-menu)
+    .search-action:not(.search-action--hidden-on-menu) {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__columns:has(.search-action--hidden-on-menu) .search-action:not(.search-action--hidden-on-menu) {
+      display: none;
+    }
+  }
+
   [data-menu-style='menu'] .header__column--left .search-action {
     @media screen and (min-width: 750px) {
       margin-inline: calc(var(--padding-lg) * -1);
