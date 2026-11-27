@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>Töötame kiiresti, et lähetada sinu tellimus esimesel võimalusel. Kui tellimus on teele pandud, saad e-kirja lisateabega. Tarneajad sõltuvad sinu asukohast.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "Mobiilivaates kasutatakse alati ikoone",
     "applies_on_image_only": "Kehtib ainult piltidele",
     "aspect_ratio_adjusted": "Kohandatud osades paigutustes",
@@ -690,6 +691,7 @@
     "below_media": "Meedia all"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "Akordion",
     "account": "Konto",
     "actions_display_style": "Menüü stiil",

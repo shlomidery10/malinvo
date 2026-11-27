@@ -98,6 +98,13 @@
     padding-top: var(--padding-xl);
   }
 
+  /* MALINVO phone compaction (see cart-products): tighter space above the summary */
+  @media screen and (max-width: 749px) {
+    .cart-page__summary {
+      padding-top: var(--padding-sm);
+    }
+  }
+
   .cart-page__title + .cart-page__items {
     margin-block-start: var(--margin-lg);
   }

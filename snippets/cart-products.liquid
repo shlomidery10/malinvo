@@ -298,27 +298,19 @@
                     {%- endif -%}
                   </div>
 
-                  <div class="cart-items__unit-price-wrapper">
-                    <div>
-                      {%- comment -%}MALINVO: the variant compare-at price is never shown in the cart; a strike appears only for a real cart discount.{%- endcomment -%}
-                      {% if item.original_price != item.final_price %}
-                        <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                        <span
-                          ><bdi>{{ item.final_price | money }}</bdi></span
-                        >
-                        <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                        <s class="compare-at-price">
-                          <bdi>{{ item.original_price | money }}</bdi>
-                        </s>
-                      {% else %}
-                        <span class="visually-hidden">{{ 'content.price' | t }}</span>
-
-                        <span
-                          ><bdi>{{ item.original_price | money }}</bdi></span
-                        >
-                      {% endif %}
+                  {%- comment -%}MALINVO: one unit price and one line total per line. The line total sits in the price column; the unit price ("₪249.95/ליח'") shows only when the quantity is above 1, where it differs from the total. The variant compare-at price is never shown, and line discounts are summed once in the cart summary ("חסכתם").{%- endcomment -%}
+                  {%- if item.quantity > 1 -%}
+                    {%- liquid
+                      if settings.currency_code_enabled_cart_items
+                        assign unit_each = item.final_price | money_with_currency
+                      else
+                        assign unit_each = item.final_price | money
+                      endif
+                    -%}
+                    <div class="cart-items__unit-price-wrapper">
+                      <span><bdi>{{ 'content.each' | t: price: unit_each }}</bdi></span>
                     </div>
-                  </div>
+                  {%- endif -%}
                 </td>
                 <td
                   class="cart-items__quantity"
@@ -586,6 +578,14 @@
 
   .cart-items__table-row:last-child {
     padding-bottom: 0;
+  }
+
+  /* MALINVO phone compaction: the cart page summary follows the last line directly, so the checkout button reaches the first screen sooner */
+  @media screen and (max-width: 749px) {
+    .cart-page .cart-items__table-row:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+    }
   }
 
   .cart-items--dividers .cart-items__table-row {

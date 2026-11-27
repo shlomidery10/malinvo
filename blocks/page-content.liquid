@@ -13,6 +13,10 @@
     {{ page.content }}
   </rte-formatter>
 </div>
+{%- comment -%} MALINVO: the FAQ page's questions also go out as FAQPage structured data, built from this same content. {%- endcomment -%}
+{%- if page.handle == 'faq' -%}
+  {% render 'faq-page-schema', content: page.content %}
+{%- endif -%}
 
 {% stylesheet %}
   .page-content {

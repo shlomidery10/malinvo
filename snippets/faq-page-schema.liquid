@@ -1,0 +1,41 @@
+{%- doc -%}
+  Renders FAQPage JSON-LD from the same rich text the page shows, so the markup cannot drift from the visible answers.
+  Every <h3> in the content is a question; its answer is the text after it, up to the next <h3> or <h2>.
+  Renders nothing when the content has fewer than two questions.
+
+  @param {string} content - The page's rich text HTML (page.content)
+
+  @example
+  {% render 'faq-page-schema', content: page.content %}
+{%- enddoc -%}
+{%- liquid
+  assign faq_parts = content | split: '<h3'
+  assign faq_count = 0
+  capture faq_items
+    for part in faq_parts offset: 1
+      assign qa = part | split: '</h3>'
+      if qa.size < 2
+        continue
+      endif
+      assign q = qa[0] | split: '>' | slice: 1, 999 | join: '>' | strip_html | strip_newlines | strip
+      assign a = qa[1] | split: '<h2' | first | replace: '</p>', '</p> ' | replace: '</li>', '</li> ' | strip_html | strip_newlines | strip
+      if q == blank or a == blank
+        continue
+      endif
+      if faq_count > 0
+        echo ','
+      endif
+      echo '{"@type":"Question","name":'
+      echo q | json
+      echo ',"acceptedAnswer":{"@type":"Answer","text":'
+      echo a | json
+      echo '}}'
+      assign faq_count = faq_count | plus: 1
+    endfor
+  endcapture
+-%}
+{%- if faq_count > 1 -%}
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","inLanguage":{{ request.locale.iso_code | json }},"mainEntity":[{{ faq_items }}]}
+  </script>
+{%- endif -%}

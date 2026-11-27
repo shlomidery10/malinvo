@@ -171,6 +171,7 @@
     "disclosures": "披露信息"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "alignment": "对齐方式",
     "autoplay": "自动播放",
     "background": "背景",
@@ -1093,6 +1094,7 @@
     "disclosures": "披露信息"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "video_alt_text": "为使用辅助技术的用户描述视频",
     "video_autoplay": "视频将默认静音",
     "video_external": "使用 YouTube 或 Vimeo URL",

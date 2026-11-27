@@ -171,6 +171,7 @@
     "disclosures": "資訊揭露"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "alignment": "對齊",
     "autoplay": "自動播放",
     "background": "背景",
@@ -1093,6 +1094,7 @@
     "disclosures": "資訊揭露"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "carousel_layout_on_mobile": "在行動裝置上一律使用輪播",
     "video_alt_text": "為使用輔助技術的使用者描述影片",
     "video_autoplay": "影片預設為靜音播放",

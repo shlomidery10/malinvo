@@ -930,10 +930,18 @@
     backdrop-filter: brightness(0.75);
     z-index: var(--layer-overlay);
     opacity: 0;
-    transition: opacity var(--drawer-animation-speed) ease;
+
+    /* Closed or closing (details still [open] until the slide-out ends): the transparent backdrop
+       must not catch taps meant for the page */
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--drawer-animation-speed) ease, visibility 0s linear var(--drawer-animation-speed);
 
     .menu-open & {
       opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity var(--drawer-animation-speed) ease, visibility 0s;
     }
   }
 

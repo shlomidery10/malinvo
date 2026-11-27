@@ -215,6 +215,7 @@
     "work_quickly_to_ship": "<p>ჩვენ სწრაფად ვიმუშავებთ, რათა შენი შეკვეთა რაც შეიძლება მალე გამოიგზავნოს. შეკვეთის გაგზავნის შემდეგ მიიღებ ელფოსტას დამატებითი ინფორმაციით. მიწოდების დრო შენს ლოკაციაზეა დამოკიდებული.</p>"
   },
   "info": {
+    "free_shipping_threshold": "The cart shows a \"Shipping: Free\" row once the cart total reaches this amount. Leave empty or 0 to hide the row.",
     "actions_display_style": "ხატულები ყოველთვის გამოიყენება მობილურზე",
     "applies_on_image_only": "ვრცელდება მხოლოდ სურათებზე",
     "aspect_ratio_adjusted": "მორგებულია ზოგიერთ განლაგებაში",
@@ -690,6 +691,7 @@
     "below_media": "მედიის ქვემოთ"
   },
   "settings": {
+    "free_shipping_threshold": "Free shipping from (cart total, shop currency)",
     "accordion": "აკორდეონი",
     "account": "ანგარიში",
     "actions_display_style": "მენიუს სტილი",

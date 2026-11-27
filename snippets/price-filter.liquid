@@ -186,6 +186,13 @@
 
 {% stylesheet %}
   /* Price filter */
+  /* iOS Safari zooms into fields under 16px on focus */
+  @media screen and (max-width: 749px) {
+    .price-facet .price-facet__input {
+      font-size: max(16px, 1em);
+    }
+  }
+
   .price-facet {
     container-type: inline-size;
     display: flex;

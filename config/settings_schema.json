@@ -1549,6 +1549,13 @@
         "default": true
       },
       {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "t:settings.free_shipping_threshold",
+        "info": "t:info.free_shipping_threshold",
+        "default": 250
+      },
+      {
         "type": "checkbox",
         "id": "show_installments",
         "label": "t:settings.shop_pay_payment_options",
