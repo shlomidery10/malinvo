@@ -4,6 +4,7 @@
   with visually hidden text for screen readers and search engines.
   @param {string} [section_id] - Section id (default: mlv-compare)
   @param {string} [kick] - Optional small label above the heading
+  @param {string} [price] - Optional current price string (e.g. ₪289.90); adds the market price row
   @example
   {% render 'mlv-compare' %}
 {% enddoc %}
@@ -31,6 +32,8 @@
         <tr><th scope="row">מפחית כלור שיורי</th><td class="us">{{ cmp_yes }}</td><td>{{ cmp_no }}</td></tr>
         <tr><th scope="row">פילטר שרואים מתי להחליף</th><td class="us">{{ cmp_yes }}</td><td>{{ cmp_no }}</td></tr>
         <tr><th scope="row">זרם צפוף ומורגש</th><td class="us">{{ cmp_yes }}</td><td>תלוי בדגם</td></tr>
+        {%- comment -%} Market price row, no brand names. Regular prices of leading filter shower heads in Israel, checked 27.11.2026 (₪349.90-₪379). Re-check monthly. {%- endcomment -%}
+        {%- if price != blank -%}<tr><th scope="row">מחיר ראש מקלחת עם פילטר</th><td class="us"><bdi>{{ price }}</bdi></td><td>במותגים מובילים בישראל: <bdi dir="ltr" style="white-space:nowrap">₪349.90-₪379</bdi> במחיר רגיל</td></tr>{%- endif -%}
       </tbody>
     </table>
   </div>

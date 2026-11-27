@@ -65,8 +65,11 @@
 #mlv .mlv-price__now{font-family:var(--disp);font-weight:800;font-size:1.6rem;line-height:1.1;color:var(--ink)}
 #mlv .mlv-price__was{font-size:1.05rem;color:var(--muted);text-decoration-thickness:1.5px}
 #mlv .mlv-price__note{font-size:.95rem;color:var(--teal-d);font-weight:600}
-@media(min-width:561px){#mlv .mlv-price__note::before{content:"· "}}
-@media(max-width:560px){#mlv .mlv-price__note{flex-basis:100%}}
+#mlv .mlv-price__note{flex-basis:100%}
+#mlv .mlv-price__save{align-self:center;padding:3px 8px;border-radius:6px;background:#fbf3ec;border:1px solid #ecd9c8;color:var(--teal-d);font-weight:700;font-size:.85rem;line-height:1.2;white-space:nowrap}
+#mlv .mlv-price__save[hidden],#mlv [data-launch-hide][hidden]{display:none}
+#mlv .mlv-vouch-badge.is-cta{align-self:center;margin-top:-2px}
+#mlv .mlv-vouch-badge[data-vouch-pending]{visibility:hidden}
 #bundle-up{scroll-margin-top:90px}
 /* Vouch Review Widget section at the page bottom: kept only as the data source for the star badge; the visible reviews are the carousel in #mlv-reviews */
 [id$="__17948660484d5ed3da"]{display:none!important}
@@ -256,6 +259,10 @@
   .mlv-sticky__sep{flex:none;width:1.5px;height:14px;background:#b87a55}
   .mlv-sticky__n{font-family:Heebo,sans-serif;font-weight:500;font-size:13px;letter-spacing:.24em;margin-inline-end:-.24em;text-transform:uppercase;color:#f6efe8}
   @media(max-width:389px){.mlv-sticky__sep,.mlv-sticky__n{display:none}}
+  .mlv-sticky__t{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+  .mlv-sticky__t .mlv-sticky__b{top:0}
+  .mlv-sticky__d{font:600 12px/1.2 Heebo,Rubik,system-ui,sans-serif;color:#f6efe8;opacity:.88;white-space:nowrap;font-variant-numeric:tabular-nums}
+  @media(max-width:359px){.mlv-sticky{padding-inline:16px 6px;gap:8px}.mlv-sticky__d{font-size:11px}.mlv-sticky__c{padding:0 14px}}
   .mlv-sticky__c{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:#f6efe8;color:#0d1b1e;font-weight:800;white-space:nowrap;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
 }
 @media(max-width:560px){
@@ -445,17 +452,22 @@
         </ul>
         {%- comment -%} Launch price: the regular price (compare-at) is real and takes effect on 1.1.2027; until then the line says so explicitly. Renders only while compare-at > price. {%- endcomment -%}
         {%- if cur.compare_at_price > cur.price -%}
-        <p class="mlv-price"><s class="mlv-price__was"><span class="vh">מחיר רגיל: </span><bdi>₪{{ cur.compare_at_price | money_without_currency }}</bdi></s><b class="mlv-price__now"><span class="vh">מחיר השקה: </span><bdi>₪{{ cur.price | money_without_currency }}</bdi></b><span class="mlv-price__note">מחיר השקה עד 31.12.2026</span></p>
+        {%- comment -%} Savings tag = compare-at minus price, computed (disappears with compare-at). Countdown note: real days to the end of 31.12.2026 Israel time, filled by the launch script below; never resets and hides itself after the date. {%- endcomment -%}
+        <p class="mlv-price"><s class="mlv-price__was"><span class="vh">מחיר רגיל: </span><bdi>₪{{ cur.compare_at_price | money_without_currency }}</bdi></s><b class="mlv-price__now"><span class="vh">מחיר השקה: </span><bdi>₪{{ cur.price | money_without_currency }}</bdi></b><span class="mlv-price__save" data-launch-hide>חוסכים <bdi>₪{{ cur.compare_at_price | minus: cur.price | money_without_currency | remove: '.00' }}</bdi></span><span class="mlv-price__note" data-launch-note data-reg="₪{{ cur.compare_at_price | money_without_currency }}">מחיר השקה עד 31.12.2026</span></p>
         {%- endif -%}
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
         </form>
-        <p class="buy-note">30 יום להחליט, מיום שהמוצר אצלכם. <a href="/pages/refund-policy">לתנאי ההחזרה המלאים</a>.</p>
-        {%- comment -%} Risk-reversal near CTA. Shipping from 10_SHIPPING; returns 30d approved by owner; warranty = placeholder. {%- endcomment -%}
+        <a class="mlv-vouch-badge is-cta" href="#mlv-reviews" data-vouch-badge data-vouch-pending aria-hidden="true" tabindex="-1">
+          <span class="mlv-vouch-stars" aria-hidden="true"><span class="mlv-vouch-fill">★★★★★</span>★★★★★</span>
+          <b class="mlv-vouch-avg"></b>
+          <span class="mlv-vouch-count"></span>
+        </a>
+        <p class="buy-note"><strong>30 יום להחליט, גם אחרי שהתקנתם והתקלחתם.</strong> לא מתאים? מחזירים. <a href="/pages/refund-policy">התנאים המלאים</a></p>
+        {%- comment -%} Risk-reversal near CTA. The 30-day line lives once, in .buy-note right under the button (#32: no extra repeat here). {%- endcomment -%}
         <ul class="reass">
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם · עד 15 ימי עסקים, עם מספר מעקב</span></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span><strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> <a href="/pages/refund-policy">מדיניות ההחזרות</a></span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מענה בעברית</span></li>
         </ul>        <div class="mlv-accs">
           {% render 'malinvo-guarantee' %}
@@ -574,12 +586,15 @@
       <h2>את קונה קרם, מרכך ושמן לשיער. ואז מתקלחת בכלור.</h2>
       <p class="lead">כולנו מכירים את הרגע אחרי הבריכה: העור מתוח, השיער קשה, והריח נשאר גם אחרי שטיפה. בבית זה קורה בשקט, כל בוקר וכל ערב. עשר דקות ביום הן כ-60 שעות בשנה מתחת למים האלה.</p>
       <p class="lead" style="margin-block-start:14px"><strong>אותה מקלחת, אותו זמן. עם פחות כלור, ובלי מה שהצנרת מוסיפה.</strong></p>
+      {%- comment -%} Cost per day: single-head price / 365, in agorot (head only, no filters sold). Computed, so it follows the real price. {%- endcomment -%}
+      {%- assign per_day = from_v.price | divided_by: 365 -%}
+      {%- if per_day > 0 and per_day < 100 -%}<p class="lead" style="margin-block-start:10px">בשנה הראשונה זה כ-{{ per_day }} אגורות ליום.</p>{%- endif -%}
     </div>
   </section>
 
   {% render 'mlv-benefits', img: section.settings.benefits_image, kick: 'מה בפנים' %}
   {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
-  {% render 'mlv-compare', kick: 'השוואה' %}
+  {% render 'mlv-compare', kick: 'השוואה', price: from_price %}
 
   {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
   {%- capture rv_html -%}
@@ -667,14 +682,19 @@
         {%- endif -%}
       </figure>
       <h2>30 יום להחליט, אצלכם בבית</h2>
-      <p class="lead">תתקינו, תתקלחו, ותסתכלו על הפילטר. אם זה לא זה, מחזירים.</p>
+      <p class="lead">תתקינו, תתקלחו, ותסתכלו על הפילטר. אם זה לא זה, מחזירים.{%- if cur.compare_at_price > cur.price %} <span data-launch-hide>ב-1.1.2027 המחיר עולה ל-<bdi>₪{{ cur.compare_at_price | money_without_currency }}</bdi>.</span>{%- endif -%}</p>
       <ul class="trio"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>משלוח חינם</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>מעקב במייל</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</li></ul>
+      {%- if cur.compare_at_price > cur.price -%}
+      <a href="#bundle-up" class="btn" data-to-buy data-launch-swap="להתקין לילדים ולכם">לבחירת חבילה במחיר השקה</a>
+      {%- else -%}
       <a href="#bundle-up" class="btn" data-to-buy>להתקין לילדים ולכם</a>
+      {%- endif -%}
     </div>
   </section>
 </div>
 {% render 'mlv-img-loader' %}
-<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up" aria-label="לבחירת חבילה של MALINVO Nova"><span class="mlv-sticky__b" dir="ltr">{%- assign st_logo = images['malinvo_logo_light.png'] -%}{%- if st_logo -%}<img class="mlv-sticky__logo" src="{{ st_logo | image_url: height: 60 }}" srcset="{{ st_logo | image_url: height: 60 }} 1x, {{ st_logo | image_url: height: 120 }} 2x, {{ st_logo | image_url: height: 180 }} 3x" width="{{ st_logo.width }}" height="{{ st_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}<span class="mlv-sticky__p">MALINVO</span>{%- endif -%}<span class="mlv-sticky__sep" aria-hidden="true"></span><span class="mlv-sticky__n">Nova</span></span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
+{%- assign st_launch = false -%}{%- if from_v.compare_at_price > from_v.price -%}{%- assign st_launch = true -%}{%- endif -%}
+<button type="button" class="mlv-sticky" id="mlv-sticky" aria-hidden="true" tabindex="-1" aria-controls="bundle-up" aria-label="לבחירת חבילה של MALINVO Nova, מ-{{ from_price }}{% if st_launch %}, מחיר השקה עד 31.12.2026{% endif %}"><span class="mlv-sticky__t"><span class="mlv-sticky__b" dir="ltr">{%- assign st_logo = images['malinvo_logo_light.png'] -%}{%- if st_logo -%}<img class="mlv-sticky__logo" src="{{ st_logo | image_url: height: 60 }}" srcset="{{ st_logo | image_url: height: 60 }} 1x, {{ st_logo | image_url: height: 120 }} 2x, {{ st_logo | image_url: height: 180 }} 3x" width="{{ st_logo.width }}" height="{{ st_logo.height }}" alt="MALINVO" loading="lazy" decoding="async">{%- else -%}<span class="mlv-sticky__p">MALINVO</span>{%- endif -%}<span class="mlv-sticky__sep" aria-hidden="true"></span><span class="mlv-sticky__n">Nova</span></span><span class="mlv-sticky__d"{% if st_launch %} data-launch-sticky data-from="{{ from_price }}"{% endif %}>מ-<bdi>{{ from_price }}</bdi>{% if st_launch %} · מחיר השקה עד 31.12{% endif %}</span></span><span class="mlv-sticky__c">לבחירת חבילה</span></button>
 
 <script>
 (function(){
@@ -760,25 +780,68 @@
     };
   })();
 
-  /* Vouch star-rating badge at the top of the buy box: mirrors the real Vouch widget data, auto-updates, hides when there are no reviews */
+  /* Vouch star-rating badges (top of the buy box + under the order button): mirror the real Vouch widget data, auto-update, hide when there are no reviews. Review content is never touched. */
   (function(){
-    var badge=root.querySelector('[data-vouch-badge]');if(!badge)return;
-    var fill=badge.querySelector('.mlv-vouch-fill'),avgEl=badge.querySelector('.mlv-vouch-avg'),cntEl=badge.querySelector('.mlv-vouch-count'),tries=0;
+    var badges=[].slice.call(root.querySelectorAll('[data-vouch-badge]'));if(!badges.length)return;
+    var tries=0,done=false;
     var num=function(s){var m=String(s||'').replace(/[^\d.]/g,'');return m?parseFloat(m):NaN};
+    var go=function(ev){ev.preventDefault();var t=document.getElementById('mlv-reviews')||document.querySelector('.review-widget');if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
+    var off=function(){badges.forEach(function(b){b.hidden=true;b.removeAttribute('data-vouch-pending')})};
     function fillBadge(){
       var w=document.querySelector('.review-widget');if(!w)return false;
       var an=w.querySelector('.dropdown-rating-large span'),cn=w.querySelector('.summary-text');
       var avg=an?num(an.textContent):NaN;
       var ct=cn?cn.textContent:((w.querySelector('.review-header-clean')||{}).textContent||'');
       var cnt=num((String(ct).match(/\d[\d,]*/)||[])[0]);
-      if(!cnt||cnt<1)return true;
-      if(!isNaN(avg)){fill.style.width=(Math.max(0,Math.min(5,avg))/5*100)+'%';avgEl.textContent=avg.toFixed(1)}else{fill.style.width='100%'}
-      cntEl.textContent=cnt.toLocaleString('he-IL')+' חוות דעת';
-      badge.hidden=false;
-      badge.addEventListener('click',function(ev){ev.preventDefault();var t=document.getElementById('mlv-reviews')||document.querySelector('.review-widget');if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})});
-      return true;
+      if(!cnt||cnt<1){off();return true}
+      badges.forEach(function(badge){
+        var fill=badge.querySelector('.mlv-vouch-fill'),avgEl=badge.querySelector('.mlv-vouch-avg'),cntEl=badge.querySelector('.mlv-vouch-count');
+        if(!isNaN(avg)){fill.style.width=(Math.max(0,Math.min(5,avg))/5*100)+'%';avgEl.textContent=avg.toFixed(1)}else{fill.style.width='100%'}
+        cntEl.textContent=cnt.toLocaleString('he-IL')+' חוות דעת';
+        badge.hidden=false;badge.removeAttribute('data-vouch-pending');
+        if(!done)badge.addEventListener('click',go);
+      });
+      done=true;return true;
     }
-    if(!fillBadge()){var iv2=setInterval(function(){if(fillBadge()||++tries>80)clearInterval(iv2)},250)}
+    if(!fillBadge()){var iv2=setInterval(function(){if(fillBadge())clearInterval(iv2);else if(++tries>80){clearInterval(iv2);off()}},250)}
+  })();
+
+  /* Launch price countdown: whole days left until the end of 31.12.2026 (Israel time, UTC+2 in December). Computed from the visitor's clock on every load, so it never restarts; after the date every launch line hides itself. */
+  (function(){
+    var END=Date.parse('2027-01-01T00:00:00+02:00'),ms=END-Date.now();
+    var q=function(s){return [].slice.call(document.querySelectorAll(s))};
+    if(ms<=0){
+      q('[data-launch-hide],[data-launch-note]').forEach(function(el){el.hidden=true});
+      q('[data-launch-sticky]').forEach(function(el){el.textContent='מ-'+el.getAttribute('data-from')});
+      q('[data-launch-swap]').forEach(function(el){el.textContent=el.getAttribute('data-launch-swap')});
+      return;
+    }
+    var d=Math.ceil(ms/864e5),left=d===2?'נשארו יומיים':'נשארו '+d+' ימים';
+    q('[data-launch-note]').forEach(function(el){
+      var reg=el.getAttribute('data-reg')||'';
+      el.textContent=d>7?'מחיר השקה עד 31.12 - '+left:d>1?'מחיר השקה - '+left+'. מ-1.1 המחיר '+reg:'היום זה היום האחרון במחיר השקה';
+    });
+    if(d<=7)q('[data-launch-sticky]').forEach(function(el){el.textContent=(d>1?left:'יום אחרון')+' · מ-'+el.getAttribute('data-from')});
+  })();
+
+  /* Order button shows the selected bundle price ("להוספה לעגלה · ₪499.90"); re-applied when BundleUp re-renders or the shopper picks another card */
+  (function(){
+    var LABEL='להוספה לעגלה';var writes=0;
+    function sync(){
+      var btn=document.getElementById('BU-action-button');if(!btn||btn.disabled)return;
+      var r=document.querySelector('#bundle-up .bu-offer-radio:checked'),card=r?r.closest('.card-offer-wrapper'):null;
+      var pe=card?card.querySelector('.offer-price'):null,m=pe?pe.textContent.replace(/\s+/g,'').match(/[\d.,]+/):null;
+      if(!m)return;
+      var want=LABEL+' · ₪'+m[0];
+      if(btn.textContent.trim()===want)return;
+      var t=btn.textContent;if(t.indexOf('👈')<0&&t.indexOf(LABEL)<0)return; /* leave BundleUp's loading/added states alone */
+      if(++writes>40)return; /* safety: never fight BundleUp in a loop */
+      btn.textContent=want;btn.setAttribute('aria-label',want);
+    }
+    var tries=0,iv=setInterval(function(){sync();if(document.getElementById('BU-action-button')||++tries>80)clearInterval(iv)},250);
+    document.addEventListener('change',function(ev){if(ev.target.closest&&ev.target.closest('#bundle-up'))setTimeout(sync,60)});
+    document.addEventListener('click',function(ev){if(ev.target.closest&&ev.target.closest('#bundle-up'))setTimeout(sync,120)});
+    if('MutationObserver' in window){var buyEl=document.getElementById('mlv-buy');if(buyEl)new MutationObserver(function(){sync()}).observe(buyEl,{childList:true,subtree:true,characterData:true})}
   })();
 })();
 </script>

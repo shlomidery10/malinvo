@@ -4,23 +4,24 @@
   @example
   {% render 'mlv-buy-more' %}
 {% enddoc %}
-<section class="mlv-gtee" aria-label="משלוח ומעקב">
+<section class="mlv-gtee" aria-label="משלוח חינם עד הבית">
   <details class="mlv-gtee__box">
     <summary class="mlv-gtee__sum">
       <span class="mlv-gtee__num mlv-gtee__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"/></svg></span>
       <span>
-        <span class="mlv-gtee__t">משלוח ומעקב</span>
-        <span class="mlv-gtee__s">חינם · עד 15 ימי עסקים, עם מספר מעקב</span>
+        <span class="mlv-gtee__t">משלוח חינם עד הבית</span>
+        <span class="mlv-gtee__s">מספר מעקב במייל מהיום שיוצא</span>
       </span>
       <span class="mlv-gtee__chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
     </summary>
     <div class="mlv-gtee__body">
-      <dl class="mlv-gtee__rows">
-        <div class="mlv-gtee__row"><dt>הזמנה</dt><dd>אישור נשלח למייל</dd></div>
-        <div class="mlv-gtee__row"><dt>הכנה</dt><dd>אורזים ושולחים</dd></div>
-        <div class="mlv-gtee__row"><dt>בדרך</dt><dd>מספר מעקב במייל</dd></div>
-        <div class="mlv-gtee__row"><dt>אצלכם</dt><dd>מגיע עד הדלת</dd></div>
-      </dl>
+      {%- comment -%} Timeline from the shipping FAQ: 1-3 business days to prepare, up to 15 business days in transit, 30 days to decide from delivery. {%- endcomment -%}
+      <ol class="mlv-tl">
+        <li><span class="mlv-tl__w">היום</span><span class="mlv-tl__d">אישור הזמנה במייל</span></li>
+        <li><span class="mlv-tl__w">תוך 1-3 ימי עסקים</span><span class="mlv-tl__d">יוצא אליכם עם מספר מעקב</span></li>
+        <li><span class="mlv-tl__w">עד 15 ימי עסקים בדרך</span><span class="mlv-tl__d">מגיע עד הדלת</span></li>
+        <li><span class="mlv-tl__w">מהיום שהגיע</span><span class="mlv-tl__d">30 יום להחליט</span></li>
+      </ol>
     </div>
   </details>
 </section>
@@ -42,3 +43,12 @@
     </div>
   </details>
 </section>
+<style>
+  .mlv-tl{position:relative;display:grid;gap:14px;margin:0;padding:4px 0 2px;list-style:none;counter-reset:none}
+  .mlv-tl::before{content:"";position:absolute;inset-block:12px 12px;inset-inline-start:5px;width:2px;background:#ecd9c8;border-radius:2px}
+  .mlv-tl li{position:relative;display:grid;gap:2px;padding-inline-start:24px;list-style:none}
+  .mlv-tl li::before{content:"";position:absolute;inset-inline-start:0;top:5px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #b87a55;box-sizing:border-box}
+  .mlv-tl li:last-child::before{background:#b87a55}
+  .mlv-tl__w{font-size:.8rem;line-height:1.4;color:#6b625a;font-weight:600}
+  .mlv-tl__d{font-size:.95rem;line-height:1.35;color:#0d1b1e;font-weight:700}
+</style>
