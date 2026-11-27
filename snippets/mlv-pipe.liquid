@@ -55,7 +55,7 @@
       <p class="journey-e">אתם לא יכולים להחליף את הצנרת של הבניין. אתם כן יכולים להחליט מה יוצא ממנה.</p>
       {%- if chamber_img -%}
         <figure class="pipe-real pipe-chamber">
-          <figcaption><b>התא השקוף, בצילום אמיתי</b></figcaption>
+          <figcaption><b>התא השקוף</b></figcaption>
           <img src="{{ chamber_img | image_url: width: 800 }}" srcset="{{ chamber_img | image_url: width: 600 }} 600w, {{ chamber_img | image_url: width: 720 }} 720w, {{ chamber_img | image_url: width: 840 }} 840w, {{ chamber_img | image_url: width: 1120 }} 1120w" sizes="(min-width:901px) 560px, (min-resolution: 3dppx) 60vw, (min-resolution: 2.5dppx) 72vw, 92vw" width="{{ chamber_img.width }}" height="{{ chamber_img.height }}" loading="lazy" decoding="async" alt="התא השקוף של ראש המקלחת MALINVO, עם הפילטר הלבן גלוי בתוכו">
         </figure>
       {%- endif -%}

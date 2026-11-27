@@ -8,7 +8,7 @@
 {%- for v in product.variants -%}
   {%- if v.price < from_v.price -%}{%- assign from_v = v -%}{%- endif -%}
 {%- endfor -%}
-{%- capture from_price -%}₪{{ from_v.price | money_without_currency | remove: '.00' }}{%- endcapture -%}
+{%- capture from_price -%}₪{{ from_v.price | money_without_currency }}{%- endcapture -%}
 {%- assign fb = '/cdn/shop/files/' -%}
 
 <style>
@@ -260,6 +260,9 @@
   #mlv .step figure{flex:0 0 104px;aspect-ratio:auto;min-height:104px}
   #mlv .step>div{padding:14px 16px;min-width:0}
   #mlv .final{padding-bottom:120px}
+}
+/* Sticky buy bar: phones and tablets (<=900px), and desktop from 990px (centered pill), same markup and script */
+@media(max-width:900px),(min-width:990px){
   .mlv-sticky{display:flex;position:fixed;z-index:40;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));min-height:60px;padding-block:0;padding-inline:20px 8px;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(246,239,232,.14);border-radius:999px;background:rgba(13,27,30,.94);-webkit-backdrop-filter:saturate(1.4) blur(8px);backdrop-filter:saturate(1.4) blur(8px);color:#fff;font:700 1rem/1 Heebo,Rubik,system-ui,sans-serif;direction:rtl;cursor:pointer;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;transform:translateY(calc(100% + 24px));transition:transform 220ms cubic-bezier(.32,.72,0,1)}
   .mlv-sticky.on{transform:none;transition-duration:380ms}
   .mlv-sticky:active .mlv-sticky__c{transform:scale(.97)}
@@ -274,6 +277,12 @@
   .mlv-sticky__d{font:600 12px/1.2 Heebo,Rubik,system-ui,sans-serif;color:#f6efe8;opacity:.88;white-space:nowrap;font-variant-numeric:tabular-nums}
   @media(max-width:359px){.mlv-sticky{padding-inline:16px 6px;gap:8px}.mlv-sticky__d{font-size:11px}.mlv-sticky__c{padding:0 14px}}
   .mlv-sticky__c{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:#f6efe8;color:#0d1b1e;font-weight:800;white-space:nowrap;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+}
+@media(min-width:990px){
+  #mlv .final{padding-bottom:120px}
+  html{scroll-padding-bottom:90px}
+  .mlv-sticky{left:0;right:0;width:min(560px,calc(100% - 48px));margin-inline:auto;bottom:20px}
+  .mlv-sticky__logo{height:20px}
 }
 @media(max-width:560px){
   #mlv .cmp{font-size:.9rem}
@@ -313,6 +322,17 @@
 #mlv .buy-note{font-size:.95rem;line-height:1.5;color:var(--ink2)}
 #mlv .buy-note a,#mlv .reass a{color:var(--teal-d);font-weight:700;text-underline-offset:3px}
 #mlv .mlv-usp b{color:var(--ink);font-weight:700}
+#mlv .mlv-chips{display:none}
+#mlv .buy.bu-wait .mlv-price__save,#mlv .buy:has(#bundle-up .bundle-offer-card) .mlv-price__save{display:none}
+#mlv .mlv-unit{display:block;margin-top:2px;font-size:12px;font-weight:600;line-height:1.25;color:var(--teal-d);white-space:nowrap;direction:rtl}
+@media(max-width:900px){
+  #mlv .mlv-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0}
+  #mlv .mlv-chips li{min-width:0;padding:5px 11px;border-radius:999px;background:#faf5ef;border:1px solid #ecdccb;font-size:.85rem;font-weight:600;line-height:1.35;color:var(--ink)}
+  #mlv .mlv-usp{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  #mlv .mlv-lockup{--lk:20px}
+  #mlv h1.mlv-h1{gap:8px}
+  #mlv .mlv-tag{font-size:clamp(1.35rem,5.6vw,2rem)}
+}
 #mlv .mlv-vouch-badge{display:inline-flex;align-self:flex-start;align-items:center;gap:7px;margin:0;text-decoration:none;color:var(--ink2);font-size:.85rem;line-height:1;-webkit-tap-highlight-color:transparent}
 #mlv .mlv-vouch-stars{position:relative;display:inline-block;font-size:1rem;line-height:1;letter-spacing:1px;color:#e7ddcb;direction:ltr;white-space:nowrap}
 #mlv .mlv-vouch-fill{position:absolute;inset-block:0;inset-inline-start:0;overflow:hidden;white-space:nowrap;color:#FFC043;width:0}
@@ -356,7 +376,7 @@
 /* Statement sections are centered; long body copy reads right-aligned on phones */
 @media(max-width:600px){#mlv #mlv-adults .lead{text-align:right}}
 /* Fixed sticky bar must not cover a focused control at the bottom of the screen */
-@media(max-width:900px){html{scroll-padding-bottom:90px}#mlv h1.mlv-h1{gap:12px}}
+@media(max-width:900px){html{scroll-padding-bottom:90px}}
 </style>
 
 <div id="mlv">
@@ -445,7 +465,7 @@
           <span class="mlv-sep" aria-hidden="true"></span>
           <span class="mlv-nova">Nova<span class="mlv-tm">&trade;</span></span>
         </span>
-        <span class="mlv-tag">ראש מקלחת עם פילטר לילדים ולכם.</span>
+        <span class="mlv-tag">ראש מקלחת עם פילטר לכל הבית.</span>
         </h1>
         <p class="mlv-sub">החול והחלודה מהצנרת נשארים בפילטר, לא במים שעליכם.</p>
         <a class="mlv-vouch-badge" href="#mlv-reviews" data-vouch-badge hidden>
@@ -453,18 +473,22 @@
           <b class="mlv-vouch-avg"></b>
           <span class="mlv-vouch-count"></span>
         </a>
+        {%- comment -%} Phones see three short chips (aria-hidden: they repeat the list); the full list stays in the DOM in the same place, visually hidden on phones so screen readers still get every line. {%- endcomment -%}
+        <ul class="mlv-chips" aria-hidden="true"><li>מפחית כלור שיורי</li><li>תופס חול וחלודה</li><li>התקנה בדקה, בלי אינסטלטור</li></ul>
         <ul class="mlv-usp">
           <li><div><b>תופס את מה שהצנרת מוסיפה.</b> חול, חלודה ומשקעים נתפסים בפילטר, והכלור השיורי מופחת.</div></li>
-          <li><div><b>העיצוב שמעצבות פנים בוחרות.</b> קווים נקיים, גימור מט, בשחור או בלבן, שמתאימים לכל חדר רחצה.</div></li>
+          <li><div><b>עיצוב נקי בגימור מט.</b> קווים נקיים, בשחור או בלבן, שמתאימים לכל חדר רחצה.</div></li>
           <li><div><b>זרם מלא וצפוף.</b> חורים זעירים מרכזים את המים, בלי לשנות את הלחץ בבית.</div></li>
           <li><div><b>מתקינים בדקה.</b> מבריגים לצינור המקלחת הקיים, בלי כלים ובלי אינסטלטור.</div></li>
           <li><div><b>מרגישים מהמקלחת הראשונה.</b> פחות ריח של כלור, ומים שנעים לעמוד תחתם.</div></li>
         </ul>
-        {%- comment -%} Launch price: the regular price (compare-at) is real and takes effect on 1.1.2027; until then the line says so explicitly. Renders only while compare-at > price. {%- endcomment -%}
-        {%- if cur.compare_at_price > cur.price -%}
-        {%- comment -%} Savings tag = compare-at minus price, computed (disappears with compare-at). Countdown note: real days to the end of 31.12.2026 Israel time, filled by the launch script below; never resets and hides itself after the date. {%- endcomment -%}
-        <p class="mlv-price"><s class="mlv-price__was"><span class="vh">מחיר רגיל: </span><bdi>₪{{ cur.compare_at_price | money_without_currency }}</bdi></s><b class="mlv-price__now"><span class="vh">מחיר השקה: </span><bdi>₪{{ cur.price | money_without_currency }}</bdi></b><span class="mlv-price__save" data-launch-hide>חוסכים <bdi>₪{{ cur.compare_at_price | minus: cur.price | money_without_currency | remove: '.00' }}</bdi></span><span class="mlv-price__note" data-launch-note data-reg="₪{{ cur.compare_at_price | money_without_currency }}">מחיר השקה עד 31.12.2026</span></p>
-        {%- endif -%}
+        {%- comment -%} Price line: "מ-" + the cheapest variant (from_v), so it matches every bundle (the order button shows the chosen bundle's total). Launch parts (regular price, savings, deadline) render only while compare-at > price; the regular price is real and takes effect on 1.1.2027. Savings tag = compare-at minus price, per unit; it is hidden once BundleUp's cards (which carry their own savings) are on the page. {%- endcomment -%}
+        {%- assign launch = false -%}{%- if from_v.compare_at_price > from_v.price -%}{%- assign launch = true -%}{%- endif -%}
+        <p class="mlv-price">
+          {%- if launch -%}<s class="mlv-price__was"><span class="vh">מחיר רגיל: </span><bdi>₪{{ from_v.compare_at_price | money_without_currency }}</bdi></s>{%- endif -%}
+          <b class="mlv-price__now">{%- if launch -%}<span class="vh">מחיר השקה: </span>{%- endif -%}מ-<bdi>{{ from_price }}</bdi></b>
+          {%- if launch -%}<span class="mlv-price__save" data-launch-hide>חוסכים <bdi>₪{{ from_v.compare_at_price | minus: from_v.price | money_without_currency }}</bdi></span><span class="mlv-price__note" data-launch-note data-reg="₪{{ from_v.compare_at_price | money_without_currency }}">מחיר השקה עד 31.12.2026</span>{%- endif -%}
+        </p>
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
@@ -478,9 +502,10 @@
         <p class="buy-note"><strong>30 יום להחליט, גם אחרי שהתקנתם והתקלחתם.</strong> לא מתאים? מחזירים. <a href="/pages/refund-policy">התנאים המלאים</a></p>
         {%- comment -%} Risk-reversal near CTA. The 30-day line lives once, in .buy-note right under the button (#32: no extra repeat here). {%- endcomment -%}
         <ul class="reass">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>משלוח חינם · עד 15 ימי עסקים, עם מספר מעקב</span></li>
+          {% render 'mlv-eta' %}
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מענה בעברית</span></li>
-        </ul>        <div class="mlv-accs">
+        </ul>
+        <div class="mlv-accs">
           {% render 'malinvo-guarantee' %}
           {% render 'mlv-buy-more' %}
         </div>
@@ -488,7 +513,9 @@
     </div>
   </section>
 
-  {% render 'mlv-need' %}
+  {%- comment -%} Claims toggle (section setting show_claims, default off): off hides the CDC/blood study, the adults skin/hair section and the hair/scalp before-after cards; the filter and old-head/Nova before-after stay. {%- endcomment -%}
+  {%- assign show_claims = section.settings.show_claims -%}
+  {% render 'mlv-need', claims: show_claims %}
 
   {%- comment -%} The need, stated from a published study. Wording follows the paper: blood trihalomethane levels in adults were highest after a 10-minute shower and lowest after drinking 1 L of tap water. Source: Backer et al., J Expo Anal Environ Epidemiol 2000 (PMID 10981726); the study did not test this product. Source line and that note were removed from the page at the owner's request. {%- endcomment -%}
   {%- if section.blocks.size > 0 -%}
@@ -510,6 +537,7 @@
 
   {%- comment -%} The unseen part, from published studies, then the answer. All three studies were on adults and none tested this product; the page says "adults" in the text. Sources: Backer 2000 (PMID 10981726), Jo/Weisel/Lioy 1990 (PMID 2287784), Backer 2008 (PMID 18197300). {%- endcomment -%}
   <section class="big" id="mlv-study">
+    {%- if show_claims -%}
     <div class="big-p"><div class="n">
         <span class="kick">ומה שלא רואים בעין</span>
         <p class="big-n">10<small>דקות במקלחת</small></p>
@@ -517,6 +545,7 @@
         <p class="big-by">מחקר של חוקרי ה-CDC בארה״ב, בדיקות דם למבוגרים.</p>
         <p class="big-inf">המחקר נעשה על מבוגרים. את המסקנה לגבי גוף קטן תסיקו בעצמכם.</p>
     </div></div>
+    {%- endif -%}
     <div class="big-s"><div class="n">
         <p class="big-n">4<small>שכבות</small></p>
         <p class="big-t">בתוך פילטר אחד. המים עוברים דרך כולן, ו<mark>החול, החלודה והמשקעים נשארים בפילטר</mark>. הכלור מופחת.</p>
@@ -528,7 +557,7 @@
         </figure>
         {%- endif -%}
         <p class="big-by">את המים לשתייה כבר סידרתם. הגיע תור המקלחת.</p>
-        <a class="btn" href="#bundle-up" data-to-buy>להתקין לילדים ולכם</a>
+        <a class="btn" href="#bundle-up" data-to-buy>לבחירת חבילה</a>
     </div></div>
   </section>
 
@@ -592,16 +621,17 @@
             new IntersectionObserver(function(es){es.forEach(function(e){inView=e.isIntersecting;run();});},{rootMargin:'200px 0px'}).observe(v);
           })();
         </script>
-        <figcaption>הזרם של Nova, בצילום אמיתי</figcaption>
+        <figcaption>הזרם של Nova</figcaption>
       </figure>
       {%- endif -%}
       <p style="text-align:center;margin:26px 0 0"><a class="btn" href="#bundle-up" data-to-buy>לבחירת חבילה</a></p>
     </div>
   </section>
 
+  {%- if show_claims -%}
   <section class="sec" id="mlv-adults">
     <div class="n" style="text-align:center">
-      <span class="kick">העור והשיער שלך</span>
+      <span class="kick">העור והשיער שלכם</span>
       <h2>קונים קרם, מרכך ושמן לשיער. ואז מתקלחים בכלור.</h2>
       <p class="lead">כולנו מכירים את הרגע אחרי הבריכה: העור מתוח, השיער קשה, והריח נשאר גם אחרי שטיפה. בבית זה קורה בשקט, כל בוקר וכל ערב. עשר דקות ביום הן כ-60 שעות בשנה מתחת למים האלה.</p>
       <p class="lead" style="margin-block-start:14px"><strong>אותה מקלחת, אותו זמן. עם פחות כלור, ובלי מה שהצנרת מוסיפה.</strong></p>
@@ -610,6 +640,7 @@
       {%- if per_day > 0 and per_day < 100 -%}<p class="lead" style="margin-block-start:10px">בשנה הראשונה זה כ-{{ per_day }} אגורות ליום.</p>{%- endif -%}
     </div>
   </section>
+  {%- endif -%}
 
   {% render 'mlv-benefits', img: section.settings.benefits_image, kick: 'מה בפנים' %}
   {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
@@ -719,9 +750,9 @@
       <p class="lead">תתקינו, תתקלחו, ותסתכלו על הפילטר. אם זה לא זה, מחזירים.{%- if cur.compare_at_price > cur.price %} <span data-launch-hide>ב-1.1.2027 המחיר עולה ל-<bdi>₪{{ cur.compare_at_price | money_without_currency }}</bdi>.</span>{%- endif -%}</p>
       <ul class="trio"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>משלוח חינם</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>מעקב במייל</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</li></ul>
       {%- if cur.compare_at_price > cur.price -%}
-      <a href="#bundle-up" class="btn" data-to-buy data-launch-swap="להתקין לילדים ולכם">לבחירת חבילה במחיר השקה</a>
+      <a href="#bundle-up" class="btn" data-to-buy data-launch-swap="לבחירת חבילה">לבחירת חבילה במחיר השקה</a>
       {%- else -%}
-      <a href="#bundle-up" class="btn" data-to-buy>להתקין לילדים ולכם</a>
+      <a href="#bundle-up" class="btn" data-to-buy>לבחירת חבילה</a>
       {%- endif -%}
     </div>
   </section>
@@ -816,8 +847,21 @@
       [].slice.call(host.querySelectorAll('#bundle-up .card-tag h6:not([role])')).forEach(function(h){h.setAttribute('role','none')});
       [].slice.call(host.querySelectorAll('#bundle-up img[alt="offer product"]')).forEach(function(im){im.alt=''});
     };
-    enhance();
-    if('MutationObserver' in window){var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
+    /* Per-unit price under each multi-unit offer ("₪249.95 ליחידה"), computed from the offer's own price and BundleUp's quantity. Runs straight from the observer (before paint) so the line never shifts the cards after they show. */
+    var qty=null;
+    var units=function(){
+      if(!qty){var d=document.getElementById('bundle-data');if(!d)return;try{qty=(JSON.parse(d.textContent).offers||[]).map(function(o){return +o.quantity||1})}catch(e){qty=[];return}}
+      qty.forEach(function(q,i){
+        if(q<2)return;var pe=host.querySelector('#price_offer_'+(i+1));if(!pe)return;
+        var m=pe.textContent.replace(/[\s,]/g,'').match(/\d+(\.\d+)?/);if(!m)return;
+        var txt='₪'+(Math.round(parseFloat(m[0])/q*100)/100).toFixed(2)+' ליחידה';
+        var box=pe.closest('.offer-price')||pe,u=box.parentNode.querySelector('.mlv-unit');
+        if(!u){u=document.createElement('span');u.className='mlv-unit';box.parentNode.appendChild(u)}
+        if(u.textContent!==txt)u.textContent=txt;
+      });
+    };
+    enhance();units();
+    if('MutationObserver' in window){var t;new MutationObserver(function(){units();clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
   })();
   /* Vouch review controls ship English names ("Previous", "Next reviews", "Previous image"). Swap only those exact labels for the storefront-language ones; idempotent, re-run when Vouch renders the carousel or opens its image modal (appended to body). */
   (function(){
@@ -937,6 +981,8 @@
   "class": "mlv-section",
   "blocks": [ { "type": "@app" } ],
   "settings": [
+    { "type": "header", "content": "תוכן בריאות ולפני/אחרי" },
+    { "type": "checkbox", "id": "show_claims", "label": "הצגת תוכן בריאות ולפני/אחרי (לא מומלץ למודעות)", "default": false, "info": "כבוי: מוסתרים מחקר ה-CDC, סקשן העור והשיער וכרטיסי הלפני/אחרי של שיער וקרקפת. הפילטר לפני/אחרי נשאר." },
     { "type": "header", "content": "הורים מספרים (מוסתר עד שממלאים)" },
     { "type": "paragraph", "content": "רק ביקורות אמיתיות של לקוחות. ביקורת מוצגת כשיש לה גם טקסט וגם שם." },
     { "type": "textarea", "id": "review1_text", "label": "ביקורת 1: טקסט" },
