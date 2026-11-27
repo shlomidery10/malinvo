@@ -1,11 +1,11 @@
 {%- doc -%}
-  MALINVO "need" section on the product page: four before/after drag sliders (illustrations, marked as such).
+  MALINVO "need" section on the product page: before/after drag sliders (illustrations, marked as such).
   Sits right after the hero/buy box and before the ingredients label. Each card is a native range input over
   two stacked images: the first state on the right, the later state on the left (RTL reading order).
   Images are theme assets (assets/mlv-ba-<name>-r.jpg / -l.jpg, 600x960). The left (later) image carries the real
   MALINVO logo at its bottom-left corner, so the logo stays visible while the slider clips that image's right side.
   Everything is lazy-loaded with fixed width/height, so it costs nothing on the buy box and causes no layout shift.
-  With claims off (the default), only the filter and old-head/Nova cards render, without the skin/hair line.
+  With claims off (the default), only the filter card renders, without the skin/hair line. The old-head/Nova card was removed at the owner's request.
   @param {boolean} [claims] - Also show the hair and scalp cards and the skin/hair lead (default false)
   @example
   {% render 'mlv-need', claims: section.settings.show_claims %}
@@ -13,12 +13,11 @@
 {%- comment -%} name|title|right label|left label|right image|left image|alt right|alt left {%- endcomment -%}
 {%- capture ba_raw -%}
 filter|הפילטר אחרי חודש במקלחת|חדש|אחרי חודש|filter-r|filter-l|פילטר MALINVO חדש ונקי|הפילטר אחרי חודש במקלחת, עם החול והחלודה שנתפסו בו
-;;shower|הראש הישן שלכם מול Nova|לפני|אחרי|shower-r|shower-l|ראש מקלחת ישן עם אבנית וחלודה וזרם מפוזר|ראש המקלחת MALINVO Nova השחור
 ;;curls|שיער שמקבל מים מסוננים|לפני|אחרי|curls-r|curls-l|שיער מתולתל יבש ומקורזל|שיער מתולתל מוגדר ומבריק אחרי מקלחות במים מסוננים
 ;;dandruff|קרקפת שמקבלת מים מסוננים|לפני|אחרי|dandruff-r|dandruff-l|קשקשים על הצוואר ועל החולצה|צוואר וחולצה נקיים, בלי קשקשים
 {%- endcapture -%}
 {%- assign ba_items = ba_raw | strip | split: ';;' -%}
-{%- unless claims -%}{%- assign ba_items = ba_items | slice: 0, 2 -%}{%- endunless -%}
+{%- unless claims -%}{%- assign ba_items = ba_items | slice: 0, 1 -%}{%- endunless -%}
 <style>
 #mlv-need{background:#f7f2eb;padding-block:clamp(44px,8vw,88px)}
 #mlv-need .need-h{text-align:center}
