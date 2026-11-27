@@ -1,10 +1,11 @@
 {%- comment -%}
   MALINVO floating WhatsApp button.
   Number + message are theme settings: Theme settings > "MALINVO WhatsApp button".
-  A placeholder number is set so the icon is visible now; Shlomi replaces it with the real number.
+  The button renders only with a real number: blank or the old placeholder (972500000000) hides it.
   Positioned to clear the sticky CTA on the product page (raised above it).
 {%- endcomment -%}
 {%- assign wa_num = settings.mlv_wa_number | default: settings.mlv_whatsapp | strip -%}
+{%- if wa_num == '972500000000' -%}{%- assign wa_num = '' -%}{%- endif -%}
 {%- if settings.mlv_wa_enable and wa_num != blank -%}
   {%- assign wa_msg = settings.mlv_wa_message | default: 'היי, יש לי שאלה על ראש המקלחת של MALINVO' -%}
   <a class="mlv-wa{% if template contains 'product' %} mlv-wa--raised{% endif %}"

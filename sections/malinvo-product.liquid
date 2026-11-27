@@ -104,7 +104,9 @@
 #mlv #bundle-up .bundle-offer-card_pricing{align-items:flex-end;gap:0}
 #mlv #bundle-up .offer-price p,#mlv #bundle-up .offer-compare-price p{margin:0;direction:ltr;unicode-bidi:isolate;white-space:nowrap;line-height:1.25}
 #mlv #bundle-up .offer-price p{font-family:var(--disp);font-weight:800;font-size:19px}
-#mlv #bundle-up .offer-compare-price p{font-size:13px}
+#mlv #bundle-up .offer-compare-price p{font-size:13px;color:var(--muted)!important}
+#mlv #bundle-up .card-offer-wrapper:has(.bu-offer-radio:focus-visible){outline:3px solid var(--teal-d);outline-offset:3px;border-radius:14px}
+#mlv #bundle-up .bu-boxes-option:focus-visible{outline:3px solid var(--teal-d);outline-offset:2px}
 #mlv #bundle-up .offer-bottom-text{margin:0}
 #mlv #bundle-up .card-tag{left:auto;right:14px;width:auto;border-radius:6px}
 #mlv #BU-action-button{min-height:56px;border-radius:999px!important;-webkit-tap-highlight-color:transparent;transition:transform 160ms var(--ease-out),background-color 200ms ease}
@@ -556,15 +558,23 @@
         {%- liquid
           assign vsrc = nova_vid.sources | where: 'mime_type', 'video/mp4' | first
           assign vurl = vsrc.url | append: '' | replace: 'HD-1080p-2.5Mbps', 'HD-720p-1.6Mbps'
+          assign vsd = nil
+          for vs in nova_vid.sources
+            if vs.mime_type == 'video/mp4' and vs.height == 480
+              assign vsd = vs
+              break
+            endif
+          endfor
         -%}
-        <video data-lazy-vid="{{ vurl }}" data-fallback="{{ vsrc.url }}" muted loop playsinline preload="none" poster="{{ nova_vid.preview_image | image_url: width: 720 }}" width="{{ vsrc.width }}" height="{{ vsrc.height }}" aria-hidden="true"></video>
+        <video data-lazy-vid="{{ vurl }}"{% if vsd %} data-lite="{{ vsd.url }}"{% endif %} data-fallback="{{ vsrc.url }}" muted loop playsinline preload="none" poster="{{ nova_vid.preview_image | image_url: width: 720 }}" width="{{ vsrc.width }}" height="{{ vsrc.height }}" aria-hidden="true"></video>
         <button type="button" class="vs-vid__btn" aria-pressed="false" aria-label="השהיית הסרטון"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></button>
         <script>
           (function(){
             var btn=document.currentScript.previousElementSibling,v=btn.previousElementSibling;if(!v)return;
             var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             var paused=reduce,inView=false;
-            var load=function(){if(!v.src){v.onerror=function(){if(v.src!==v.dataset.fallback){v.src=v.dataset.fallback;if(!paused)v.play();}};v.src=v.dataset.lazyVid;}};
+            var c=navigator.connection,slow=!!(c&&(c.saveData||/(^|-)2g|3g/.test(c.effectiveType||'')));
+            var load=function(){if(!v.src){v.onerror=function(){if(v.src!==v.dataset.fallback){v.src=v.dataset.fallback;if(!paused)v.play();}};v.src=(slow&&v.dataset.lite)||v.dataset.lazyVid;}};
             var sync=function(){btn.setAttribute('aria-pressed',paused?'true':'false');btn.setAttribute('aria-label',paused?'הפעלת הסרטון':'השהיית הסרטון');};
             var run=function(){if(paused||!inView){if(v.src)v.pause();return;}load();var p=v.play();p&&p.catch(function(){});};
             btn.addEventListener('click',function(){paused=!paused;if(!paused)inView=true;sync();run();});
@@ -583,7 +593,7 @@
   <section class="sec" id="mlv-adults">
     <div class="n" style="text-align:center">
       <span class="kick">העור והשיער שלך</span>
-      <h2>את קונה קרם, מרכך ושמן לשיער. ואז מתקלחת בכלור.</h2>
+      <h2>קונים קרם, מרכך ושמן לשיער. ואז מתקלחים בכלור.</h2>
       <p class="lead">כולנו מכירים את הרגע אחרי הבריכה: העור מתוח, השיער קשה, והריח נשאר גם אחרי שטיפה. בבית זה קורה בשקט, כל בוקר וכל ערב. עשר דקות ביום הן כ-60 שעות בשנה מתחת למים האלה.</p>
       <p class="lead" style="margin-block-start:14px"><strong>אותה מקלחת, אותו זמן. עם פחות כלור, ובלי מה שהצנרת מוסיפה.</strong></p>
       {%- comment -%} Cost per day: single-head price / 365, in agorot (head only, no filters sold). Computed, so it follows the real price. {%- endcomment -%}
@@ -735,19 +745,56 @@
   var buy=document.getElementById('mlv-buy');
   var toPicker=function(ev){if(ev)ev.preventDefault();var tg=document.getElementById('bundle-up')||buy;if(tg)tg.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
   [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){a.addEventListener('click',toPicker)});
-  /* mobile sticky bar: visible from the start, hidden while a bundle card or the order button is on screen above the bar */
+  /* mobile sticky bar: hidden until the visitor scrolls past the buy box, and hidden while a bundle card, the order button or an in-page "choose a bundle" CTA is on screen above the bar */
   var st=document.getElementById('mlv-sticky');
   if(st){
     var show=function(on){st.classList.toggle('on',on);st.setAttribute('aria-hidden',on?'false':'true');st.tabIndex=on?0:-1};
     st.addEventListener('click',function(){toPicker()});
-    show(true);
-    var bw=function(){
-      var b=document.getElementById('bundle-up');if(!b||!b.querySelector('.bundle-offer-card'))return false;
-      if('IntersectionObserver' in window){var vis={c:false,b:false},upd=function(){show(!vis.c&&!vis.b)},om={rootMargin:'0px 0px -72px 0px'},cards=b.querySelector('.bundle-offer-cards-container'),ob=document.getElementById('BU-action-button');if(cards)new IntersectionObserver(function(e){vis.c=e[0].isIntersecting;upd()},om).observe(cards);if(ob)new IntersectionObserver(function(e){vis.b=e[0].isIntersecting;upd()},om).observe(ob)}
-      return true;
-    };
-    if(!bw()&&buy&&'MutationObserver' in window){var mo=new MutationObserver(function(){if(bw())mo.disconnect()});mo.observe(buy,{childList:true,subtree:true})}
+    if(!('IntersectionObserver' in window)){show(true)}
+    else{
+      var vis={past:!buy,c:false,b:false},ctas=new Set(),om={rootMargin:'0px 0px -72px 0px'};
+      var upd=function(){show(vis.past&&!vis.c&&!vis.b&&ctas.size===0)};
+      if(buy)new IntersectionObserver(function(e){var x=e[e.length-1];vis.past=!x.isIntersecting&&x.boundingClientRect.top<0;upd()}).observe(buy);
+      var co=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting)ctas.add(x.target);else ctas.delete(x.target)});upd()},om);
+      [].slice.call(root.querySelectorAll('[data-to-buy]')).forEach(function(a){if(!buy||!buy.contains(a))co.observe(a)});
+      var bw=function(){
+        var b=document.getElementById('bundle-up');if(!b||!b.querySelector('.bundle-offer-card'))return false;
+        var cards=b.querySelector('.bundle-offer-cards-container'),ob=document.getElementById('BU-action-button');
+        if(cards)new IntersectionObserver(function(e){vis.c=e[e.length-1].isIntersecting;upd()},om).observe(cards);
+        if(ob)new IntersectionObserver(function(e){vis.b=e[e.length-1].isIntersecting;upd()},om).observe(ob);
+        return true;
+      };
+      upd();
+      if(!bw()&&buy&&'MutationObserver' in window){var mo=new MutationObserver(function(){if(bw())mo.disconnect()});mo.observe(buy,{childList:true,subtree:true})}
+    }
   }
+  /* BundleUp a11y: the app renders color choices as plain divs and its card tag as an h6. Make each choice a keyboard radio (roving tabindex, arrows, Space/Enter), keep aria-checked in sync with the app's "selected" class, drop the stray heading level and the English "offer product" alt. Idempotent, re-run when the app re-renders. */
+  (function(){
+    var host=document.getElementById('mlv-buy');if(!host)return;
+    var sync=function(g){[].slice.call(g.querySelectorAll('.bu-boxes-option')).forEach(function(o){var on=o.classList.contains('selected');o.setAttribute('aria-checked',on?'true':'false');o.tabIndex=on?0:-1})};
+    var enhance=function(){
+      [].slice.call(host.querySelectorAll('.bu-boxes-options:not([data-mlv-a11y])')).forEach(function(g){
+        g.setAttribute('data-mlv-a11y','');g.setAttribute('role','radiogroup');
+        var card=g.closest('.card-offer-wrapper'),title=card&&card.querySelector('.offer-title');
+        g.setAttribute('aria-label',(g.getAttribute('data-option-name')||'צבע')+(title?' - '+title.textContent.trim().replace(/\s+/g,' '):''));
+        [].slice.call(g.querySelectorAll('.bu-boxes-option')).forEach(function(o){o.setAttribute('role','radio')});
+        sync(g);
+        g.addEventListener('keydown',function(ev){
+          var o=ev.target.closest&&ev.target.closest('.bu-boxes-option');if(!o)return;
+          var list=[].slice.call(g.querySelectorAll('.bu-boxes-option')),i=list.indexOf(o),k=ev.key,n=null;
+          if(k===' '||k==='Enter')n=o;
+          else if(k==='ArrowLeft'||k==='ArrowDown')n=list[(i+1)%list.length];
+          else if(k==='ArrowRight'||k==='ArrowUp')n=list[(i-1+list.length)%list.length];
+          if(!n)return;ev.preventDefault();n.click();n.focus();setTimeout(function(){sync(g)},0);
+        });
+        g.addEventListener('click',function(){setTimeout(function(){sync(g)},0)});
+      });
+      [].slice.call(host.querySelectorAll('#bundle-up .card-tag h6:not([role])')).forEach(function(h){h.setAttribute('role','none')});
+      [].slice.call(host.querySelectorAll('#bundle-up img[alt="offer product"]')).forEach(function(im){im.alt=''});
+    };
+    enhance();
+    if('MutationObserver' in window){var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(enhance,50)}).observe(host,{childList:true,subtree:true})}
+  })();
   /* Hero color swap: when the first set in the selected bundle offer is the alternate color, slide 1 shows that color's hero */
   (function(){
     var dataEl=document.querySelector('[data-hero-alt]');if(!dataEl)return;

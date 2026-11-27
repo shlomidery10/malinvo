@@ -2153,7 +2153,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Floating WhatsApp button. A placeholder number is set so the icon is visible now - replace it with your real number."
+        "content": "Floating WhatsApp button. It shows only after you enter your real WhatsApp number below."
       },
       {
         "type": "checkbox",
@@ -2165,8 +2165,7 @@
         "type": "text",
         "id": "mlv_wa_number",
         "label": "WhatsApp number - international format, digits only (e.g. 972501234567)",
-        "info": "PLACEHOLDER set. Replace with your real number to make the button work.",
-        "default": "972500000000"
+        "info": "Leave empty to hide the button."
       },
       {
         "type": "text",

@@ -25,6 +25,13 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html,
+  .page-wrapper {
+    scroll-behavior: auto;
+  }
+}
+
 
 /* MALINVO: the document is the scroll container at every width (normal page scrollbar, window.scrollY works).
    The desktop .page-wrapper scroller was removed here and in assets/scroll-container.js. */
