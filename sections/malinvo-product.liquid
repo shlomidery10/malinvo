@@ -533,7 +533,7 @@
 
   {%- assign real_img = null -%}
   {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
-  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true %}
+  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true, claims: show_claims %}
 
   {%- comment -%} The unseen part, from published studies, then the answer. All three studies were on adults and none tested this product; the page says "adults" in the text. Sources: Backer 2000 (PMID 10981726), Jo/Weisel/Lioy 1990 (PMID 2287784), Backer 2008 (PMID 18197300). {%- endcomment -%}
   <section class="big" id="mlv-study">
@@ -689,7 +689,7 @@
     <div class="n">
       <span class="kick">שאלות</span>
       <h2>שאלות נפוצות</h2>
-      {%- comment -%} One source for the visible FAQ and its FAQPage markup, so they cannot drift apart. Entry: question::answer, entries separated by ;; {%- endcomment -%}
+      {%- comment -%} One source for the visible FAQ and its FAQPage markup, so they cannot drift apart. Entry: question::answer, entries separated by ;; The dry-skin entry is a skin claim: it renders (visible and in FAQPage) only with show_claims. {%- endcomment -%}
       {%- capture faq_raw -%}
 מתאים לדירה שכורה?::כן. הראש מתחבר לצינור המקלחת בהברגה, בלי קידוחים ובלי שינוי בצנרת. כשעוברים דירה, מפרקים ולוקחים אותו איתכם.
 ;;צריך אינסטלטור?::לא. מבריגים את הפילטר לידית, סוגרים, ומבריגים לצינור המקלחת הרגיל. ההתקנה לוקחת כדקה ולא דורשת כלים.
@@ -697,7 +697,9 @@
 ;;מה הפילטר מפחית?::שני דברים שמגיעים אליכם דרך הצנרת: כלור שיורי - הריח של "מי ברז" במקלחת, וחלקיקים כמו חול וחלודה שנסחפים מהצינורות. הפילטר מפחית את הכלור השיורי ותופס את החלקיקים לפני שהמים מגיעים אליכם. ארבע שכבות סינון בתוך הידית, שמחליפים כשצריך.
 ;;יש לי לפעמים מים צהובים מהברז. זה יעזור?::המים הצהובים שרואים אחרי הפסקת מים הם חלודה שנסחפה מהצינורות. הפילטר תופס חלקיקי חלודה כאלה, וזו גם הסיבה שבבניינים ישנים הוא מתכהה מהר יותר. אחרי הפסקת מים כדאי בכל מקרה לתת למים לזרום דקה לפני שנכנסים.
 ;;זה מתאים לילדים ולתינוקות?::זה ראש מקלחת לכל המשפחה. הפילטר עובד על המים לפני שהם יוצאים, לא על מי שמתקלח.
+{%- if show_claims %}
 ;;זה יעזור לעור יבש?::הפילטר משנה את מה שמגיע לעור: פחות כלור שיורי ופחות חלקיקים. את התחושה תבדקו בעצמכם כבר במקלחות הראשונות. אם לא הרגשתם הבדל, יש 30 יום להחזרה.
+{%- endif %}
 ;;כל כמה זמן מחליפים את הפילטר?::כשהפילטר מתכהה ונראה משומש - מחליפים. הברגה אחת, הראש נשאר. הקצב משתנה לפי המים ולפי כמות המקלחות בבית, אז מציצים מדי פעם ומחליפים כשרואים שצריך.
 ;;כמה זמן לוקח המשלוח?::המשלוח חינם. מכינים את ההזמנה תוך 1-3 ימי עסקים, והמשלוח עצמו לוקח עד 15 ימי עסקים, עם מספר מעקב שנשלח במייל. ימי עסקים הם ימים א׳-ה׳, לא כולל חגים. אם יהיה עיכוב חריג, נעדכן אתכם במייל.
 ;;מה אם לא מתאים לי? אפשר להחזיר?::<strong>30 יום להתלבט. אם זה לא זה, מחזירים.</strong> אחרי שהמוצר חוזר ונבדק, מזכים אתכם באמצעי התשלום המקורי. לפרטי ההחזרה המלאים - <a href="/pages/refund-policy">מדיניות ההחזרות</a>.
