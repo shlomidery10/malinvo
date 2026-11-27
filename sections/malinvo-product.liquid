@@ -250,6 +250,8 @@
   #mlv .gal{position:static;margin-inline:-16px}
   #mlv .track{border-radius:0;gap:0}
   #mlv .slide{border-radius:0}
+  /* First screen: a full-width square took ~59% of a phone screen, so the price sat below the fold. Cap the slide height; images keep object-fit:contain (whole slide, side bands in the slide colour), so no gallery content is cropped. */
+  #mlv .slide{aspect-ratio:auto;height:min(100vw,48vh);height:min(100vw,48svh)}
   #mlv .thumbs{display:none}
   #mlv .dots{display:flex}
   #mlv .buy{gap:12px}
@@ -467,6 +469,13 @@
         </span>
         <span class="mlv-tag">ראש מקלחת עם פילטר לכל הבית.</span>
         </h1>
+        {%- comment -%} Price line, directly under the H1 so phones see the price on the first screen. "מ-" + the cheapest variant (from_v), so it matches every bundle (the order button shows the chosen bundle's total). Launch parts (regular price, savings, deadline) render only while compare-at > price; the regular price is real and takes effect on 1.1.2027. Savings tag = compare-at minus price, per unit; it is hidden once BundleUp's cards (which carry their own savings) are on the page. {%- endcomment -%}
+        {%- assign launch = false -%}{%- if from_v.compare_at_price > from_v.price -%}{%- assign launch = true -%}{%- endif -%}
+        <p class="mlv-price">
+          {%- if launch -%}<s class="mlv-price__was"><span class="vh">מחיר רגיל: </span><bdi>₪{{ from_v.compare_at_price | money_without_currency }}</bdi></s>{%- endif -%}
+          <b class="mlv-price__now">{%- if launch -%}<span class="vh">מחיר השקה: </span>{%- endif -%}מ-<bdi>{{ from_price }}</bdi></b>
+          {%- if launch -%}<span class="mlv-price__save" data-launch-hide>חוסכים <bdi>₪{{ from_v.compare_at_price | minus: from_v.price | money_without_currency }}</bdi></span><span class="mlv-price__note" data-launch-note data-reg="₪{{ from_v.compare_at_price | money_without_currency }}">מחיר השקה עד 31.12.2026</span>{%- endif -%}
+        </p>
         <p class="mlv-sub">החול והחלודה מהצנרת נשארים בפילטר, לא במים שעליכם.</p>
         <a class="mlv-vouch-badge" href="#mlv-reviews" data-vouch-badge hidden>
           <span class="mlv-vouch-stars" aria-hidden="true"><span class="mlv-vouch-fill">★★★★★</span>★★★★★</span>
@@ -482,13 +491,6 @@
           <li><div><b>מתקינים בדקה.</b> מבריגים לצינור המקלחת הקיים, בלי כלים ובלי אינסטלטור.</div></li>
           <li><div><b>מרגישים מהמקלחת הראשונה.</b> פחות ריח של כלור, ומים שנעים לעמוד תחתם.</div></li>
         </ul>
-        {%- comment -%} Price line: "מ-" + the cheapest variant (from_v), so it matches every bundle (the order button shows the chosen bundle's total). Launch parts (regular price, savings, deadline) render only while compare-at > price; the regular price is real and takes effect on 1.1.2027. Savings tag = compare-at minus price, per unit; it is hidden once BundleUp's cards (which carry their own savings) are on the page. {%- endcomment -%}
-        {%- assign launch = false -%}{%- if from_v.compare_at_price > from_v.price -%}{%- assign launch = true -%}{%- endif -%}
-        <p class="mlv-price">
-          {%- if launch -%}<s class="mlv-price__was"><span class="vh">מחיר רגיל: </span><bdi>₪{{ from_v.compare_at_price | money_without_currency }}</bdi></s>{%- endif -%}
-          <b class="mlv-price__now">{%- if launch -%}<span class="vh">מחיר השקה: </span>{%- endif -%}מ-<bdi>{{ from_price }}</bdi></b>
-          {%- if launch -%}<span class="mlv-price__save" data-launch-hide>חוסכים <bdi>₪{{ from_v.compare_at_price | minus: from_v.price | money_without_currency }}</bdi></span><span class="mlv-price__note" data-launch-note data-reg="₪{{ from_v.compare_at_price | money_without_currency }}">מחיר השקה עד 31.12.2026</span>{%- endif -%}
-        </p>
         <form method="post" action="/cart/add" class="shopify-product-form" id="mlv-form">
           <input type="hidden" name="id" value="{{ cur.id }}">
           <div class="product-form__buttons"><button type="submit" name="add" class="btn"{% unless cur.available %} disabled{% endunless %}>להוספה לעגלה</button></div>
