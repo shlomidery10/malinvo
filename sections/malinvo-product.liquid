@@ -118,6 +118,23 @@
 #mlv .bu-payment-icons{--bu-payment-icon-height:24px!important;flex-wrap:wrap;max-width:100%;margin-top:10px;justify-content:flex-start!important}
 #mlv #bundle-up .bu-savings{background:#fbf3ec!important;border-color:#ecd9c8!important;color:var(--teal-d)!important}
 #mlv #bundle-up .bu-savings *{color:var(--teal-d)!important}
+/* Colour choices: 44px tap targets, at least 8px apart (also between the #1 and #2 rows of the pair card) */
+#mlv #bundle-up .bu-boxes-options{gap:10px}
+#mlv #bundle-up .bu-boxes-option{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:64px;box-sizing:border-box}
+#mlv #bundle-up .bundle-item-option-set+.bundle-item-option-set{margin-block-start:8px}
+/* Savings pill stays on one line and wraps under the title as a unit instead of splitting "חוסכים / ₪..." */
+#mlv #bundle-up .offer-title-label{flex:none;white-space:nowrap}
+#mlv #bundle-up .offer-title-label p,#mlv #bundle-up .offer-title-label span{white-space:nowrap}
+/* Narrow phones: a smaller offer image leaves the text column room, and the price drops under the title block when the two cannot share a row, so titles no longer break one word per line and the pill never touches the price */
+@media(max-width:400px){
+  #mlv #bundle-up .header-wrapper{gap:8px}
+  #mlv #bundle-up .offer-thumbnail{flex:none;width:56px}
+  #mlv #bundle-up .offer-thumbnail img{width:56px;height:56px;object-fit:contain}
+  #mlv #bundle-up .offer-header{flex-wrap:wrap;align-items:flex-end;row-gap:6px}
+  #mlv #bundle-up .offer-start-section{flex:1 1 150px}
+  #mlv #bundle-up .offer-price-wrapper{margin-inline-start:auto}
+  #mlv #bundle-up .offer-title p,#mlv #bundle-up .offer-sub-title p{overflow-wrap:normal;word-break:normal;hyphens:none}
+}
 #mlv .reass{display:grid;gap:8px;font-size:.95rem;font-weight:600;line-height:1.4}
 #mlv .reass li{display:flex;align-items:center;gap:11px;background:#faf5ef;border:1px solid #ecdccb;border-radius:12px;padding:11px 14px}
 #mlv .reass svg,#mlv .trio svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--teal-d);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
