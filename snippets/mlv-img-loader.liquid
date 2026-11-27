@@ -6,7 +6,7 @@
   2. A photo that gets within 1400px of the screen is fetched at once (fast scrolling, anchor links).
   3. Product gallery: slide 2 is fetched once slide 1 and the page scripts are in; the first touch on the
      gallery fetches the rest.
-  App blocks (Vouch reviews) are left to the browser's native lazy loading, so their photos load on scroll.
+  App blocks (Vouch reviews) and the before/after sliders (#mlv-need) are left to native lazy loading.
   4. A photo below the first screen that still arrives while it is on screen fades in over the cream placeholder.
   5. The payment icons that the bundle app adds are requested at the size they are shown (same files, same CDN).
   Steps 1 to 3 are skipped when the visitor asked the browser to save data.
@@ -30,7 +30,7 @@ img.mlv-fade{transition:opacity 180ms ease}
   var settle=function(i,ms,cb){if(ok(i))return cb();var d=false,t,f=function(){if(d)return;d=true;clearTimeout(t);cb()};t=setTimeout(f,ms);i.addEventListener('load',f);i.addEventListener('error',f)};
   var track=root.querySelector('[data-track]');
   var slides=track?arr(track.querySelectorAll('img')):[];
-  var queue=arr(root.querySelectorAll('img[loading="lazy"]')).filter(function(i){return !i.closest('[data-track],.thumbs,.shopify-app-block')});
+  var queue=arr(root.querySelectorAll('img[loading="lazy"]')).filter(function(i){return !i.closest('[data-track],.thumbs,.shopify-app-block,#mlv-need')});
   var save=!!(navigator.connection&&navigator.connection.saveData);
 
   /* 4. soft fade for a photo that arrives late (never for the first screen) */

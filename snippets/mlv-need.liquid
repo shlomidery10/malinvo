@@ -1,0 +1,95 @@
+{%- doc -%}
+  MALINVO "need" section on the product page: four before/after drag sliders (illustrations, marked as such).
+  Sits right after the hero/buy box and before the ingredients label. Each card is a native range input over
+  two stacked images: the first state on the right, the later state on the left (RTL reading order).
+  Images are theme assets (assets/mlv-ba-<name>-r.jpg / -l.jpg, 600x960). The left (later) image carries the real
+  MALINVO logo at its bottom-left corner, so the logo stays visible while the slider clips that image's right side.
+  Everything is lazy-loaded with fixed width/height, so it costs nothing on the buy box and causes no layout shift.
+  @example
+  {% render 'mlv-need' %}
+{%- enddoc -%}
+{%- comment -%} name|title|right label|left label|right image|left image|alt right|alt left {%- endcomment -%}
+{%- capture ba_raw -%}
+filter|הפילטר אחרי חודש במקלחת|חדש|אחרי חודש|filter-r|filter-l|פילטר MALINVO חדש ונקי|הפילטר אחרי חודש במקלחת, עם החול והחלודה שנתפסו בו
+;;shower|הראש הישן שלכם מול Nova|לפני|אחרי|shower-r|shower-l|ראש מקלחת ישן עם אבנית וחלודה וזרם מפוזר|ראש המקלחת MALINVO Nova השחור
+;;curls|שיער שמקבל מים מסוננים|לפני|אחרי|curls-r|curls-l|שיער מתולתל יבש ומקורזל|שיער מתולתל מוגדר ומבריק אחרי מקלחות במים מסוננים
+;;dandruff|קרקפת שמקבלת מים מסוננים|לפני|אחרי|dandruff-r|dandruff-l|קשקשים על הצוואר ועל החולצה|צוואר וחולצה נקיים, בלי קשקשים
+{%- endcapture -%}
+{%- assign ba_items = ba_raw | strip | split: ';;' -%}
+<style>
+#mlv-need{background:#f7f2eb;padding-block:clamp(44px,8vw,88px)}
+#mlv-need .need-h{text-align:center}
+#mlv-need .need-h h2{font-family:"Rubik","Heebo",system-ui,sans-serif;font-weight:800}
+#mlv-need .need-h .lead{margin-top:12px}
+#mlv-need .ba-row{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:12px;margin:28px 0 0;padding:0 16px 6px;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scroll-padding-inline:16px;scrollbar-width:none}
+#mlv-need .ba-row::-webkit-scrollbar{display:none}
+#mlv-need .ba-card{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;background:#fff;border:1px solid #ebe2d6;border-radius:18px;overflow:hidden}
+#mlv-need .ba{--p:50%;position:relative;aspect-ratio:600/960;background:#efe6da;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#mlv-need .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+#mlv-need .ba__l{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+#mlv-need .ba__line{position:absolute;inset-block:0;left:var(--p);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(13,27,30,.12);pointer-events:none}
+#mlv-need .ba__knob{position:absolute;top:50%;left:var(--p);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -6px rgba(13,27,30,.45);display:grid;place-items:center;pointer-events:none}
+#mlv-need .ba__knob svg{width:22px;height:22px;fill:none;stroke:#8f5434;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#mlv-need .ba__tag{position:absolute;top:12px;padding:5px 12px;border-radius:999px;font:700 .82rem/1.2 "Heebo",system-ui,sans-serif;color:#fff;pointer-events:none}
+#mlv-need .ba__tag--r{right:12px;background:rgba(13,27,30,.85)}
+#mlv-need .ba__tag--l{left:12px;background:#8f5434}
+#mlv-need .ba__ill{position:absolute;bottom:12px;right:12px;padding:2px 9px;border-radius:999px;background:rgba(250,245,239,.9);color:#0d1b1e;font-size:12px;line-height:1.6;pointer-events:none}
+#mlv-need .ba input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:none;touch-action:pan-y}
+#mlv-need .ba input:focus-visible~.ba__knob{outline:3px solid #8f5434;outline-offset:3px}
+#mlv-need .ba-card h3{margin:0;padding:14px 16px 16px;font:800 1.05rem/1.3 "Rubik","Heebo",system-ui,sans-serif;color:#0d1b1e;text-align:right}
+#mlv-need .need-cta{text-align:center;margin-top:28px;padding-inline:16px}
+@media(min-width:901px){
+  #mlv-need .ba-row{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;max-width:1180px;margin-inline:auto;padding-inline:16px}
+}
+@media(prefers-reduced-motion:no-preference){#mlv-need .ba.is-hint .ba__l,#mlv-need .ba.is-hint .ba__line,#mlv-need .ba.is-hint .ba__knob{transition:clip-path 600ms cubic-bezier(.23,1,.32,1),left 600ms cubic-bezier(.23,1,.32,1)}}
+</style>
+<section id="mlv-need" aria-labelledby="mlv-need-h">
+  <div class="n need-h">
+    <span class="kick">המחשה</span>
+    <h2 id="mlv-need-h">ככה זה נראה אחרי חודש עם מים מסוננים</h2>
+    <p class="lead">מה שהפילטר תופס, לא מגיע לעור ולשיער.</p>
+  </div>
+  <ul class="ba-row">
+    {%- for it in ba_items -%}
+      {%- assign b = it | strip | split: '|' -%}
+      {%- assign img_r = 'mlv-ba-' | append: b[4] | append: '.jpg' -%}
+      {%- assign img_l = 'mlv-ba-' | append: b[5] | append: '.jpg' -%}
+      <li class="ba-card">
+        <div class="ba" data-ba>
+          <img src="{{ img_r | asset_img_url: '600x' }}" srcset="{{ img_r | asset_img_url: '400x' }} 400w, {{ img_r | asset_img_url: '600x' }} 600w" sizes="(min-width:901px) 280px, 85vw" width="600" height="960" loading="lazy" decoding="async" alt="{{ b[2] }}: {{ b[6] }}">
+          <img class="ba__l" src="{{ img_l | asset_img_url: '600x' }}" srcset="{{ img_l | asset_img_url: '400x' }} 400w, {{ img_l | asset_img_url: '600x' }} 600w" sizes="(min-width:901px) 280px, 85vw" width="600" height="960" loading="lazy" decoding="async" alt="{{ b[3] }}: {{ b[7] }}">
+          <span class="ba__line" aria-hidden="true"></span>
+          <span class="ba__tag ba__tag--r" aria-hidden="true">{{ b[2] }}</span>
+          <span class="ba__tag ba__tag--l" aria-hidden="true">{{ b[3] }}</span>
+          <span class="ba__ill" aria-hidden="true">המחשה</span>
+          <input type="range" min="0" max="100" step="1" value="50" dir="ltr" aria-label="השוואה לפני ואחרי: {{ b[1] }}" aria-valuetext="50 אחוז">
+          <span class="ba__knob" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
+        </div>
+        <h3>{{ b[1] }}</h3>
+      </li>
+    {%- endfor -%}
+  </ul>
+  <p class="need-cta"><a class="btn" href="#bundle-up" data-to-buy>אני רוצה מים מסוננים</a></p>
+</section>
+<script>
+(function(){
+  var root=document.getElementById('mlv-need');if(!root)return;
+  [].slice.call(root.querySelectorAll('[data-ba]')).forEach(function(ba){
+    var r=ba.querySelector('input');if(!r)return;
+    var set=function(v){ba.style.setProperty('--p',v+'%');r.setAttribute('aria-valuetext',v+' אחוז')};
+    r.addEventListener('input',function(){ba.classList.remove('is-hint');set(r.value)});
+    set(r.value);
+  });
+  /* one gentle hint per card the first time it comes into view (skipped for reduced motion) */
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;io.unobserve(e.target);
+    var ba=e.target,r=ba.querySelector('input');if(!r||r.value!=='50')return;
+    ba.classList.add('is-hint');ba.style.setProperty('--p','62%');
+    setTimeout(function(){if(ba.classList.contains('is-hint')){ba.style.setProperty('--p','50%')}},650);
+    setTimeout(function(){ba.classList.remove('is-hint')},1300);
+  })},{threshold:.6});
+  [].slice.call(root.querySelectorAll('[data-ba]')).forEach(function(b){io.observe(b)});
+})();
+</script>

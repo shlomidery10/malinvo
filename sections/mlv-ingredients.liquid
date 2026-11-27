@@ -92,9 +92,9 @@
 
 <script>
 (function(){
-  /* Place this section directly after the product hero (gallery + buy box). */
+  /* Place this section directly after the product hero (gallery + buy box), or after the before/after section when it is there. */
   var me=document.getElementById('shopify-section-{{ section.id }}');
-  var hero=document.querySelector('#mlv > section.hero');
+  var hero=document.getElementById('mlv-need')||document.querySelector('#mlv > section.hero');
   if(me&&hero&&me.querySelector('[data-place="hero"]')&&hero.nextElementSibling!==me)hero.after(me);
   if(window.__mlvIngBound)return;window.__mlvIngBound=true;
   /* CTA: scroll to the visible add-to-cart button (BundleUp's when present) and focus it. */
