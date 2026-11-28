@@ -575,6 +575,10 @@
         <ul class="reass">
           {% render 'mlv-eta' %}
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מענה בעברית</span></li>
+          {%- comment -%} Quantity enquiries (4+ units): merchant-editable text and link; hidden when the text is empty. {%- endcomment -%}
+          {%- if section.settings.bulk_text != blank -%}
+          <li class="mlv-bulk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5z"/><path d="M3 9v6l9 5 9-5V9"/><path d="M12 14v6"/></svg><span>{{ section.settings.bulk_text | escape }}{%- if section.settings.bulk_link_label != blank %} <a href="{{ section.settings.bulk_link | default: '/pages/contact' }}">{{ section.settings.bulk_link_label | escape }}</a>{%- endif -%}</span></li>
+          {%- endif -%}
         </ul>
         <div class="mlv-accs">
           {% render 'malinvo-guarantee' %}
@@ -1105,6 +1109,10 @@
     { "type": "image_picker", "id": "step1_image", "label": "צעד 1: מחברים (1:1)" },
     { "type": "image_picker", "id": "step2_image", "label": "צעד 2: תולים (1:1)" },
     { "type": "image_picker", "id": "step3_image", "label": "צעד 3: מתקלחים ורואים (1:1)" },
+    { "type": "header", "content": "כמות: 4 יחידות ומעלה" },
+    { "type": "text", "id": "bulk_text", "label": "טקסט", "default": "קונים 4 יחידות ומעלה? נשמח להציע מחיר לכמות.", "info": "ריק = השורה לא מוצגת." },
+    { "type": "text", "id": "bulk_link_label", "label": "טקסט הקישור", "default": "כתבו לנו" },
+    { "type": "url", "id": "bulk_link", "label": "קישור", "info": "ריק = עמוד צור קשר." },
     { "type": "header", "content": "מדריכים (מוסתר כשאין כתבות)" },
     { "type": "text", "id": "guides_heading", "label": "כותרת", "default": "מדריכים" },
     { "type": "blog", "id": "guides_blog", "label": "בלוג", "info": "ריק = הבלוג news. מוצגות 3 הכתבות האחרונות." },
