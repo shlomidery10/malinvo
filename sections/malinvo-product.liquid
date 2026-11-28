@@ -164,6 +164,7 @@
 #mlv .big-p{background:var(--sand);padding-block:clamp(40px,7vw,80px)}
 #mlv .big-s{background:#fff;padding-block:clamp(36px,6vw,72px)}
 #mlv #mlv-pipe{padding-block-end:clamp(18px,3vw,30px)}
+#mlv #mlv-steps + #mlv-reviews{padding-block-start:clamp(12px,2vw,24px)}
 #mlv #mlv-study .big-p{padding-block-start:clamp(22px,3.5vw,36px)}
 #mlv .big-n{margin-block-start:14px;font:900 clamp(5.4rem,22vw,8.5rem)/.9 var(--disp);color:var(--teal-d)}
 #mlv .big-n small{font-size:.28em;font-weight:800;margin-inline-start:.25em}
@@ -179,7 +180,9 @@
 #mlv .big-s .big-t mark{background:var(--ink);color:#fff}
 #mlv .big-s .big-by{font-size:1.05rem;color:var(--ink2)}
 #mlv .big-s .btn{margin-block-start:22px}
-#mlv .big-fig{position:relative;max-width:480px;margin:24px 0 6px;border-radius:var(--r);overflow:hidden}
+#mlv .big-fig{position:relative;--fw:min(calc(100% + 32px),560px);width:var(--fw);max-width:none;margin:24px calc((100% - var(--fw))/2) 6px;overflow:hidden}
+@media(min-width:560px){#mlv .big-fig{border-radius:var(--r)}}
+@media(min-width:750px){#mlv .big-fig{--fw:min(calc(100vw - 64px),960px)}}
 #mlv .big-fig img{display:block;width:100%;height:auto}
 #mlv .big-fig figcaption{position:absolute;bottom:10px;inset-inline-start:12px;margin:0;padding:2px 10px;border-radius:999px;background:rgba(21,35,43,.85);color:#fff;font-size:13px;line-height:1.6}
 #mlv .journey-h{margin:0 0 14px;font:800 clamp(1.3rem,4vw,1.7rem)/1.3 var(--disp);color:var(--ink);text-wrap:balance}
@@ -599,7 +602,8 @@
   {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
   {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true, claims: show_claims %}
   {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
-  {% render 'mlv-need', claims: show_claims %}
+  {%- comment -%} Before/after sliders (#mlv-need): off by default at the owner's request. Turn on the section setting show_need to restore. {%- endcomment -%}
+  {%- if section.settings.show_need -%}{% render 'mlv-need', claims: show_claims %}{%- endif -%}
 
   {%- comment -%} The need, stated from a published study. Wording follows the paper: blood trihalomethane levels in adults were highest after a 10-minute shower and lowest after drinking 1 L of tap water. Source: Backer et al., J Expo Anal Environ Epidemiol 2000 (PMID 10981726); the study did not test this product. Source line and that note were removed from the page at the owner's request. {%- endcomment -%}
   {%- if section.blocks.size > 0 -%}
@@ -629,11 +633,14 @@
     <div class="big-s"><div class="n">
         <p class="big-n">4<small>שכבות</small></p>
         <p class="big-t">בתוך פילטר אחד. המים עוברים דרך כולן, ו<mark>החול, החלודה והמשקעים נשארים בפילטר</mark>. הכלור מופחת.</p>
-        {%- assign layers_img = images['malinvo_nova_layers_discs.jpg'] -%}
-        {%- if layers_img -%}
+        {%- assign layers_m = images['malinvo_nova_layers_v2_m.jpg'] -%}
+        {%- assign layers_d = images['malinvo_nova_layers_v2_d.jpg'] -%}
+        {%- if layers_m and layers_d -%}
         <figure class="big-fig">
-          <img src="{{ layers_img | image_url: width: 900 }}" srcset="{{ layers_img | image_url: width: 480 }} 480w, {{ layers_img | image_url: width: 720 }} 720w, {{ layers_img | image_url: width: 1080 }} 1080w" sizes="(min-width:560px) 480px, 92vw" width="{{ layers_img.width }}" height="{{ layers_img.height }}" loading="lazy" decoding="async" alt="ארבע שכבות הסינון של הפילטר - יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP">
-          
+          <picture>
+            <source media="(min-width:750px)" srcset="{{ layers_d | image_url: width: 1000 }} 1000w, {{ layers_d | image_url: width: 1680 }} 1680w" sizes="(min-width:1024px) 960px, calc(100vw - 64px)" width="{{ layers_d.width }}" height="{{ layers_d.height }}">
+            <img src="{{ layers_m | image_url: width: 800 }}" srcset="{{ layers_m | image_url: width: 500 }} 500w, {{ layers_m | image_url: width: 800 }} 800w, {{ layers_m | image_url: width: 1080 }} 1080w" sizes="(min-width:560px) 560px, 100vw" width="{{ layers_m.width }}" height="{{ layers_m.height }}" loading="lazy" decoding="async" alt="ארבע שכבות הסינון: שכבת כסף, בד סינון כפול, פחם פעיל ושכבת ליטוש">
+          </picture>
         </figure>
         {%- endif -%}
         <p class="big-by">את המים לשתייה כבר סידרתם. הגיע תור המקלחת.</p>
@@ -1125,6 +1132,7 @@
     { "type": "header", "content": "סקשן 7: 30 יום להחליט" },
     { "type": "image_picker", "id": "final_image", "label": "תמונת אמון (1:1)" },
     { "type": "header", "content": "תמונת פילטר אמיתית אחרי שימוש (מוסתר עד שממלאים)" },
+    { "type": "checkbox", "id": "show_need", "label": "להציג סקשן לפני/אחרי (סליידרים)", "default": false },
     { "type": "checkbox", "id": "show_strip_results", "label": "להציג תמונת פילטר אמיתית בסקשן 2", "default": false },
     { "type": "image_picker", "id": "strip_image", "label": "תמונה אמיתית: הפילטר אחרי שימוש" },
     { "type": "text", "id": "strip_result", "label": "כיתוב לתמונה" }
