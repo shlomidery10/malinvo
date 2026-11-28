@@ -594,6 +594,11 @@
 
   {%- comment -%} Claims toggle (section setting show_claims, default off): off hides the CDC/blood study, the adults skin/hair section and the hair/scalp before-after cards; the filter and old-head/Nova before-after stay. {%- endcomment -%}
   {%- assign show_claims = section.settings.show_claims -%}
+  {%- comment -%} Right after the hero: the pipe section, then installation. Everything else follows in its previous order. {%- endcomment -%}
+  {%- assign real_img = null -%}
+  {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
+  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true, claims: show_claims %}
+  {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
   {% render 'mlv-need', claims: show_claims %}
 
   {%- comment -%} The need, stated from a published study. Wording follows the paper: blood trihalomethane levels in adults were highest after a 10-minute shower and lowest after drinking 1 L of tap water. Source: Backer et al., J Expo Anal Environ Epidemiol 2000 (PMID 10981726); the study did not test this product. Source line and that note were removed from the page at the owner's request. {%- endcomment -%}
@@ -609,10 +614,6 @@
     </div>
   </section>
   {%- endif -%}
-
-  {%- assign real_img = null -%}
-  {%- if section.settings.show_strip_results -%}{%- assign real_img = section.settings.strip_image -%}{%- endif -%}
-  {% render 'mlv-pipe', img_m: section.settings.pipe_image_m, img_d: section.settings.pipe_image_d, real_img: real_img, real_cap: section.settings.strip_result, cta_button: true, claims: show_claims %}
 
   {%- comment -%} The unseen part, from published studies, then the answer. All three studies were on adults and none tested this product; the page says "adults" in the text. Sources: Backer 2000 (PMID 10981726), Jo/Weisel/Lioy 1990 (PMID 2287784), Backer 2008 (PMID 18197300). {%- endcomment -%}
   <section class="big" id="mlv-study">
@@ -631,7 +632,7 @@
         {%- assign layers_img = images['malinvo_nova_layers_discs.jpg'] -%}
         {%- if layers_img -%}
         <figure class="big-fig">
-          <img src="{{ layers_img | image_url: width: 900 }}" srcset="{{ layers_img | image_url: width: 480 }} 480w, {{ layers_img | image_url: width: 720 }} 720w, {{ layers_img | image_url: width: 1080 }} 1080w" sizes="(min-width:560px) 480px, 92vw" width="{{ layers_img.width }}" height="{{ layers_img.height }}" loading="lazy" decoding="async" alt="המחשה: ארבע שכבות הסינון של הפילטר - יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP">
+          <img src="{{ layers_img | image_url: width: 900 }}" srcset="{{ layers_img | image_url: width: 480 }} 480w, {{ layers_img | image_url: width: 720 }} 720w, {{ layers_img | image_url: width: 1080 }} 1080w" sizes="(min-width:560px) 480px, 92vw" width="{{ layers_img.width }}" height="{{ layers_img.height }}" loading="lazy" decoding="async" alt="ארבע שכבות הסינון של הפילטר - יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP">
           
         </figure>
         {%- endif -%}
@@ -722,7 +723,6 @@
   {%- endif -%}
 
   {% render 'mlv-benefits', img: section.settings.benefits_image, kick: 'מה בפנים' %}
-  {% render 'mlv-steps', diagram: true, diagram_image: section.settings.install_image, kick: 'התקנה' %}
   {% render 'mlv-compare', kick: 'השוואה', price: from_price, claims: show_claims %}
 
   {%- comment -%} Real parent reviews and real customer photos. Both sections stay hidden until the merchant fills them in the theme editor; nothing here is placeholder content. {%- endcomment -%}
