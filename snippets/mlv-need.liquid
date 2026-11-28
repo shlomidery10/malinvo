@@ -12,7 +12,7 @@
 {%- enddoc -%}
 {%- comment -%} name|title|right label|left label|right image|left image|alt right|alt left {%- endcomment -%}
 {%- capture ba_raw -%}
-filter|הפילטר אחרי חודש במקלחת|חדש|אחרי חודש|filter-r|filter-l|פילטר MALINVO חדש ונקי|הפילטר אחרי חודש במקלחת, עם החול והחלודה שנתפסו בו
+filter|הפילטר אחרי 3 חודשים במקלחת|חדש|אחרי 3 חודשים|filter-r|filter-l|פילטר MALINVO חדש ונקי|הפילטר אחרי 3 חודשים במקלחת, עם החול והחלודה שנתפסו בו
 ;;curls|שיער שמקבל מים מסוננים|לפני|אחרי|curls-r|curls-l|שיער מתולתל יבש ומקורזל|שיער מתולתל מוגדר ומבריק אחרי מקלחות במים מסוננים
 ;;dandruff|קרקפת שמקבלת מים מסוננים|לפני|אחרי|dandruff-r|dandruff-l|קשקשים על הצוואר ועל החולצה|צוואר וחולצה נקיים, בלי קשקשים
 {%- endcapture -%}
@@ -53,8 +53,7 @@ filter|הפילטר אחרי חודש במקלחת|חדש|אחרי חודש|filt
 </style>
 <section id="mlv-need" aria-labelledby="mlv-need-h">
   <div class="n need-h">
-    <span class="kick">המחשה</span>
-    <h2 id="mlv-need-h">ככה זה נראה אחרי חודש עם מים מסוננים</h2>
+    <h2 id="mlv-need-h">ככה זה נראה אחרי 3 חודשים עם מים מסוננים</h2>
     {%- if claims -%}<p class="lead">מה שהפילטר תופס, לא מגיע לעור ולשיער.</p>{%- endif -%}
   </div>
   <ul class="ba-row">
@@ -69,7 +68,6 @@ filter|הפילטר אחרי חודש במקלחת|חדש|אחרי חודש|filt
           <span class="ba__line" aria-hidden="true"></span>
           <span class="ba__tag ba__tag--r" aria-hidden="true">{{ b[2] }}</span>
           <span class="ba__tag ba__tag--l" aria-hidden="true">{{ b[3] }}</span>
-          <span class="ba__ill" aria-hidden="true">המחשה</span>
           <input type="range" min="0" max="100" step="1" value="50" dir="ltr" aria-label="השוואה לפני ואחרי: {{ b[1] }}" aria-valuetext="50 אחוז">
           <span class="ba__knob" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
         </div>

@@ -207,9 +207,9 @@
 #mlv .mist{background:var(--mist)}
 #mlv .pipe{background:var(--sand)}
 #mlv .pipe-g{display:grid;gap:24px}
-#mlv .pipe-m{border-radius:var(--r);overflow:hidden;background:#fff;aspect-ratio:4/5}
+#mlv .pipe-m{border-radius:var(--r);overflow:hidden;background:#fff}
 #mlv .pipe-m.is-ph{aspect-ratio:1/1}
-#mlv .pipe-m img{width:100%;height:100%;object-fit:contain;display:block}
+#mlv .pipe-m img{width:100%;height:auto;display:block}
 #mlv .pipe-m.is-ph img{object-fit:cover}
 #mlv .nums{display:grid;gap:10px;counter-reset:n}
 #mlv .nums li{counter-increment:n;display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid #ecdfd0}
@@ -632,7 +632,7 @@
         {%- if layers_img -%}
         <figure class="big-fig">
           <img src="{{ layers_img | image_url: width: 900 }}" srcset="{{ layers_img | image_url: width: 480 }} 480w, {{ layers_img | image_url: width: 720 }} 720w, {{ layers_img | image_url: width: 1080 }} 1080w" sizes="(min-width:560px) 480px, 92vw" width="{{ layers_img.width }}" height="{{ layers_img.height }}" loading="lazy" decoding="async" alt="המחשה: ארבע שכבות הסינון של הפילטר - יוני כסף, בד סינון דו-שכבתי, סיב פחם פעיל ושכבת PP">
-          <figcaption>המחשה</figcaption>
+          
         </figure>
         {%- endif -%}
         <p class="big-by">את המים לשתייה כבר סידרתם. הגיע תור המקלחת.</p>
