@@ -573,6 +573,10 @@
         <p class="buy-note"><strong>30 יום להחליט, גם אחרי שהתקנתם והתקלחתם.</strong> לא מתאים? מחזירים. <a href="/pages/refund-policy">התנאים המלאים</a></p>
         {%- comment -%} Risk-reversal near CTA. The 30-day line lives once, in .buy-note right under the button (#32: no extra repeat here). {%- endcomment -%}
         <ul class="reass">
+          {%- comment -%} Fit reassurance: merchant-editable; hidden when empty. {%- endcomment -%}
+          {%- if section.settings.fit_text != blank -%}
+          <li class="mlv-fit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>{{ section.settings.fit_text | escape }}</span></li>
+          {%- endif -%}
           {% render 'mlv-eta' %}
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>תשלום מאובטח · מענה בעברית</span></li>
           {%- comment -%} Quantity enquiries (4+ units): merchant-editable text and link; hidden when the text is empty. {%- endcomment -%}
@@ -1109,6 +1113,8 @@
     { "type": "image_picker", "id": "step1_image", "label": "צעד 1: מחברים (1:1)" },
     { "type": "image_picker", "id": "step2_image", "label": "צעד 2: תולים (1:1)" },
     { "type": "image_picker", "id": "step3_image", "label": "צעד 3: מתקלחים ורואים (1:1)" },
+    { "type": "header", "content": "התאמה למקלחת" },
+    { "type": "text", "id": "fit_text", "label": "שורת התאמה ליד כפתור הקנייה", "default": "יש לכם צינור במקלחת? Nova מתאים. מתקינים לבד, בדקה, בלי אינסטלטור.", "info": "ריק = השורה לא מוצגת." },
     { "type": "header", "content": "כמות: 4 יחידות ומעלה" },
     { "type": "text", "id": "bulk_text", "label": "טקסט", "default": "קונים 4 יחידות ומעלה? נשמח להציע מחיר לכמות.", "info": "ריק = השורה לא מוצגת." },
     { "type": "text", "id": "bulk_link_label", "label": "טקסט הקישור", "default": "כתבו לנו" },
